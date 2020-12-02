@@ -14,7 +14,7 @@ import Alert from '@material-ui/lab/Alert';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import {makeStyles} from '@material-ui/core/styles'
 
-import firebase, { auth } from '../firebase';
+import { useFirebase } from '../firebase';
 import image from '../images/asset1.svg'
 
 const useStyles = makeStyles((theme) => ({
@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Home = () => {
+    const {auth, firebase} = useFirebase()
     const [error, setError] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -80,7 +81,7 @@ const Home = () => {
     );
 
     if (auth.currentUser) {
-        return <Redirect to='/' />;
+        return <Redirect to='/dashboard' />;
     }
     return (
         <>

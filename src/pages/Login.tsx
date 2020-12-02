@@ -14,7 +14,7 @@ import Alert from '@material-ui/lab/Alert';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import {makeStyles} from '@material-ui/core/styles'
 
-import firebase, { auth } from '../firebase';
+import { useFirebase } from '../firebase';
 
 const useStyles = makeStyles((theme) => ({
     root:{
@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Login = () => {
+    const {auth, firebase} = useFirebase()
     const [error, setError] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

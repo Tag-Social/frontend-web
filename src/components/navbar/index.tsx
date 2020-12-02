@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 
 import logo from '../../images/Logo.svg';
-import { auth } from '../../firebase';
+import { useFirebase } from '../../firebase';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = () => {
+    const {user, auth} = useFirebase();
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState<EventTarget & Element | null>(null);
     const open = Boolean(anchorEl);
@@ -52,7 +53,7 @@ const Navbar = () => {
         handleClose();
     };
 
-    const userNav = auth.currentUser && (
+    const userNav = (
         <div>
             <IconButton
                 aria-label='account of current user'
@@ -62,8 +63,8 @@ const Navbar = () => {
                 color='inherit'
             >
                 <Avatar
-                    alt={auth.currentUser.displayName !== null ? auth.currentUser.displayName : undefined }
-                    src={auth.currentUser.photoURL !== null ? auth.currentUser.photoURL : undefined}
+                    alt={user?.displayName || undefined }
+                    src={user?.photoURL || undefined}
                 />
             </IconButton>
             {auth.currentUser && (
@@ -107,7 +108,7 @@ const Navbar = () => {
     const logoImg = (
         <img
             src={logo}
-            style={{ width: '100px', height: 'auto' }}
+            style={{ width: '100px', height: 'auto', paddingTop:'12px' }}
             alt='Tag logo'
         />
     );
@@ -122,9 +123,9 @@ const Navbar = () => {
                 <Container maxWidth='lg'>
                     <Toolbar>
                         <Typography variant='h5' className={classes.title}>
-                            <Link to='/'>{logoImg}</Link>
+                            <Link to='/dashboard'>{logoImg}</Link>
                         </Typography>
-                        {auth.currentUser ? userNav : guestNav}
+                        {user ? userNav : guestNav}
                     </Toolbar>
                 </Container>
             </AppBar>

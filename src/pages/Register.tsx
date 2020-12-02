@@ -10,7 +10,7 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import {makeStyles} from '@material-ui/core/styles'
 
-import {auth} from '../firebase'
+import {useFirebase} from '../firebase'
 
 const useStyles = makeStyles((theme) => ({
     root:{
@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Register = () => {
+    const {auth} = useFirebase()
     const history = useHistory();
     const [error, setError] = useState('');
     const [name, setName] = useState('');
@@ -60,7 +61,7 @@ const Register = () => {
     };
 
     if (auth.currentUser) {
-        return <Redirect to='/' />;
+        return <Redirect to='/dashboard' />;
     }
     return (
         <>
