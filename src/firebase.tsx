@@ -1,7 +1,10 @@
+import React, {createContext, useContext, FC, ReactNode} from 'react'
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/analytics';
+import {useAuthState} from 'react-firebase-hooks/auth'
+
 
 firebase.initializeApp({
         apiKey: process.env.REACT_APP_API_KEY,
@@ -18,4 +21,20 @@ firebase.analytics();
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 
-export { auth, firestore, firebase as default}
+export const FirebaseContext = createContext({
+    user: auth.currentUser,
+    auth,
+    firestore,
+    firebase
+});
+
+export const FirebaseProvider: FC<ReactNode> = ({ children }) => {
+    const [user] = useAuthState(auth);
+    return(
+        <FirebaseContext.Provider value={{user,auth,firestore,firebase}}>
+            {children}
+        </FirebaseContext.Provider>
+    )
+}
+
+export const useFirebase = () => useContext(FirebaseContext)
