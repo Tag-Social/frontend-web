@@ -1,6 +1,5 @@
 import React, { MouseEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
 import {
     AppBar,
     Toolbar,
@@ -13,26 +12,11 @@ import {
     Container,
 } from '@material-ui/core';
 
+import {useStyles} from './styles'
 import logo from '../../images/Logo.svg';
 import { useFirebase } from '../../firebase';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    title: {
-        flexGrow: 1,
-    },
-    logo: {
-        fontSize: 60,
-    },
-    nav: {
-        boxShadow: 'none',
-    },
-}));
+
 
 const Navbar = () => {
     const {user, auth} = useFirebase();
