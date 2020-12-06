@@ -1,1 +1,1 @@
-export {default as useSignIn} from './useSignIn'
+export {default as useAuth} from './useAuth'
