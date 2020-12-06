@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React from 'react';
 import { Link as A, Redirect } from 'react-router-dom';
 import {
     Button,
@@ -12,67 +12,49 @@ import {
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import FacebookIcon from '@material-ui/icons/Facebook';
-import {makeStyles} from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles';
+import { useFirebase } from 'react-redux-firebase';
 
-import { useFirebase } from '../firebase';
+import { useSignIn } from '../hooks';
+import { DASHBOARD, REGISTER } from './routePaths';
 
 const useStyles = makeStyles((theme) => ({
-    root:{
-        display:'flex',
+    root: {
+        display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         margin: '0 auto',
         maxWidth: '400px',
     },
     title: {
-       color: '#653695',
+        color: '#653695',
     },
     button: {
         margin: theme.spacing(1, 0),
         borderRadius: '50px',
         padding: '0.75rem 0',
-        fontWeight: 600
+        fontWeight: 600,
     },
-    facebook:  {
+    facebook: {
         margin: theme.spacing(1, 0),
         borderRadius: '50px',
         padding: '0.75rem 0',
         fontWeight: 600,
         backgroundColor: '#3b5998',
         color: '#ffffff',
-    }
+    },
 }));
 
-
 const Login = () => {
-    const {auth, firebase} = useFirebase()
-    const [error, setError] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const classes = useStyles()
-
-    const signIn = (e: FormEvent) => {
-        e.preventDefault();
-        auth.signInWithEmailAndPassword(email, password).catch((error) => {
-            setError(error.message);
-            setTimeout(() => setError(''), 5000);
-        });
-    };
-    const googleSignIn = () => {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithPopup(provider).catch((error) => {
-            setError(error.message);
-            setTimeout(() => setError(''), 5000);
-        });;
-    };
-
-    const fbSignIn = () => {
-        const provider = new firebase.auth.FacebookAuthProvider();
-        auth.signInWithPopup(provider).catch((error) => {
-            setError(error.message);
-            setTimeout(() => setError(''), 5000);
-        });;
-    };
+    const { auth } = useFirebase();
+    const {
+        signIn,
+        providerSignIn,
+        setEmail,
+        setPassword,
+        error,
+    } = useSignIn();
+    const classes = useStyles();
 
     const googleIcon = (
         <SvgIcon className='button-icon'>
@@ -85,19 +67,20 @@ const Login = () => {
         </SvgIcon>
     );
 
-    if (auth.currentUser) {
-        return <Redirect to='/' />;
-    }
     return (
         <>
             <CssBaseline />
             <div className={classes.root}>
-                <Typography component='h1' variant='h4' className={classes.title}>
+                <Typography
+                    component='h1'
+                    variant='h4'
+                    className={classes.title}
+                >
                     Sign in
                 </Typography>
                 {error && (
                     <Alert className='alert' severity='error'>
-                        {error}
+                        {error.message}
                     </Alert>
                 )}
                 <form noValidate onSubmit={signIn}>
@@ -132,7 +115,7 @@ const Login = () => {
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link component={A} to='/register' variant='body2'>
+                            <Link component={A} to={REGISTER} variant='body2'>
                                 Don't have an account? Sign Up
                             </Link>
                         </Grid>
@@ -152,7 +135,7 @@ const Login = () => {
                         variant='contained'
                         color='secondary'
                         className={classes.button}
-                        onClick={googleSignIn}
+                        onClick={() => providerSignIn('google')}
                     >
                         {googleIcon}
                         Sign In with Google
@@ -161,7 +144,7 @@ const Login = () => {
                         fullWidth
                         variant='contained'
                         className={classes.facebook}
-                        onClick={fbSignIn}
+                        onClick={() => providerSignIn('facebook')}
                     >
                         <FacebookIcon className='button-icon' />
                         Sign In with Facebook

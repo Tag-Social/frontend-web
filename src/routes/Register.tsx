@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { Link as A, Redirect, useHistory } from 'react-router-dom';
+import { Link as A, useHistory } from 'react-router-dom';
 import {
     Button,
     CssBaseline,
@@ -8,50 +8,58 @@ import {
     Typography,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import {makeStyles} from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles';
 
-import {useFirebase} from '../firebase'
+import { useFirebase, useFirestore } from 'react-redux-firebase';
 
 const useStyles = makeStyles((theme) => ({
-    root:{
-        display:'flex',
+    root: {
+        display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         margin: '0 auto',
         maxWidth: '400px',
     },
     title: {
-       color: '#653695',
+        color: '#653695',
     },
     button: {
         margin: theme.spacing(1, 0),
         borderRadius: '50px',
         padding: '0.75rem 0',
-        fontWeight: 600
+        fontWeight: 600,
     },
 }));
 
 const Register = () => {
-    const {auth} = useFirebase()
+    const { auth } = useFirebase();
+    const firestore = useFirestore()
     const history = useHistory();
     const [error, setError] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const classes = useStyles()
+    const classes = useStyles();
 
     const handleRegister = async (e: FormEvent) => {
         e.preventDefault();
-        auth.createUserWithEmailAndPassword(email, password)
-            .then((result) =>{
-                if(result.user){
-                    result.user
-                    .updateProfile({
-                        displayName: name,
-                    })
-                    .then(() => {
-                        history.push('/');
-                    })
+        auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then((result) => {
+                if (result.user) {
+                    const { user } = result
+                    user
+                        .updateProfile({
+                            displayName: name,
+                        })
+                        .then(() => firestore.collection('users').doc(user.uid).set({
+                            avatarUrl: user?.photoURL,
+                            displayName: user?.displayName,
+                            email: user?.email
+                        }))
+                        .then(() => {
+                            history.push('/');
+                        });
                 }
             })
             .catch((error) => {
@@ -60,14 +68,15 @@ const Register = () => {
             });
     };
 
-    if (auth.currentUser) {
-        return <Redirect to='/dashboard' />;
-    }
     return (
         <>
             <CssBaseline />
             <div className={classes.root}>
-                <Typography component='h1' variant='h4' className={classes.title}>
+                <Typography
+                    component='h1'
+                    variant='h4'
+                    className={classes.title}
+                >
                     Find your mentor today!
                 </Typography>
                 {error && (
@@ -75,10 +84,7 @@ const Register = () => {
                         {error}
                     </Alert>
                 )}
-                <form
-                    noValidate
-                    onSubmit={handleRegister}
-                >
+                <form noValidate onSubmit={handleRegister}>
                     <TextField
                         variant='outlined'
                         margin='normal'
@@ -96,9 +102,7 @@ const Register = () => {
                         fullWidth
                         label='Email Address'
                         autoComplete='email'
-                        onChange={({ target }) =>
-                            setEmail(target.value)
-                        }
+                        onChange={({ target }) => setEmail(target.value)}
                     />
                     <TextField
                         variant='outlined'
@@ -108,9 +112,7 @@ const Register = () => {
                         label='Password'
                         type='password'
                         autoComplete='current-password'
-                        onChange={({ target }) =>
-                            setPassword(target.value)
-                        }
+                        onChange={({ target }) => setPassword(target.value)}
                     />
                     <Link component={A} to='/login' variant='body2'>
                         Already have an account? Sign in
