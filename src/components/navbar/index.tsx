@@ -1,5 +1,7 @@
 import React, { MouseEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import {
     AppBar,
     Toolbar,
@@ -14,12 +16,11 @@ import {
 
 import {useStyles} from './styles'
 import logo from '../../images/Logo.svg';
-import { useFirebase } from '../../firebase';
-
-
+import { DASHBOARD, LOGIN, REGISTER } from '../../routes/routePaths'
 
 const Navbar = () => {
-    const {user, auth} = useFirebase();
+    const firebase = useFirebase()
+    const auth = useSelector((state: RootStateOrAny) => state.firebase.auth);
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState<EventTarget & Element | null>(null);
     const open = Boolean(anchorEl);
@@ -33,7 +34,7 @@ const Navbar = () => {
     };
 
     const handleSignOut = () => {
-        auth.signOut();
+        firebase.auth().signOut();
         handleClose();
     };
 
@@ -47,11 +48,11 @@ const Navbar = () => {
                 color='inherit'
             >
                 <Avatar
-                    alt={user?.displayName || undefined }
-                    src={user?.photoURL || undefined}
+                    alt={auth.displayName || undefined}
+                    src={auth.photoURL || undefined}
                 />
             </IconButton>
-            {auth.currentUser && (
+            {auth && (
                 <Menu
                     id='menu-appbar'
                     anchorEl={anchorEl}
@@ -75,12 +76,12 @@ const Navbar = () => {
 
     const guestNav = (
         <div>
-            <Button component={Link} to='/login'>
+            <Button component={Link} to={LOGIN}>
                 Login
             </Button>
             <Button
                 component={Link}
-                to='/register'
+                to={REGISTER}
                 variant='outlined'
                 color='primary'
             >
@@ -107,9 +108,9 @@ const Navbar = () => {
                 <Container maxWidth='lg'>
                     <Toolbar>
                         <Typography variant='h5' className={classes.title}>
-                            <Link to='/dashboard'>{logoImg}</Link>
+                            <Link to={DASHBOARD}>{logoImg}</Link>
                         </Typography>
-                        {user ? userNav : guestNav}
+                        {isLoaded(auth) && !isEmpty(auth) ? userNav : guestNav}
                     </Toolbar>
                 </Container>
             </AppBar>
