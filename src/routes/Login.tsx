@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link as A, Redirect } from 'react-router-dom';
+import { Link as A } from 'react-router-dom';
 import {
     Button,
     CssBaseline,
@@ -8,15 +8,14 @@ import {
     Link,
     Grid,
     Typography,
-    SvgIcon,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import { makeStyles } from '@material-ui/core/styles';
-import { useFirebase } from 'react-redux-firebase';
 
-import { useSignIn } from '../hooks';
-import { DASHBOARD, REGISTER } from './routePaths';
+import googleIcon from '../images/googleIcon'
+import { useAuth } from '../hooks';
+import { PASSWORD_RESET, REGISTER } from './routePaths';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -45,27 +44,17 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Login = () => {
-    const { auth } = useFirebase();
+const Login: React.FC = () => {
+    const classes = useStyles();
     const {
         signIn,
         providerSignIn,
+        email,
         setEmail,
+        password,
         setPassword,
         error,
-    } = useSignIn();
-    const classes = useStyles();
-
-    const googleIcon = (
-        <SvgIcon className='button-icon'>
-            <svg>
-                <path
-                    fill='currentColor'
-                    d='M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z'
-                />
-            </svg>
-        </SvgIcon>
-    );
+    } = useAuth();
 
     return (
         <>
@@ -90,6 +79,7 @@ const Login = () => {
                         required
                         fullWidth
                         label='Email Address'
+                        value={email}
                         autoComplete='email'
                         autoFocus
                         onChange={({ target }) => setEmail(target.value)}
@@ -100,6 +90,7 @@ const Login = () => {
                         required
                         fullWidth
                         label='Password'
+                        value={password}
                         type='password'
                         autoComplete='current-password'
                         onChange={({ target }) => setPassword(target.value)}
@@ -108,7 +99,7 @@ const Login = () => {
                         <Grid item xs>
                             <Link
                                 component={A}
-                                to='/resetpassword'
+                                to={PASSWORD_RESET}
                                 variant='body2'
                             >
                                 Forgot password?

@@ -1,4 +1,6 @@
 export const HOME = '/'
+export const DASHBOARD = '/dashboard'
+export const PROFILE = '/profile'
 export const LOGIN = '/login'
 export const REGISTER ='/register'
-export const DASHBOARD = '/dashboard'
+export const PASSWORD_RESET ='/passwordreset'

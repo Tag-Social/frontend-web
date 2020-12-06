@@ -1,5 +1,5 @@
-import React, { FormEvent, useState } from 'react';
-import { Link as A, useHistory } from 'react-router-dom';
+import React from 'react';
+import { Link as A } from 'react-router-dom';
 import {
     Button,
     CssBaseline,
@@ -10,7 +10,7 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { useFirebase, useFirestore } from 'react-redux-firebase';
+import { useAuth } from '../hooks';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,42 +31,18 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Register = () => {
-    const { auth } = useFirebase();
-    const firestore = useFirestore()
-    const history = useHistory();
-    const [error, setError] = useState('');
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+const Register: React.FC = () => {
     const classes = useStyles();
-
-    const handleRegister = async (e: FormEvent) => {
-        e.preventDefault();
-        auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then((result) => {
-                if (result.user) {
-                    const { user } = result
-                    user
-                        .updateProfile({
-                            displayName: name,
-                        })
-                        .then(() => firestore.collection('users').doc(user.uid).set({
-                            avatarUrl: user?.photoURL,
-                            displayName: user?.displayName,
-                            email: user?.email
-                        }))
-                        .then(() => {
-                            history.push('/');
-                        });
-                }
-            })
-            .catch((error) => {
-                setError(error.message);
-                setTimeout(() => setError(''), 5000);
-            });
-    };
+    const {
+        name,
+        setName,
+        email,
+        setEmail,
+        password,
+        setPassword,
+        handleRegister,
+        error,
+    } = useAuth();
 
     return (
         <>
@@ -92,6 +68,7 @@ const Register = () => {
                         fullWidth
                         label='Full Name'
                         autoComplete='name'
+                        value={name}
                         autoFocus
                         onChange={({ target }) => setName(target.value)}
                     />
@@ -101,6 +78,7 @@ const Register = () => {
                         required
                         fullWidth
                         label='Email Address'
+                        value={email}
                         autoComplete='email'
                         onChange={({ target }) => setEmail(target.value)}
                     />
@@ -110,6 +88,7 @@ const Register = () => {
                         required
                         fullWidth
                         label='Password'
+                        value={password}
                         type='password'
                         autoComplete='current-password'
                         onChange={({ target }) => setPassword(target.value)}

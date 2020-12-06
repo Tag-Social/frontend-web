@@ -9,7 +9,7 @@ const PrivateRoute = ({ children, ...restProps }: RouteProps) => {
     const auth = useSelector((state: RootStateOrAny) => state.firebase.auth);
     return (
         <Route {...restProps}>
-            {isLoaded(auth) && !isEmpty(auth) ? children : <Redirect to={HOME} />}
+            {!isEmpty(auth) ? children : <Redirect to={HOME} />}
         </Route>
     );
 }
