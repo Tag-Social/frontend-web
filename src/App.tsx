@@ -1,5 +1,5 @@
 import React  from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import {Container} from '@material-ui/core'
 
 import { Navbar, PrivateRoute, PublicRoute } from './components';
@@ -31,9 +31,9 @@ const App = () => (
         <PrivateRoute exact path={DASHBOARD}>
           <Dashboard />
         </PrivateRoute>
-        <Route exact path={PROFILE}>
+        <PrivateRoute path={PROFILE}>
           <Profile />
-        </Route>
+        </PrivateRoute>
       </Switch>
     </Container>
   </Router>

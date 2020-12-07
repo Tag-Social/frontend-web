@@ -14,15 +14,17 @@ import {
     Container,
 } from '@material-ui/core';
 
-import {useStyles} from './styles'
+import { useStyles } from './styles';
 import logo from '../../images/Logo.svg';
-import { DASHBOARD, LOGIN, REGISTER } from '../../routes/routePaths'
+import { DASHBOARD, LOGIN, PROFILE, REGISTER } from '../../routes/routePaths';
 
 const Navbar = () => {
-    const firebase = useFirebase()
+    const firebase = useFirebase();
     const auth = useSelector((state: RootStateOrAny) => state.firebase.auth);
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = useState<EventTarget & Element | null>(null);
+    const [anchorEl, setAnchorEl] = useState<(EventTarget & Element) | null>(
+        null
+    );
     const open = Boolean(anchorEl);
 
     const handleMenu = (event: MouseEvent) => {
@@ -54,7 +56,6 @@ const Navbar = () => {
             </IconButton>
             {auth && (
                 <Menu
-                    id='menu-appbar'
                     anchorEl={anchorEl}
                     anchorOrigin={{
                         vertical: 'top',
@@ -68,6 +69,13 @@ const Navbar = () => {
                     open={open}
                     onClose={handleClose}
                 >
+                    <MenuItem
+                        component={Link}
+                        to={PROFILE}
+                        onClick={handleClose}
+                    >
+                        Profile
+                    </MenuItem>
                     <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
                 </Menu>
             )}
@@ -93,7 +101,7 @@ const Navbar = () => {
     const logoImg = (
         <img
             src={logo}
-            style={{ width: '100px', height: 'auto', paddingTop:'12px' }}
+            style={{ width: '100px', height: 'auto', paddingTop: '12px' }}
             alt='Tag logo'
         />
     );

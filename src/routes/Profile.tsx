@@ -29,7 +29,7 @@ const Profile = () => {
     return (
         <>
             <Typography variant='h5' gutterBottom>
-                Profile Info
+                Profile 
             </Typography>
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={12}>
@@ -37,25 +37,21 @@ const Profile = () => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <TextField
-                        required
                         variant='outlined'
                         value={name}
                         name='name'
                         label='Full Name'
                         fullWidth
-                        autoComplete='name'
                         onChange={onChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <TextField
-                        required
                         variant='outlined'
                         value={email}
                         name='email'
                         label='Email Address'
                         fullWidth
-                        autoComplete='email'
                         onChange={onChange}
                     />
                 </Grid>
