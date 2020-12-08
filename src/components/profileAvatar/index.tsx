@@ -62,7 +62,7 @@ const ProfileAvatar: React.FC<Props> = ({ alt, src }) => {
                 <Avatar
                     alt={alt}
                     src={avatar?.toString()}
-                    style={{ width: '100px', height: '100px' }}
+                    className={classes.avatar}
                 />
             </Badge>
         </>
