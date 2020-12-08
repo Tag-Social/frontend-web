@@ -15,5 +15,6 @@ export const useStyles = makeStyles((theme) => ({
     },
     nav: {
         boxShadow: 'none',
+        backgroundColor: '#fafafa',
     },
 }));
