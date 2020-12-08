@@ -4,6 +4,7 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFirebase, useFirestore } from 'react-redux-firebase';
 
 import { DASHBOARD } from '../routes/routePaths';
+import { userProfile } from '../firebase/utils/userProfile';
 
 type Provider =
     | 'facebook'
@@ -19,8 +20,9 @@ const useAuth = () => {
     const firestore = useFirestore();
     const history = useHistory();
     const error = useSelector(
-        (state: RootStateOrAny) => state.firebase.authError
+        (state: RootStateOrAny) => state.firebase.error
     )
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -61,9 +63,9 @@ const useAuth = () => {
                     })
                         .then(() =>
                             firestore.collection('users').doc(user.uid).set({
-                                avatarUrl: user?.photoURL,
                                 displayName: user?.displayName,
                                 email: user?.email,
+                                ...userProfile
                             })
                         )
                         .then(() => {
