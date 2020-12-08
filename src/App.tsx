@@ -14,7 +14,7 @@ import { HOME, LOGIN, REGISTER, DASHBOARD, PASSWORD_RESET, PROFILE } from './rou
 const App = () => (
   <Router>
     <Navbar/>
-    <Container style={{marginTop: '5rem'}}>
+    <main style={{ paddingTop: '6rem' }}>
       <Switch>
         <PublicRoute exact path={HOME}>
           <Home />
@@ -35,7 +35,7 @@ const App = () => (
           <Profile />
         </PrivateRoute>
       </Switch>
-    </Container>
+    </main>
   </Router>
 )
 
