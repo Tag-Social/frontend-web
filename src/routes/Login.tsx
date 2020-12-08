@@ -8,6 +8,7 @@ import {
     Link,
     Grid,
     Typography,
+    Container,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -57,7 +58,7 @@ const Login: React.FC = () => {
     } = useAuth();
 
     return (
-        <>
+        <Container>
             <CssBaseline />
             <div className={classes.root}>
                 <Typography
@@ -142,7 +143,7 @@ const Login: React.FC = () => {
                     </Button>
                 </form>
             </div>
-        </>
+        </Container>
     );
 };
 

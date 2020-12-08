@@ -6,6 +6,7 @@ import {
     TextField,
     Link,
     Typography,
+    Container,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
@@ -45,7 +46,7 @@ const Register: React.FC = () => {
     } = useAuth();
 
     return (
-        <>
+        <Container>
             <CssBaseline />
             <div className={classes.root}>
                 <Typography
@@ -107,7 +108,7 @@ const Register: React.FC = () => {
                     </Button>
                 </form>
             </div>
-        </>
+        </Container>
     );
 };
 

@@ -17,7 +17,7 @@ import { useAuth } from '../hooks'
 const PasswordReset: React.FC = () => {
     const { email, setEmail, resetPassword, resetSuccess, resetError } = useAuth()
     return (
-        <Container component='main' maxWidth='xs'>
+        <Container maxWidth='xs'>
             <CssBaseline />
             <div className='auth-form-container'>
                 <Typography component='h1' variant='h5'>
