@@ -1,10 +1,13 @@
 import React from 'react'
+import { Container, Typography } from '@material-ui/core';
 
 const Dashboard = () => {
     return (
-        <div>
-            Dashboard goes here!
-        </div>
+        <Container maxWidth='sm'>
+            <Typography variant='h2' component='h1'>
+                Dashboard goes here!                
+            </Typography>
+        </Container>
     )
 }
 
