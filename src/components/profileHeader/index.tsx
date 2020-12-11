@@ -26,10 +26,22 @@ import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import { ProfileAvatar } from '..';
 import { useStyles } from './styles';
 
-const ProfileHeader = () => {
-    const { auth, profile } = useSelector(
-        (state: RootStateOrAny) => state.firebase
-    );
+interface Props {
+    headerItems: {
+        displayName: string;
+        photoURL: string;
+        occupation: string;
+        location: {
+            state: string | null | undefined;
+            province: string | null | undefined;
+            country: string | null | undefined;
+        };
+        organization: string;
+        mentor: boolean;
+    }
+}
+
+const ProfileHeader = ({ headerItems }: Props) => {
     const classes = useStyles();
     const menuRef = useRef<HTMLButtonElement>(null);
     const [showMenu, setShowMenu] = useState(false);
@@ -44,7 +56,7 @@ const ProfileHeader = () => {
         setShowMenu(false);
     };
 
-    const { displayName, occupation, location, organization, mentor } = profile;
+    const { displayName, photoURL, occupation, location, organization, mentor } = headerItems;
 
     const cardActions = (
         <CardActions className={classes.cardActions}>
@@ -120,7 +132,7 @@ const ProfileHeader = () => {
             />
             {cardActions}
             <div className={classes.avatarContainer}>
-                <ProfileAvatar alt={displayName} src={auth.photoURL} />
+                <ProfileAvatar alt={displayName} src={photoURL} />
             </div>
             {cardContent}
         </Card>
