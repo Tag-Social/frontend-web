@@ -1,7 +1,15 @@
+export type Education = {
+    fieldOfStudy: string;
+    school: string;
+    degree: string;
+    endYear: number;
+    startYear: number;
+};
+
 export type UserProfile = {
     displayName?: string | null | undefined;
     email?: string | null | undefined;
-    photoURL?: string
+    photoURL?: string;
     mentor: boolean;
     displayEducation: boolean;
     displayLocation: boolean;
@@ -10,18 +18,18 @@ export type UserProfile = {
         followers: string[];
         following: string[];
         mentees: string[];
-        mentors: string[]
+        mentors: string[];
     };
     interests: string[];
     location: {
         postalCode: string;
         state: string;
         province: string;
-        country: string
+        country: string;
     };
-    education: object[];
+    education: Education[] | any;
     skills: string[];
-}
+};
 
 export const userProfile: UserProfile = {
     mentor: false,
