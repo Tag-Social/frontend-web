@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { RootStateOrAny, useSelector } from 'react-redux';
 import {
     Grid,
     Menu,

@@ -25,11 +25,22 @@ const ProfileInfo = ({ profile }: Props) => {
         <Card className={classes.infoCard}>
             <CardContent>
                 <Typography variant='h6' component='h3' className={classes.title}>
+                    About
+                </Typography>
+                <Typography variant='body1' component='h3'>
+                    <List>
+                        <ListItem>
+                            {profile.bio}
+                        </ListItem>
+                    </List>
+                </Typography>
+                <Divider className={classes.divider} />
+                <Typography variant='h6' component='h3' className={classes.title}>
                     Education
                 </Typography>
                 <List>
-                    {education && education.map((edu: Education) => (
-                        <ListItem>
+                    {education && education.map((edu: Education, index: number) => (
+                        <ListItem key={index}>
                             <ListItemText>
                                 <Typography variant='body1' component='h3' className={classes.title}>
                                     {edu.school}

@@ -10,6 +10,7 @@ export type UserProfile = {
     displayName?: string | null | undefined;
     email?: string | null | undefined;
     photoURL?: string;
+    bio: string;
     mentor: boolean;
     displayEducation: boolean;
     displayLocation: boolean;
@@ -32,6 +33,7 @@ export type UserProfile = {
 };
 
 export const userProfile: UserProfile = {
+    bio: '',
     mentor: false,
     displayEducation: false,
     displayLocation: false,
@@ -40,15 +42,15 @@ export const userProfile: UserProfile = {
         followers: [],
         following: [],
         mentees: [],
-        mentors: []
+        mentors: [],
     },
     interests: [],
     location: {
         postalCode: '',
         state: '',
         province: '',
-        country: ''
+        country: '',
     },
     education: [],
-    skills: []
-}
+    skills: [],
+};

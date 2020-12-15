@@ -16,6 +16,7 @@ export const useStyles = makeStyles((theme) => ({
         position: 'relative',
         bottom: '100px',
         maxHeight: '100px',
+        paddingLeft: '20px',
     },
     cardActions: {
         justifyContent: 'flex-end',
@@ -27,7 +28,7 @@ export const useStyles = makeStyles((theme) => ({
         marginRight: '6px',
         color: 'rgba(0, 0, 0, 0.55)',
     },
-    status:    {
+    status: {
         color: '#663695',
     },
 }));

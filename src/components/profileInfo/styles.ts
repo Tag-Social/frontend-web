@@ -5,6 +5,7 @@ export const useStyles = makeStyles((theme) => ({
         display: 'flex',
         overflow: 'auto',
         flexDirection: 'column',
+        padding: '10px',
     },
     title: {
         fontWeight: 600,
