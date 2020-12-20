@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import { RootStateOrAny, useSelector } from 'react-redux';
 import {
     Container,
@@ -7,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles'
 
-import { ProfileHeader, ProfileInfo } from '../components';
+import { PROFILE } from '../routes/routePaths';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -26,31 +27,23 @@ const useStyles = makeStyles((theme) => ({
 
 
 // TODO: Finish
-const Profile = () => {
+const EditProfile = () => {
     const { profile, auth } = useSelector((state: RootStateOrAny) => state.firebase)
     const classes = useStyles()
-    const headerItems = {
-        displayName: profile.displayName,
-        photoURL: auth.photoURL,
-        occupation: profile.occupation,
-        location: profile.location,
-        organization: profile.organization,
-        mentor: profile.mentor,
-        bio: profile.bio,
-    }
+
     return (
         <Container maxWidth='md' className={classes.container}>
             <CssBaseline />
             <Grid container spacing={2} >
                 <Grid item xs={12} sm={12} className={classes.gridItem}>
-                    <ProfileHeader headerItems={headerItems} />
+                    <Link to={`${PROFILE}/${auth.uid}`}>View Profile</Link>
                 </Grid>
                 <Grid item xs={12} sm={12} className={classes.gridItem}>
-                    <ProfileInfo profile={profile} />
+                    fields
                 </Grid>
             </Grid>
         </Container>
     );
 };
 
-export default Profile;
+export default EditProfile;

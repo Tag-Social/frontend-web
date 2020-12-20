@@ -15,7 +15,6 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { useAuth } from '../hooks';
-import image from '../images/asset1.svg';
 import googleIcon from '../images/googleIcon';
 import { PASSWORD_RESET } from './routePaths';
 
@@ -135,8 +134,8 @@ const Home: React.FC = () => {
                     </Grid>
                     <Grid item xs={12} sm={12} md={8}>
                         <img
-                            src={image}
-                            alt=''
+                            src='https://firebasestorage.googleapis.com/v0/b/tag-app-81b10.appspot.com/o/images%2Fassets%2Fwelcome.svg?alt=media&token=4827decd-0e49-4e30-9d3e-67e17f6586a5'
+                            alt='Welcome'
                             style={{ width: '100%', height: 'auto' }}
                         />
                     </Grid>

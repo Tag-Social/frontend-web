@@ -9,9 +9,10 @@ import { useImageUpload } from '../../hooks';
 type Props = {
     alt: string;
     src: string;
+    editable?: boolean;
 };
 
-const ProfileAvatar: React.FC<Props> = ({ alt, src }) => {
+const ProfileAvatar: React.FC<Props> = ({ alt, src, editable }) => {
     const classes = useStyles();
     const [avatar, setAvatar] = useState<string | ArrayBuffer>();
     const {
@@ -27,45 +28,48 @@ const ProfileAvatar: React.FC<Props> = ({ alt, src }) => {
     const badgeContent = previewImage ? (
         <FormControlLabel
             control={<></>}
-            label={<SaveIcon
-                onClick={() => saveImageToFirebase('avatar')}
-                color='primary'
-                className={classes.action} />}
+            label={
+                <SaveIcon
+                    onClick={() => saveImageToFirebase('avatar')}
+                    color='primary'
+                    className={classes.action}
+                />
+            }
             className={classes.label}
         />
     ) : (
-            <FormControlLabel
-                control={
-                    <input
-                        type='file'
-                        onChange={handleImageInput}
-                        className={classes.input}
-                        id='avatar'
-                        name='avatar'
-                    />
-                }
-                label={<EditIcon color='primary' className={classes.action} />}
-                className={classes.label}
-            />
-        )
-
-    return (
-        <>
-            <Badge
-                overlap="circle"
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                }}
-                badgeContent={badgeContent}
-            >
-                <Avatar
-                    alt={alt}
-                    src={avatar?.toString()}
-                    className={classes.avatar}
+        <FormControlLabel
+            control={
+                <input
+                    type='file'
+                    onChange={handleImageInput}
+                    className={classes.input}
+                    id='avatar'
+                    name='avatar'
                 />
-            </Badge>
-        </>
+            }
+            label={<EditIcon color='primary' className={classes.action} />}
+            className={classes.label}
+        />
+        );
+
+    return editable ? (
+        <Badge
+            overlap='circle'
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}
+            badgeContent={badgeContent}
+        >
+            <Avatar
+                alt={alt}
+                src={avatar?.toString()}
+                className={classes.avatar}
+            />
+        </Badge>
+    ) : (
+            <Avatar alt={alt} src={avatar?.toString()} className={classes.avatar} />
     );
 };
 

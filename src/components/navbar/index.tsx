@@ -15,7 +15,6 @@ import {
 } from '@material-ui/core';
 
 import { useStyles } from './styles';
-import logo from '../../images/Logo.svg';
 import { DASHBOARD, LOGIN, PROFILE, REGISTER } from '../../routes/routePaths';
 
 const Navbar = () => {
@@ -100,7 +99,7 @@ const Navbar = () => {
 
     const logoImg = (
         <img
-            src={logo}
+            src='https://firebasestorage.googleapis.com/v0/b/tag-app-81b10.appspot.com/o/images%2Fassets%2Flogo.svg?alt=media&token=16b8288b-042e-4e68-8dda-5de15c3c7d1f'
             style={{ width: '100px', height: 'auto', paddingTop: '12px' }}
             alt='Tag logo'
         />

@@ -7,13 +7,18 @@ export type Education = {
 };
 
 export type UserProfile = {
+    [key: string] : any;
     displayName?: string | null | undefined;
     email?: string | null | undefined;
+    gender: string | null | undefined;
+    pronouns: string | null | undefined;
+    ethnicity: string | null | undefined;
     photoURL?: string;
     bio: string;
     mentor: boolean;
     displayEducation: boolean;
     displayLocation: boolean;
+    disability: string | null | undefined;
     occupation: string;
     connections: {
         followers: string[];
@@ -22,6 +27,7 @@ export type UserProfile = {
         mentors: string[];
     };
     interests: string[];
+    hobbies: string[];
     location: {
         postalCode: string;
         state: string;
@@ -34,9 +40,13 @@ export type UserProfile = {
 
 export const userProfile: UserProfile = {
     bio: '',
+    gender: '',
+    ethnicity:  '',
     mentor: false,
     displayEducation: false,
     displayLocation: false,
+    disability: null,
+    pronouns: null,
     occupation: '',
     connections: {
         followers: [],
@@ -53,4 +63,19 @@ export const userProfile: UserProfile = {
     },
     education: [],
     skills: [],
+    hobbies: []
 };
+
+export const checkProfileCompletion = (profile: UserProfile) => {
+    let completedFields = 0
+
+    if(profile.bio !== '') completedFields+=1;
+    if(profile.occupation !== '') completedFields+=1;
+    if(profile.interests && profile.interests.length > 0) completedFields+=1;
+    if(profile.education && profile.education.length > 0)
+        completedFields += 1;
+    if(profile.skills && profile.skills.length > 0) completedFields+=1;
+    if (profile.hobbies && profile.hobbies.length > 0) completedFields += 1;
+
+    return {completedFields, fields: 6}
+}

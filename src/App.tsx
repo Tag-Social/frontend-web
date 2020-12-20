@@ -1,14 +1,15 @@
 import React  from 'react';
-import { BrowserRouter as Router, Switch } from "react-router-dom";
-import {Container} from '@material-ui/core'
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { Navbar, PrivateRoute, PublicRoute } from './components';
 import Home from './routes/Home'
 import Dashboard from './routes/Dashboard';
-import Profile from './routes/Profile';
+import UserProfile from './routes/UserProfile';
+import EditProfile from './routes/EditProfile';
 import Login from './routes/Login';
 import Register from './routes/Register';
 import PasswordReset from './routes/PasswordReset';
+import NotFound404 from './routes/NotFound404';
 import { HOME, LOGIN, REGISTER, DASHBOARD, PASSWORD_RESET, PROFILE } from './routes/routePaths'
 
 const App = () => (
@@ -31,9 +32,15 @@ const App = () => (
         <PrivateRoute exact path={DASHBOARD}>
           <Dashboard />
         </PrivateRoute>
-        <PrivateRoute path={PROFILE}>
-          <Profile />
+        <PrivateRoute exact path={PROFILE}>
+          <EditProfile />
         </PrivateRoute>
+        <Route path={`${PROFILE}/:profileId`}>
+          <UserProfile />
+        </Route>
+        <Route path='*'>
+          <NotFound404 />
+        </Route>
       </Switch>
     </main>
   </Router>
