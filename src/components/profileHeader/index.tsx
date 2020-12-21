@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { Link } from 'react-router-dom'
 import {
     Grid,
     Menu,
@@ -24,6 +25,7 @@ import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 
 import { ProfileAvatar } from '..';
 import { useStyles } from './styles';
+import { EDIT_PROFILE } from '../../routes/routePaths';
 
 interface Props {
     headerItems: {
@@ -75,7 +77,7 @@ const ProfileHeader = ({ headerItems }: Props) => {
                     </ListItemIcon>
                     <ListItemText primary='Share' />
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleClose} component={Link} to={EDIT_PROFILE}>
                     <ListItemIcon className={classes.listItemIcon}>
                         <EditIcon fontSize='small' />
                     </ListItemIcon>

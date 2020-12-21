@@ -12,14 +12,14 @@ import {
 } from '@material-ui/core';
 
 import { checkProfileCompletion } from '../../firebase/utils/userProfile';
-import { PROFILE } from '../../routes/routePaths';
+import { EDIT_PROFILE } from '../../routes/routePaths';
 
 const ProfileProgress = () => {
     const { profile } = useSelector((state: RootStateOrAny) => state.firebase);
     const { completedFields, fields } = checkProfileCompletion(profile);
     return (
         <Card>
-            <CardActionArea component={Link} to={PROFILE}>
+            <CardActionArea component={Link} to={EDIT_PROFILE}>
                 <CardContent>
                     <Grid container spacing={3}>
                         <Grid item>

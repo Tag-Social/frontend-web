@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 
-import { useAuth } from '../hooks'
+import { useAuth } from '../../hooks'
 
 // TODO: Refactor to get a password code to reset on page
 

@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 
 import { useStyles } from './styles';
-import { DASHBOARD, LOGIN, PROFILE, REGISTER } from '../../routes/routePaths';
+import { DASHBOARD, LOGIN, PROFILES, REGISTER } from '../../routes/routePaths';
 
 const Navbar = () => {
     const firebase = useFirebase();
@@ -70,7 +70,7 @@ const Navbar = () => {
                 >
                     <MenuItem
                         component={Link}
-                        to={PROFILE}
+                        to={`${PROFILES}/${auth.uid}`}
                         onClick={handleClose}
                     >
                         Profile

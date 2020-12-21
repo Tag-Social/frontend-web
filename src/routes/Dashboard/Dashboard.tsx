@@ -4,7 +4,7 @@ import {
     Typography,
     CssBaseline,
 } from '@material-ui/core';
-import { ProfileProgress } from '../components';
+import { ProfileProgress } from '../../components';
 
 
 

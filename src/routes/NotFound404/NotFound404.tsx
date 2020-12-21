@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, CssBaseline } from '@material-ui/core';
-import { Bug } from '../components'
+import { Bug } from '../../components'
 
 const NotFound404 = () => {
     return (

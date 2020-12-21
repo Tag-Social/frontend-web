@@ -14,9 +14,9 @@ import Alert from '@material-ui/lab/Alert';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import { makeStyles } from '@material-ui/core/styles';
 
-import GoogleIcon from '../icons/GoogleIcon'
-import { useAuth } from '../hooks';
-import { PASSWORD_RESET, REGISTER } from './routePaths';
+import GoogleIcon from '../../icons/GoogleIcon'
+import { useAuth } from '../../hooks';
+import { PASSWORD_RESET, REGISTER } from '../routePaths';
 
 const useStyles = makeStyles((theme) => ({
     root: {
