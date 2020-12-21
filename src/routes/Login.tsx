@@ -14,7 +14,7 @@ import Alert from '@material-ui/lab/Alert';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import { makeStyles } from '@material-ui/core/styles';
 
-import googleIcon from '../images/googleIcon'
+import GoogleIcon from '../icons/GoogleIcon'
 import { useAuth } from '../hooks';
 import { PASSWORD_RESET, REGISTER } from './routePaths';
 
@@ -129,7 +129,7 @@ const Login: React.FC = () => {
                         className={classes.button}
                         onClick={() => providerSignIn('google')}
                     >
-                        {googleIcon}
+                        {GoogleIcon}
                         Sign In with Google
                     </Button>
                     <Button
