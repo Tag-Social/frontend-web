@@ -9,28 +9,9 @@ import {
     Container,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import { makeStyles } from '@material-ui/core/styles';
 
 import { useAuth } from '../../hooks';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        margin: '0 auto',
-        maxWidth: '400px',
-    },
-    title: {
-        color: '#653695',
-    },
-    button: {
-        margin: theme.spacing(1, 0),
-        borderRadius: '50px',
-        padding: '0.75rem 0',
-        fontWeight: 600,
-    },
-}));
+import { useStyles } from './styles';
 
 const Register: React.FC = () => {
     const classes = useStyles();

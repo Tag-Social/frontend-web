@@ -12,38 +12,12 @@ import {
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import FacebookIcon from '@material-ui/icons/Facebook';
-import { makeStyles } from '@material-ui/core/styles';
 
+import { useStyles } from './styles';
 import GoogleIcon from '../../icons/GoogleIcon'
 import { useAuth } from '../../hooks';
 import { PASSWORD_RESET, REGISTER } from '../routePaths';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        margin: '0 auto',
-        maxWidth: '400px',
-    },
-    title: {
-        color: '#653695',
-    },
-    button: {
-        margin: theme.spacing(1, 0),
-        borderRadius: '50px',
-        padding: '0.75rem 0',
-        fontWeight: 600,
-    },
-    facebook: {
-        margin: theme.spacing(1, 0),
-        borderRadius: '50px',
-        padding: '0.75rem 0',
-        fontWeight: 600,
-        backgroundColor: '#3b5998',
-        color: '#ffffff',
-    },
-}));
 
 const Login: React.FC = () => {
     const classes = useStyles();

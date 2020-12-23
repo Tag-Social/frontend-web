@@ -11,15 +11,18 @@ import {
 import Alert from '@material-ui/lab/Alert';
 
 import { useAuth } from '../../hooks'
+import { useStyles } from './styles';
+
 
 // TODO: Refactor to get a password code to reset on page
 
 const PasswordReset: React.FC = () => {
     const { email, setEmail, resetPassword, resetSuccess, resetError } = useAuth()
+    const classes = useStyles()
     return (
         <Container maxWidth='xs'>
             <CssBaseline />
-            <div className='auth-form-container'>
+            <div className={classes.root}>
                 <Typography component='h1' variant='h5'>
                     Reset Password
                 </Typography>
@@ -50,6 +53,7 @@ const PasswordReset: React.FC = () => {
                             fullWidth
                             variant='contained'
                             color='primary'
+                            className={classes.button}
                         >
                             Reset
                         </Button>
