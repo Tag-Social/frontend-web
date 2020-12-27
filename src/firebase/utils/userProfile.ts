@@ -7,7 +7,7 @@ export type Education = {
 };
 
 export type UserProfile = {
-    [key: string] : any;
+    [key: string]: any;
     displayName?: string | null | undefined;
     email?: string | null | undefined;
     gender: string | null | undefined;
@@ -19,7 +19,8 @@ export type UserProfile = {
     displayEducation: boolean;
     displayLocation: boolean;
     disability: string | null | undefined;
-    occupation: string;
+    occupation: string | null | undefined;
+    organization: string | null | undefined;
     connections: {
         followers: string[];
         following: string[];
@@ -39,15 +40,18 @@ export type UserProfile = {
 };
 
 export const userProfile: UserProfile = {
+    displayName: '',
+    email: '',
     bio: '',
     gender: '',
-    ethnicity:  '',
+    ethnicity: '',
     mentor: false,
     displayEducation: false,
     displayLocation: false,
     disability: null,
-    pronouns: null,
+    pronouns: '',
     occupation: '',
+    organization: '',
     connections: {
         followers: [],
         following: [],
@@ -63,7 +67,7 @@ export const userProfile: UserProfile = {
     },
     education: [],
     skills: [],
-    hobbies: []
+    hobbies: [],
 };
 
 export const checkProfileCompletion = (profile: UserProfile) => {
