@@ -24,8 +24,15 @@ const UserProfile = () => {
         ({ firestore: { data } }: RootStateOrAny) =>
             data.users && data.users[profileId]
     );
+    const auth = useSelector(
+        ({ firebase }: RootStateOrAny) =>
+            firebase.auth
+    );
     const classes = useStyles();
-    let headerItems = profile && {
+    const owner = profileId === auth.uid;
+
+    let headerItems = profile && auth && {
+        owner,
         displayName: profile.displayName,
         photoURL: profile.photoURL,
         occupation: profile.occupation,
@@ -33,6 +40,7 @@ const UserProfile = () => {
         organization: profile.organization,
         mentor: profile.mentor,
         bio: profile.bio,
+        pronouns: profile.pronouns
     };
 
     if (profile) {
@@ -55,7 +63,7 @@ const UserProfile = () => {
                             <ProfileHeader headerItems={headerItems} />
                         </Grid>
                         <Grid item xs={12} sm={12} className={classes.gridItem}>
-                            <ProfileInfo profile={profile} />
+                                <ProfileInfo profile={profile} owner={owner} />
                         </Grid>
                         </>
                     ) : (

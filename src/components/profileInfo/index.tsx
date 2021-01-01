@@ -1,46 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     List,
     ListItem,
     ListItemText,
     Typography,
     Card,
+    CardActions,
     CardContent,
     Divider,
-    Chip
+    Chip,
+    IconButton
 } from '@material-ui/core';
+import Edit from '@material-ui/icons/Edit'
 
 import { useStyles } from './styles';
 import { UserProfile, Education } from '../../firebase/utils/userProfile';
+import EditEdu from './editEdu'
+import EditInterests from './editInterests'
+import EditSkills from './editSkills'
 
 interface Props {
     profile: UserProfile
+    owner: boolean
 }
 
 
-const ProfileInfo = ({ profile }: Props) => {
+const ProfileInfo = ({ profile, owner }: Props) => {
+    const [editEdu, setEditEdu] = useState(false)
+    const [editSkills, setEditSkills] = useState(false)
+    const [editInterests, setEditInterests] = useState(false)
     const classes = useStyles()
     const { education, interests, skills } = profile
     return (
         <Card className={classes.infoCard}>
             <CardContent>
-                <Typography variant='h6' component='h3' className={classes.title}>
-                    About
-                </Typography>
-                <Typography variant='body1' component='h3'>
-                    <List>
-                        <ListItem>
-                            {profile.bio}
-                        </ListItem>
-                    </List>
-                </Typography>
-                <Divider className={classes.divider} />
-                <Typography variant='h6' component='h3' className={classes.title}>
+                <CardActions className={classes.infoHeader}>
+                    <Typography variant='h6' component='h3' className={classes.title}>
                     Education
-                </Typography>
+                    </Typography>
+                    {owner && <IconButton aria-label="edit" className={classes.editButton} onClick={() => setEditEdu(true)}>
+                        <Edit color='primary' fontSize='small' />
+                    </IconButton>}
+                </CardActions>
                 <List>
                     {education && education.map((edu: Education, index: number) => (
-                        <ListItem key={index}>
+                        <ListItem key={`education-${index}`}>
                             <ListItemText>
                                 <Typography variant='body1' component='h3' className={classes.title}>
                                     {edu.school}
@@ -56,12 +60,18 @@ const ProfileInfo = ({ profile }: Props) => {
                     ))}
                 </List>
                 <Divider className={classes.divider} />
-                <Typography variant='h6' component='h3' className={classes.title}>
-                    Interests
-                </Typography>
+                <CardActions className={classes.infoHeader}>
+                    <Typography variant='h6' component='h3' className={classes.title}>
+                        Interests
+                    </Typography>
+                    {owner && <IconButton aria-label="edit" className={classes.editButton} onClick={() => setEditInterests(true)}>
+                        <Edit color='primary' fontSize='small' />
+                    </IconButton>}
+                </CardActions>
                 <List className={classes.chips}>
-                    {interests && interests.map((item) => (
+                    {interests && interests.map((item, index) => (
                         <Chip
+                            key={`interests-${index}`}
                             size="small"
                             label={item}
                             clickable
@@ -70,12 +80,18 @@ const ProfileInfo = ({ profile }: Props) => {
                     ))}
                 </List>
                 <Divider className={classes.divider} />
-                <Typography variant='h6' component='h3' className={classes.title}>
-                    Skills
-                </Typography>
+                <CardActions className={classes.infoHeader}>
+                    <Typography variant='h6' component='h3' className={classes.title}>
+                        Skills
+                    </Typography>
+                    {owner && <IconButton aria-label="edit" className={classes.editButton} onClick={() => setEditSkills(true)}>
+                        <Edit color='primary' fontSize='small' />
+                    </IconButton>}
+                </CardActions>
                 <List className={classes.chips}>
-                    {skills && skills.map((item) => (
+                    {skills && skills.map((item, index) => (
                         <Chip
+                            key={`skills-${index}`}
                             size="small"
                             label={item}
                             clickable
@@ -84,6 +100,9 @@ const ProfileInfo = ({ profile }: Props) => {
                     ))}
                 </List>
             </CardContent>
+            <EditEdu open={editEdu} setOpen={setEditEdu} />
+            <EditSkills open={editSkills} setOpen={setEditSkills} />
+            <EditInterests open={editInterests} setOpen={setEditInterests} />
         </Card>
     );
 }

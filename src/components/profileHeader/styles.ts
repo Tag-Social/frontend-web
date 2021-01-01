@@ -5,17 +5,15 @@ export const useStyles = makeStyles((theme) => ({
         display: 'flex',
         overflow: 'auto',
         flexDirection: 'column',
+        position: 'relative',
     },
     avatarContainer: {
-        position: 'relative',
-        bottom: '100px',
+        position: 'absolute',
+        top: '125px',
         left: '20px',
         width: 'fit-content',
     },
     info: {
-        position: 'relative',
-        bottom: '100px',
-        maxHeight: '100px',
         paddingLeft: '20px',
     },
     cardActions: {

@@ -7,8 +7,13 @@ export const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         padding: '10px',
     },
+    infoHeader: {
+        marginBottom: 0,
+        paddingBottom: 0,
+    },
     title: {
         fontWeight: 600,
+        lineHeight:  1,
     },
     divider: {
         marginBottom: '16px',
@@ -19,5 +24,8 @@ export const useStyles = makeStyles((theme) => ({
         '& > *': {
             margin: theme.spacing(0.5),
         },
+    },
+    editButton: {
+        marginLeft: 'auto !important',
     },
 }));

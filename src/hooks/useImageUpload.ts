@@ -43,6 +43,9 @@ const useImageUpload = () => {
                             firebase.updateAuth({
                                 photoURL: firebaseUrl
                             })
+                            firebase.updateProfile({
+                                photoURL: firebaseUrl,
+                            });
                             setPreviewImage('')
                         }
                     })
