@@ -13,9 +13,9 @@ type UserData = AuthTypes.User | undefined
 
 const profileFactory = (userData: UserData): UserProfile => {
     return {
+        ...userProfile,
         displayName: userData?.displayName,
         email: userData?.email,
-        ...userProfile
     }
 }
 
