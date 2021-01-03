@@ -52,9 +52,10 @@ const ProfileInfo = ({ profile, owner }: Props) => {
                                 <Typography variant='body1' component='p'>
                                     {edu.fieldOfStudy}
                                 </Typography>
-                                <Typography variant='caption' component='p'>
-                                    {edu.startYear} - {edu.endYear}
-                                </Typography>
+                                {edu.startYear && <Typography variant='caption' component='p'>
+                                    {edu.startYear}
+                                    {edu.endYear && '- ' + edu.endYear}
+                                </Typography>}
                             </ListItemText>
                         </ListItem>
                     ))}
