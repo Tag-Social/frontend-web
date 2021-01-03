@@ -29,4 +29,7 @@ export const useStyles = makeStyles((theme) => ({
     status: {
         color: '#663695',
     },
+    listItem: {
+        paddingLeft: 0,
+    },
 }));

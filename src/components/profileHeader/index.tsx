@@ -3,7 +3,6 @@ import {
     Grid,
     Menu,
     MenuItem,
-    List,
     ListItem,
     ListItemIcon,
     ListItemText,
@@ -132,13 +131,13 @@ const ProfileHeader = ({ headerItems }: Props) => {
             <Grid container>
                 {(bio || pronouns) && (
                     <Grid item xs={12} sm={12}>
-                        {pronouns && <Typography variant='body1'>{pronouns}</Typography>}
-                        {bio && <Typography variant='body1'>{bio}</Typography>}
+                        {pronouns && <Typography variant='body1' gutterBottom>{pronouns}</Typography>}
+                        {bio && <Typography variant='body1' gutterBottom>{bio}</Typography>}
                     </Grid>
                 )}
                 {occupation && (
                     <Grid item xs={12} sm={6}>
-                        <ListItem>
+                        <ListItem className={classes.listItem}>
                             <AssignmentIndIcon
                                 className={classes.profileItemIcon}
                             />
@@ -146,7 +145,7 @@ const ProfileHeader = ({ headerItems }: Props) => {
                                 {occupation}
                             </Typography>
                         </ListItem>
-                        <ListItem>
+                        <ListItem className={classes.listItem}>
                             <WorkIcon className={classes.profileItemIcon} />
                             <Typography variant='body1'>
                                 {organization && organization}
@@ -156,8 +155,7 @@ const ProfileHeader = ({ headerItems }: Props) => {
                 )}
                 {location && location.country && (
                     <Grid item xs={12} sm={6}>
-                        <List dense>
-                            <ListItem>
+                        <ListItem className={classes.listItem}>
                                 <LocationOnIcon
                                     className={classes.profileItemIcon}
                                 />
@@ -166,8 +164,7 @@ const ProfileHeader = ({ headerItems }: Props) => {
                                         location.province) + ','
                                         } ${location.country}`}
                                 </Typography>
-                            </ListItem>
-                        </List>
+                        </ListItem>
                     </Grid>
                 )}
             </Grid>
