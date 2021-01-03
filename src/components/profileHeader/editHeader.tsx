@@ -82,7 +82,6 @@ const EditHeader = ({ open, setOpen }: Props) => {
                     <Grid container spacing={3}>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                disabled
                                 label='Name'
                                 fullWidth
                                 value={profileData.displayName}
