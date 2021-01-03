@@ -17,7 +17,6 @@ import {
 } from '@material-ui/core';
 import { Add, Delete } from '@material-ui/icons';
 
-import { useStyles } from './styles'
 import { Education } from '../../firebase/utils/userProfile';
 
 type Props = {
@@ -29,9 +28,8 @@ const EditEdu = ({ open, setOpen }: Props) => {
     const firebase = useFirebase();
     const { profile } = useSelector((state: RootStateOrAny) => state.firebase);
     const theme = useTheme();
-    const classes = useStyles()
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-    const [eduData, setEduData] = useState<any[]>([]);
+    const [eduData, setEduData] = useState<Education[]>();
 
     useEffect(() => {
         setEduData(profile.education);
@@ -41,7 +39,7 @@ const EditEdu = ({ open, setOpen }: Props) => {
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
         index: number
     ) => {
-        setEduData([...eduData.map((edu: any, i: number) => {
+        if (eduData) setEduData([...eduData.map((edu: any, i: number) => {
             if (index === i) {
                 return {
                     ...edu,
@@ -66,7 +64,7 @@ const EditEdu = ({ open, setOpen }: Props) => {
     };
 
     const addEdu = () => {
-        setEduData([
+        if (eduData) setEduData([
             ...eduData,
             {
                 fieldOfStudy: '',
@@ -79,7 +77,7 @@ const EditEdu = ({ open, setOpen }: Props) => {
     }
 
     const deleteEdu = (index: number) => {
-        setEduData([...eduData.filter((edu: any, i: number) =>
+        if (eduData) setEduData([...eduData.filter((edu: any, i: number) =>
             index !== i
         )])
     }
