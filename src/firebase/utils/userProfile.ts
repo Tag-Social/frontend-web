@@ -1,9 +1,9 @@
 export type Education = {
     fieldOfStudy: string;
     school: string;
-    degree: string;
-    endYear: number;
-    startYear: number;
+    degree: string | undefined;
+    endYear: number | undefined;
+    startYear: number | undefined;
 };
 
 export type UserProfile = {
