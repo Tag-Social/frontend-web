@@ -162,8 +162,8 @@ const ProfileHeader = ({ headerItems }: Props) => {
                                     className={classes.profileItemIcon}
                                 />
                                 <Typography variant='body1'>
-                                    {`${location.state ||
-                                        location.province + ','
+                                    {`${(location.state ||
+                                        location.province) + ','
                                         } ${location.country}`}
                                 </Typography>
                             </ListItem>
