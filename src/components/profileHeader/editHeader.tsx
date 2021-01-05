@@ -203,6 +203,16 @@ const EditHeader = ({ open, setOpen }: Props) => {
                                 fullWidth
                             />
                         </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                type='number'
+                                name='postalCode'
+                                label='Postal Code'
+                                onChange={changeLocation}
+                                value={profileData.location?.postalCode}
+                                fullWidth
+                            />
+                        </Grid>
                     </Grid>
                 </DialogContentText>
             </DialogContent>
