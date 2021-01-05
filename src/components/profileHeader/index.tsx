@@ -12,16 +12,19 @@ import {
     CardContent,
     CardMedia,
     IconButton,
+    Button
 } from '@material-ui/core';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import ShareIcon from '@material-ui/icons/Share';
-import EditIcon from '@material-ui/icons/Edit';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import WorkIcon from '@material-ui/icons/Work';
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import {
+    Edit,
+    MoreHoriz,
+    Share,
+    LocationOn,
+    Work,
+    AssignmentInd,
+    LocalOffer,
+} from '@material-ui/icons';
 
-import { ProfileAvatar } from '..';
+import { ProfileAvatar, ShareDialog } from '..';
 import EditHeader from './editHeader'
 import { useStyles } from './styles';
 
@@ -47,9 +50,10 @@ const ProfileHeader = ({ headerItems }: Props) => {
     const classes = useStyles();
     const menuRef = useRef<HTMLButtonElement>(null);
     const [showMenu, setShowMenu] = useState(false);
+    const [showShareDialog, setShowShareDialog] = useState(false);
     const [editInfo, setEditInfo] = useState(false);
 
-    const handleClick = (
+    const handleMenuClick = (
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
         setShowMenu(true);
@@ -69,8 +73,7 @@ const ProfileHeader = ({ headerItems }: Props) => {
             })
                 .catch((error) => console.log('Error sharing', error));
         } else {
-            //TODO : Add fallback for unsupported browsers
-
+            setShowShareDialog(true)
         }
 
     }
@@ -89,8 +92,8 @@ const ProfileHeader = ({ headerItems }: Props) => {
 
     const cardActions = (
         <CardActions className={classes.cardActions}>
-            <IconButton ref={menuRef} onClick={(e) => handleClick(e)}>
-                <MoreHorizIcon color='primary' fontSize='large' />
+            <IconButton ref={menuRef} onClick={(e) => handleMenuClick(e)}>
+                <MoreHoriz color='primary' fontSize='large' />
             </IconButton>
             <Menu
                 id='simple-menu'
@@ -101,7 +104,7 @@ const ProfileHeader = ({ headerItems }: Props) => {
             >
                 <MenuItem onClick={handleShare}>
                     <ListItemIcon className={classes.listItemIcon}>
-                        <ShareIcon fontSize='small' />
+                        <Share fontSize='small' />
                     </ListItemIcon>
                     <ListItemText primary='Share' />
                 </MenuItem>
@@ -113,7 +116,7 @@ const ProfileHeader = ({ headerItems }: Props) => {
                         }}
                     >
                         <ListItemIcon className={classes.listItemIcon}>
-                            <EditIcon fontSize='small' />
+                            <Edit fontSize='small' />
                         </ListItemIcon>
                         <ListItemText primary='Edit' />
                     </MenuItem>
@@ -124,46 +127,62 @@ const ProfileHeader = ({ headerItems }: Props) => {
 
     const cardContent = (
         <CardContent className={classes.info}>
-            <Typography variant='h4' component='h2'>
+            <Typography gutterBottom variant='h4' component='h2'>
                 {displayName && displayName}{' '}
-                {mentor && <LocalOfferIcon className={classes.status} />}
+                {mentor && <LocalOffer className={classes.status} />}
             </Typography>
             <Grid container>
+                {owner && (!bio && !organization && !occupation && !location.country) && (
+                    <Button
+                        variant='contained'
+                        color='primary'
+                        onClick={() => setEditInfo(true)}
+
+                    >
+                        <Edit style={{ marginRight: 6 }} /> Edit Profile
+                    </Button>
+                )}
                 {(bio || pronouns) && (
                     <Grid item xs={12} sm={12}>
-                        {pronouns && <Typography variant='body1' gutterBottom>{pronouns}</Typography>}
-                        {bio && <Typography variant='body1' gutterBottom>{bio}</Typography>}
+                        {pronouns && (
+                            <Typography variant='body1' gutterBottom>
+                                {pronouns}
+                            </Typography>
+                        )}
+                        {bio && (
+                            <Typography variant='body1' gutterBottom>
+                                {bio}
+                            </Typography>
+                        )}
                     </Grid>
                 )}
-                {occupation && (
+                {(occupation || organization) && (
                     <Grid item xs={12} sm={6}>
-                        <ListItem className={classes.listItem}>
-                            <AssignmentIndIcon
+                        {occupation && <ListItem className={classes.listItem}>
+                            <AssignmentInd
                                 className={classes.profileItemIcon}
                             />
                             <Typography variant='body1'>
                                 {occupation}
                             </Typography>
-                        </ListItem>
-                        <ListItem className={classes.listItem}>
-                            <WorkIcon className={classes.profileItemIcon} />
+                        </ListItem>}
+                        {organization && <ListItem className={classes.listItem}>
+                            <Work className={classes.profileItemIcon} />
                             <Typography variant='body1'>
-                                {organization && organization}
+                                {organization}
                             </Typography>
-                        </ListItem>
+                        </ListItem>}
                     </Grid>
                 )}
                 {location && location.country && (
                     <Grid item xs={12} sm={6}>
                         <ListItem className={classes.listItem}>
-                                <LocationOnIcon
-                                    className={classes.profileItemIcon}
-                                />
-                                <Typography variant='body1'>
-                                    {`${(location.state ||
-                                        location.province) + ','
-                                        } ${location.country}`}
-                                </Typography>
+                            <LocationOn
+                                className={classes.profileItemIcon}
+                            />
+                            <Typography variant='body1'>
+                                {`${(location.state || location.province)}${(location.state || location.province) && ','} ${location.country}`}
+                            </Typography>
                         </ListItem>
                     </Grid>
                 )}
@@ -190,6 +209,7 @@ const ProfileHeader = ({ headerItems }: Props) => {
             </div>
             {cardContent}
             <EditHeader open={editInfo} setOpen={setEditInfo} />
+            <ShareDialog open={showShareDialog} setOpen={setShowShareDialog} url={document.location.href} />
         </Card>
     );
 };
