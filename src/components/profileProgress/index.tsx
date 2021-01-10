@@ -11,18 +11,20 @@ import {
     Grid,
 } from '@material-ui/core';
 
+import { useStyles } from './styles'
 import { checkProfileCompletion } from '../../firebase/utils/userProfile';
 import { PROFILES } from '../../routes/routePaths';
 
 const ProfileProgress = () => {
+    const classes = useStyles()
     const { profile, auth } = useSelector((state: RootStateOrAny) => state.firebase);
     const { completedFields, fields } = checkProfileCompletion(profile);
     return (
-        <Card>
+        <Card className={classes.card}>
             <CardActionArea component={Link} to={`${PROFILES}/${auth.uid}`}>
                 <CardContent>
-                    <Grid container spacing={3}>
-                        <Grid item>
+                    <Grid container spacing={1}>
+                        <Grid item xs={10}>
                             <Typography
                                 variant='h5'
                                 style={{ color: '#663695' }}
@@ -32,17 +34,13 @@ const ProfileProgress = () => {
                             <Typography variant='subtitle1'>
                                 A complete profile helps find your perfect
                                 mentor.
-                                    </Typography>
-                            <Typography variant='body1'>
-                                Your will recieve 5 tags when you complete
-                                your profile!
-                                    </Typography>
+                            </Typography>
                         </Grid>
-                        <Grid item>
+                        <Grid item xs={2}>
                             <Box position='relative' display='inline-flex'>
                                 <CircularProgress
                                     variant='determinate'
-                                    size={80}
+                                    size={50}
                                     value={(completedFields * 100) / fields}
                                     style={{ color: '#663695' }}
                                 />
@@ -57,7 +55,7 @@ const ProfileProgress = () => {
                                     justifyContent='center'
                                 >
                                     <Typography
-                                        variant='h5'
+                                        variant='body1'
                                         component='div'
                                         color='textSecondary'
                                     >{`${Math.round(
