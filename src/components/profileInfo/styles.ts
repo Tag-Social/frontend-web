@@ -12,8 +12,12 @@ export const useStyles = makeStyles((theme) => ({
         paddingBottom: 0,
     },
     title: {
+        fontWeight: 500,
+        lineHeight: 1,
+    },
+    itemTitle: {
         fontWeight: 600,
-        lineHeight:  1,
+        lineHeight: 1,
     },
     divider: {
         marginBottom: '16px',

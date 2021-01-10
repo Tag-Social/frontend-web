@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 
@@ -23,17 +23,22 @@ type Props = {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
-//TODO : Finish
+
 const EditEdu = ({ open, setOpen }: Props) => {
     const firebase = useFirebase();
     const { profile } = useSelector((state: RootStateOrAny) => state.firebase);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const [eduData, setEduData] = useState<Education[]>();
+    const endOfPage = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         setEduData(profile.education);
     }, [profile]);
+    useEffect(() => {
+        if (endOfPage && endOfPage.current)
+            endOfPage.current.scrollIntoView({ behavior: 'smooth' })
+    }, [eduData]);
 
     const onChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -169,6 +174,7 @@ const EditEdu = ({ open, setOpen }: Props) => {
                     </Grid>
                     {eduView}
                 </Grid>
+                <div ref={endOfPage}></div>
             </DialogContent>
             <DialogActions>
                 <Button autoFocus onClick={handleClose} color='primary'>

@@ -5,6 +5,16 @@ export type Education = {
     endYear: number | undefined;
     startYear: number | undefined;
 };
+export type Experience = {
+    title: string;
+    employmentType: string;
+    organization: string;
+    location: string;
+    description: string;
+    current: boolean;
+    startDate: string | undefined;
+    endDate: string | undefined;
+};
 
 export type UserProfile = {
     [key: string]: any;
@@ -35,7 +45,8 @@ export type UserProfile = {
         province: string;
         country: string;
     };
-    education: Education[] | any;
+    education: Education[];
+    experience: Experience[];
     skills: string[];
 };
 
@@ -66,6 +77,7 @@ export const userProfile: UserProfile = {
         country: '',
     },
     education: [],
+    experience: [],
     skills: [],
     hobbies: [],
 };
@@ -78,8 +90,10 @@ export const checkProfileCompletion = (profile: UserProfile) => {
     if(profile.interests && profile.interests.length > 0) completedFields+=1;
     if(profile.education && profile.education.length > 0)
         completedFields += 1;
+    if (profile.experience && profile.experience.length > 0)
+        completedFields += 1;
     if(profile.skills && profile.skills.length > 0) completedFields+=1;
     if (profile.hobbies && profile.hobbies.length > 0) completedFields += 1;
 
-    return {completedFields, fields: 6}
+    return { completedFields, fields: 7 };
 }
