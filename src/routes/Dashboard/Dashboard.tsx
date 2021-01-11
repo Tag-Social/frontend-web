@@ -1,22 +1,21 @@
 import React from 'react';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import {
     Container,
-    Typography,
     CssBaseline,
 } from '@material-ui/core';
-import { ProfileProgress } from '../../components';
-
-
-
+import { ProfileProgress, RecommendedMentors } from '../../components';
 
 const Dashboard = () => {
+    const profile = useSelector(
+        ({ firebase }: RootStateOrAny) =>
+            firebase.profile
+    );
     return (
-        <Container maxWidth='sm'>
+        <Container maxWidth='md'>
             <CssBaseline />
             <ProfileProgress />
-            <Typography variant='h2' component='h1'>
-                Dashboard goes here!
-            </Typography>
+            <RecommendedMentors profile={profile} />
         </Container>
     );
 };
