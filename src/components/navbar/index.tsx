@@ -12,11 +12,14 @@ import {
     MenuItem,
     Avatar,
     Container,
+    InputBase,
 } from '@material-ui/core';
+import { Search } from '@material-ui/icons'
 
 import { useStyles } from './styles';
 import { DASHBOARD, LOGIN, PROFILES, REGISTER } from '../../routes/routePaths';
 
+// TODO : Finish search functionality
 const Navbar = () => {
     const firebase = useFirebase();
     const auth = useSelector((state: RootStateOrAny) => state.firebase.auth);
@@ -40,45 +43,60 @@ const Navbar = () => {
     };
 
     const userNav = (
-        <div>
-            <IconButton
-                aria-label='account of current user'
-                aria-controls='menu-appbar'
-                aria-haspopup='true'
-                onClick={handleMenu}
-                color='inherit'
-            >
-                <Avatar
-                    alt={auth.displayName || undefined}
-                    src={auth.photoURL || undefined}
+        <>
+            <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                    <Search />
+                </div>
+                <InputBase
+                    placeholder="Search…"
+                    classes={{
+                        root: classes.inputRoot,
+                        input: classes.inputInput,
+                    }}
+                    inputProps={{ 'aria-label': 'search' }}
                 />
-            </IconButton>
-            {auth && (
-                <Menu
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
-                    open={open}
-                    onClose={handleClose}
+            </div>
+            <div>
+                <IconButton
+                    aria-label='account of current user'
+                    aria-controls='menu-appbar'
+                    aria-haspopup='true'
+                    onClick={handleMenu}
+                    color='inherit'
                 >
-                    <MenuItem
-                        component={Link}
-                        to={`${PROFILES}/${auth.uid}`}
-                        onClick={handleClose}
+                    <Avatar
+                        alt={auth.displayName || undefined}
+                        src={auth.photoURL || undefined}
+                    />
+                </IconButton>
+                {auth && (
+                    <Menu
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        open={open}
+                        onClose={handleClose}
                     >
-                        Profile
+                        <MenuItem
+                            component={Link}
+                            to={`${PROFILES}/${auth.uid}`}
+                            onClick={handleClose}
+                        >
+                            Profile
                     </MenuItem>
-                    <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
-                </Menu>
-            )}
-        </div>
+                        <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
+                    </Menu>
+                )}
+            </div>
+        </>
     );
 
     const guestNav = (
@@ -100,7 +118,7 @@ const Navbar = () => {
     const logoImg = (
         <img
             src='https://firebasestorage.googleapis.com/v0/b/tag-app-81b10.appspot.com/o/images%2Fassets%2Flogo.svg?alt=media&token=16b8288b-042e-4e68-8dda-5de15c3c7d1f'
-            style={{ width: '100px', height: 'auto', paddingTop: '12px' }}
+            className={classes.logo}
             alt='Tag logo'
         />
     );
@@ -112,7 +130,7 @@ const Navbar = () => {
                 color='transparent'
                 className={classes.nav}
             >
-                <Container maxWidth='lg'>
+                <Container maxWidth='lg' className={classes.container}>
                     <Toolbar>
                         <Typography variant='h5' className={classes.title}>
                             <Link to={DASHBOARD}>{logoImg}</Link>
