@@ -11,25 +11,23 @@ import {
     CardActions,
     Button,
     Avatar,
-    Paper
 } from '@material-ui/core';
+import { PersonAdd } from '@material-ui/icons'
 
 import { useStyles } from './styles';
 import { UserProfile } from '../../firebase/utils/userProfile';
 import { PROFILES } from '../../routes/routePaths'
 
-interface Props {
-    profile: UserProfile
-}
 
 interface Mentor extends UserProfile {
     id: string
 }
-// TODO : Add action buttons
-const RecommendedMentors = ({ profile }: Props) => {
+// TODO : Add actions to connection buttons and add interests
+const RecommendedMentors = ({ profile, auth }: any) => {
     const interests = (profile.interests && profile.interests.length > 0) ? profile.interests : ['none']
     useFirestoreConnect(() => [{
-        collection: 'users'
+        collection: 'users',
+        where: [['__name__', '!=', auth.uid]]
     }]);
     const mentorsData = useSelector(
         ({ firestore: { data } }: RootStateOrAny) =>
@@ -45,8 +43,8 @@ const RecommendedMentors = ({ profile }: Props) => {
 
     const classes = useStyles();
     return (
-        <Paper elevation={0} className={classes.container}>
-            <Typography variant='h5' component='h1' gutterBottom color='primary'>
+        <div>
+            <Typography variant='h6' component='h1' gutterBottom color='primary'>
                 Recommened Mentors
             </Typography>
             <div className={classes.gridList}>
@@ -72,8 +70,7 @@ const RecommendedMentors = ({ profile }: Props) => {
                             />
                             <CardContent>
                                 <Typography
-                                    gutterBottom
-                                    variant='h5'
+                                    variant='h6'
                                     component='h2'
                                 >
                                     {mentor.displayName}
@@ -94,10 +91,17 @@ const RecommendedMentors = ({ profile }: Props) => {
                                 </Typography>
                             </CardContent>
                         </CardActionArea>
+                        <CardActions>
+                            <PersonAdd fontSize='small' color='primary' />
+                            <Button variant='contained' color='primary' disableElevation>
+                                Connect
+                            </Button>
+                            <Button variant='outlined'>Follow</Button>
+                        </CardActions>
                     </Card>
                 ))}
             </div>
-        </Paper>
+        </div>
     );
 }
 

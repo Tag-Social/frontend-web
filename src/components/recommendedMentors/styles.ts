@@ -1,11 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
-    container: {
-        marginTop: '22px',
-        padding: '16px',
-    },
     gridList: {
+        maxWidth: '100vw',
         marginBottom: '10px',
         paddingBottom: '6px',
         display: 'grid',
