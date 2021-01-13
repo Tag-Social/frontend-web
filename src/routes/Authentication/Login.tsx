@@ -100,10 +100,12 @@ const Login: React.FC = () => {
                         fullWidth
                         variant='contained'
                         color='secondary'
-                        className={classes.button}
+                        className={classes.google}
                         onClick={() => providerSignIn('google')}
                     >
-                        {GoogleIcon}
+                        <i className={classes.icon}>
+                            {GoogleIcon}
+                        </i>
                         Sign In with Google
                     </Button>
                     <Button
@@ -112,7 +114,7 @@ const Login: React.FC = () => {
                         className={classes.facebook}
                         onClick={() => providerSignIn('facebook')}
                     >
-                        <FacebookIcon className='button-icon' />
+                        <FacebookIcon className={classes.icon} />
                         Sign In with Facebook
                     </Button>
                 </form>

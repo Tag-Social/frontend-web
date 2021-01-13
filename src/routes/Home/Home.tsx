@@ -95,9 +95,9 @@ const Home: React.FC = () => {
                                 variant='contained'
                                 color='secondary'
                                 onClick={() => providerSignIn('google')}
-                                className={classes.button}
+                                className={classes.google}
                             >
-                                {GoogleIcon}
+                                <i className={classes.icon}>{GoogleIcon}</i>
                                 Sign In with Google
                             </Button>
                             <Button
@@ -106,7 +106,7 @@ const Home: React.FC = () => {
                                 className={classes.facebook}
                                 onClick={() => providerSignIn('facebook')}
                             >
-                                <FacebookIcon />
+                                <FacebookIcon className={classes.icon} />
                                 Sign In with Facebook
                             </Button>
                         </form>
