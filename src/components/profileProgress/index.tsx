@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { RootStateOrAny, useSelector } from 'react-redux';
 import {
     Typography,
     Card,
@@ -15,23 +14,22 @@ import { useStyles } from './styles'
 import { checkProfileCompletion } from '../../firebase/utils/userProfile';
 import { PROFILES } from '../../routes/routePaths';
 
-const ProfileProgress = () => {
+const ProfileProgress = ({ profile, auth }: any) => {
     const classes = useStyles()
-    const { profile, auth } = useSelector((state: RootStateOrAny) => state.firebase);
     const { completedFields, fields } = checkProfileCompletion(profile);
     return (
         <Card className={classes.card}>
             <CardActionArea component={Link} to={`${PROFILES}/${auth.uid}`}>
                 <CardContent>
-                    <Grid container spacing={1}>
+                    <Grid container >
                         <Grid item xs={10}>
                             <Typography
-                                variant='h5'
+                                variant='body2'
                                 style={{ color: '#663695' }}
                             >
                                 Complete Your Profile
                                     </Typography>
-                            <Typography variant='subtitle1'>
+                            <Typography variant='caption' className={classes.caption}>
                                 A complete profile helps find your perfect
                                 mentor.
                             </Typography>
@@ -40,7 +38,7 @@ const ProfileProgress = () => {
                             <Box position='relative' display='inline-flex'>
                                 <CircularProgress
                                     variant='determinate'
-                                    size={50}
+                                    size={45}
                                     value={(completedFields * 100) / fields}
                                     style={{ color: '#663695' }}
                                 />
@@ -55,7 +53,7 @@ const ProfileProgress = () => {
                                     justifyContent='center'
                                 >
                                     <Typography
-                                        variant='body1'
+                                        variant='body2'
                                         component='div'
                                         color='textSecondary'
                                     >{`${Math.round(
