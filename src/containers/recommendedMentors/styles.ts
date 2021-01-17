@@ -4,7 +4,7 @@ export const useStyles = makeStyles((theme) => ({
     gridList: {
         maxWidth: '100vw',
         marginBottom: '10px',
-        paddingBottom: '6px',
+        padding: '6px',
         display: 'grid',
         gap: '10px',
         gridTemplateRows: 'minmax(150px, 1fr)',
@@ -14,12 +14,8 @@ export const useStyles = makeStyles((theme) => ({
         scrollSnapType: 'x proximity',
         scrollbarWidth: 'none',
         margin: 0,
-        '&::webkit-scrollbar': {
+        '&:webkit-scrollbar': {
             display: 'none',
-        },
-        '&:before,&:after': {
-            content: '',
-            width: '10px',
         },
     },
     userCard: {

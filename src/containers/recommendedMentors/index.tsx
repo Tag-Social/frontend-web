@@ -43,7 +43,7 @@ const RecommendedMentors = ({ profile, auth }: any) => {
 
     const classes = useStyles();
     return (
-        <div>
+        <>
             <Typography variant='h6' component='h1' gutterBottom color='primary'>
                 Recommened Mentors
             </Typography>
@@ -101,7 +101,7 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                     </Card>
                 ))}
             </div>
-        </div>
+        </>
     );
 }
 
