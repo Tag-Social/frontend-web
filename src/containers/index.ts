@@ -8,4 +8,5 @@ export { default as ProfileInfo } from './profileInfo';
 export { default as ProfileProgress } from './profileProgress';
 export { default as ShareDialog } from './shareDialog';
 export { default as RecommendedMentors } from './recommendedMentors';
+export { default as UserSearchBar } from './userSearchBar';
 export { default as Bug } from './bug';

@@ -12,11 +12,10 @@ import {
     MenuItem,
     Avatar,
     Container,
-    InputBase,
 } from '@material-ui/core';
-import { Search } from '@material-ui/icons'
 
 import { useStyles } from './styles';
+import { UserSearchBar } from '..'
 import { DASHBOARD, LOGIN, PROFILES, REGISTER } from '../../routes/routePaths';
 
 // TODO : Finish search functionality
@@ -44,19 +43,7 @@ const Navbar = () => {
 
     const userNav = (
         <>
-            <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                    <Search />
-                </div>
-                <InputBase
-                    placeholder="Search…"
-                    classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput,
-                    }}
-                    inputProps={{ 'aria-label': 'search' }}
-                />
-            </div>
+            <UserSearchBar />
             <div>
                 <IconButton
                     aria-label='account of current user'
