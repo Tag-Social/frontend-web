@@ -28,9 +28,7 @@ const Dashboard = () => {
                         <ProfileCard profile={profile} auth={auth} />
                     </Grid>
                     <Grid item md={9} xs={12}>
-                        <Paper elevation={0} className={classes.main}>
-                            <RecommendedMentors profile={profile} auth={auth} />
-                        </Paper>
+                        <RecommendedMentors profile={profile} auth={auth} />
                     </Grid>
                 </Grid>
             </Grid>
