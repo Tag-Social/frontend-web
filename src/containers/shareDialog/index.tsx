@@ -4,7 +4,6 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogContentText,
     DialogTitle,
     Button,
     IconButton,
@@ -12,7 +11,7 @@ import {
 } from '@material-ui/core';
 import { FileCopy, Facebook, Twitter, LinkedIn } from '@material-ui/icons';
 
-import { useStyles } from './styles'
+import { useStyles } from './styles';
 
 type Props = {
     open: boolean;
@@ -21,7 +20,7 @@ type Props = {
 };
 
 const ShareDialog = ({ open, setOpen, url }: Props) => {
-    const classes = useStyles()
+    const classes = useStyles();
     const copyLink = () => {
         navigator.clipboard.writeText(url);
     };
@@ -36,45 +35,52 @@ const ShareDialog = ({ open, setOpen, url }: Props) => {
                 {'Share this profile!'}
             </DialogTitle>
             <DialogContent>
-                <DialogContentText>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} className={classes.socialLinks}>
-                            <IconButton
-                                href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}
-                                target='_blank'
-                            >
-                                <Facebook fontSize='large' className={classes.faceBook} />
-                            </IconButton>
-                            <IconButton
-                                href={`https://twitter.com/intent/tweet?url=${url}`}
-                                target='_blank'
-                            >
-                                <Twitter fontSize='large' className={classes.twitter} />
-                            </IconButton>
-                            <IconButton
-                                href={`https://www.linkedin.com/shareArticle?mini=true&url=${url}`}
-                                target='_blank'
-                            >
-                                <LinkedIn fontSize='large' className={classes.linkedIn} />
-                            </IconButton>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                id='input-with-icon-textfield'
-                                label='Copy Link'
-                                fullWidth
-                                value={url}
-                                InputProps={{
-                                    startAdornment: (
-                                        <IconButton onClick={copyLink}>
-                                            <FileCopy color='primary' />
-                                        </IconButton>
-                                    ),
-                                }}
+                <Grid container spacing={3}>
+                    <Grid item xs={12} className={classes.socialLinks}>
+                        <IconButton
+                            href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}
+                            target='_blank'
+                        >
+                            <Facebook
+                                fontSize='large'
+                                className={classes.faceBook}
                             />
-                        </Grid>
+                        </IconButton>
+                        <IconButton
+                            href={`https://twitter.com/intent/tweet?url=${url}`}
+                            target='_blank'
+                        >
+                            <Twitter
+                                fontSize='large'
+                                className={classes.twitter}
+                            />
+                        </IconButton>
+                        <IconButton
+                            href={`https://www.linkedin.com/shareArticle?mini=true&url=${url}`}
+                            target='_blank'
+                        >
+                            <LinkedIn
+                                fontSize='large'
+                                className={classes.linkedIn}
+                            />
+                        </IconButton>
                     </Grid>
-                </DialogContentText>
+                    <Grid item xs={12}>
+                        <TextField
+                            id='input-with-icon-textfield'
+                            label='Copy Link'
+                            fullWidth
+                            value={url}
+                            InputProps={{
+                                startAdornment: (
+                                    <IconButton onClick={copyLink}>
+                                        <FileCopy color='primary' />
+                                    </IconButton>
+                                ),
+                            }}
+                        />
+                    </Grid>
+                </Grid>
             </DialogContent>
             <DialogActions>
                 <Button
