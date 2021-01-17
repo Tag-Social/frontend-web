@@ -100,7 +100,7 @@ const Navbar = () => {
     );
 
     const guestNav = (
-        <div>
+        <>
             <Button component={Link} to={LOGIN}>
                 Login
             </Button>
@@ -112,7 +112,7 @@ const Navbar = () => {
             >
                 Sign Up
             </Button>
-        </div>
+        </>
     );
 
     const logoImg = (
@@ -127,7 +127,6 @@ const Navbar = () => {
         <div className={classes.root}>
             <AppBar
                 position='fixed'
-                color='transparent'
                 className={classes.nav}
             >
                 <Container maxWidth='lg' className={classes.container}>
