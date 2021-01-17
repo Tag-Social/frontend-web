@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ThemeProvider } from '@material-ui/core'
 
 import { theme } from './materialUI/theme'
-import { Navbar, PrivateRoute, PublicRoute } from './components';
+import { Navbar, PrivateRoute, PublicRoute } from './containers';
 import {
   Home,
   Dashboard,

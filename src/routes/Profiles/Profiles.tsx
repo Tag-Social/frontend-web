@@ -10,7 +10,7 @@ import {
 import Skeleton from '@material-ui/lab/Skeleton';
 
 import { useStyles } from './styles';
-import { ProfileHeader, ProfileInfo, Bug } from '../../components';
+import { ProfileHeader, ProfileInfo, Bug } from '../../containers';
 
 type Params = {
     profileId: string;

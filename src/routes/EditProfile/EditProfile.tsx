@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase'
-
 import {
     Container,
     CssBaseline,
@@ -17,9 +16,7 @@ import {
 } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import MuiAlert from '@material-ui/lab/Alert';
-
 import SaveIcon from '@material-ui/icons/Save';
-
 
 import { PROFILES } from '../routePaths';
 import { userProfile, UserProfile } from '../../firebase/utils/userProfile';

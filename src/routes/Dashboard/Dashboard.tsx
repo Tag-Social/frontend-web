@@ -6,7 +6,7 @@ import {
     Grid,
     Paper
 } from '@material-ui/core';
-import { RecommendedMentors, ProfileCard } from '../../components';
+import { RecommendedMentors, ProfileCard } from '../../containers';
 import { useStyles } from './styles';
 
 const Dashboard = () => {
