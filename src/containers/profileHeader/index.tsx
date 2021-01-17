@@ -12,7 +12,8 @@ import {
     CardContent,
     CardMedia,
     IconButton,
-    Button
+    Button,
+    Link
 } from '@material-ui/core';
 import {
     Edit,
@@ -22,31 +23,23 @@ import {
     Work,
     AssignmentInd,
     LocalOffer,
+    LinkedIn,
+    Facebook,
+    Twitter,
+    Instagram
 } from '@material-ui/icons';
 
 import { ProfileAvatar, ShareDialog } from '..';
 import EditHeader from './editHeader'
 import { useStyles } from './styles';
+import { UserProfile } from '../../firebase/utils/userProfile';
 
 interface Props {
-    headerItems: {
-        owner: boolean;
-        displayName: string;
-        photoURL: string;
-        occupation: string;
-        bio: string;
-        pronouns: string;
-        location: {
-            state: string | null | undefined;
-            province: string | null | undefined;
-            country: string | null | undefined;
-        };
-        organization: string;
-        mentor: boolean;
-    };
+    profile: UserProfile;
+    owner: boolean;
 }
 
-const ProfileHeader = ({ headerItems }: Props) => {
+const ProfileHeader = ({ profile, owner }: Props) => {
     const classes = useStyles();
     const menuRef = useRef<HTMLButtonElement>(null);
     const [showMenu, setShowMenu] = useState(false);
@@ -75,11 +68,9 @@ const ProfileHeader = ({ headerItems }: Props) => {
         } else {
             setShowShareDialog(true)
         }
-
     }
 
     const {
-        owner,
         displayName,
         photoURL,
         occupation,
@@ -88,9 +79,10 @@ const ProfileHeader = ({ headerItems }: Props) => {
         bio,
         pronouns,
         mentor,
-    } = headerItems;
+        social
+    } = profile;
 
-    const cardActions = (
+    const headerActions = (
         <CardActions className={classes.cardActions}>
             <IconButton ref={menuRef} onClick={(e) => handleMenuClick(e)}>
                 <MoreHoriz color='primary' fontSize='large' />
@@ -125,7 +117,24 @@ const ProfileHeader = ({ headerItems }: Props) => {
         </CardActions>
     );
 
-    const cardContent = (
+    const socialLinks = social && Object.keys(social).length > 0 && (
+        <CardActions className={classes.cardActions}>
+            {social.facebook && <Link href={`http://facebook.com/${social.facebook}`} target='_blank'>
+                <Facebook className={classes.facebook} fontSize='large' />
+            </Link>}
+            {social.instagram && <Link href={`http://instagram.com/${social.instagram}`} target='_blank'>
+                <Instagram className={classes.instagram} fontSize='large' />
+            </Link>}
+            {social.linkedin && <Link href={`http://linkedin.com/in/${social.linkedin}`} target='_blank'>
+                <LinkedIn className={classes.linkedin} fontSize='large' />
+            </Link>}
+            {social.twitter && <Link href={`http://twitter.com/${social.twitter}`} target='_blank'>
+                <Twitter className={classes.twitter} fontSize='large' />
+            </Link>}
+        </CardActions>
+    )
+
+    const headerContent = (
         <CardContent className={classes.info}>
             <Typography gutterBottom variant='h4' component='h2'>
                 {displayName && displayName}{' '}
@@ -199,15 +208,16 @@ const ProfileHeader = ({ headerItems }: Props) => {
                 image='https://firebasestorage.googleapis.com/v0/b/tag-app-81b10.appspot.com/o/images%2Fdefault-banner.jpg?alt=media&token=425fde9f-6ae8-447b-8684-bf458e9a8255'
                 title='Banner'
             />
-            {cardActions}
+            {headerActions}
             <div className={classes.avatarContainer}>
                 <ProfileAvatar
-                    alt={displayName}
-                    src={photoURL}
+                    alt={String(displayName)}
+                    src={String(photoURL)}
                     editable={owner}
                 />
             </div>
-            {cardContent}
+            {headerContent}
+            {socialLinks}
             <EditHeader open={editInfo} setOpen={setEditInfo} />
             <ShareDialog open={showShareDialog} setOpen={setShowShareDialog} url={document.location.href} />
         </Card>

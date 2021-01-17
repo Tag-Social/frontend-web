@@ -60,7 +60,7 @@ const UserProfile = () => {
                 ) : isLoaded(profile) && profile ? (
                     <>
                         <Grid item xs={12} sm={12} className={classes.gridItem}>
-                            <ProfileHeader headerItems={headerItems} />
+                                <ProfileHeader profile={profile} owner={owner} />
                         </Grid>
                         <Grid item xs={12} sm={12} className={classes.gridItem}>
                                 <ProfileInfo profile={profile} owner={owner} />

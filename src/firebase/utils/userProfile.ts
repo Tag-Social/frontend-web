@@ -5,6 +5,7 @@ export type Education = {
     endYear: number | undefined;
     startYear: number | undefined;
 };
+
 export type Experience = {
     title: string;
     employmentType: string;
@@ -14,6 +15,13 @@ export type Experience = {
     current: boolean;
     startDate: string | undefined;
     endDate: string | undefined;
+};
+
+export type Social = {
+    facebook?: string;
+    instagram?: string;
+    twitter?: string;
+    linkedin?: string;
 };
 
 export type UserProfile = {
@@ -48,6 +56,7 @@ export type UserProfile = {
     education: Education[];
     experience: Experience[];
     skills: string[];
+    social?: Social;
 };
 
 export const userProfile: UserProfile = {
@@ -80,6 +89,12 @@ export const userProfile: UserProfile = {
     experience: [],
     skills: [],
     hobbies: [],
+    social: {
+        facebook: '',
+        twitter: '',
+        instagram: '',
+        linkedin: '',
+    },
 };
 
 export const checkProfileCompletion = (profile: UserProfile) => {

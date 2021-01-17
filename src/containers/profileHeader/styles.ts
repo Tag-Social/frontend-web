@@ -32,4 +32,16 @@ export const useStyles = makeStyles((theme) => ({
     listItem: {
         paddingLeft: 0,
     },
+    facebook: {
+        color: '#3b5998',
+    },
+    instagram: {
+        color: '#8a3ab9',
+    },
+    twitter: {
+        color: '#00acee',
+    },
+    linkedin: {
+        color: '#0072b1',
+    },
 }));

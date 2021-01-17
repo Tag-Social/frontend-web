@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
-
 import {
     Grid,
     Typography,
@@ -14,11 +13,19 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
+    InputAdornment,
     useMediaQuery,
     useTheme,
 } from '@material-ui/core';
+import {
+    LinkedIn,
+    Facebook,
+    Twitter,
+    Instagram
+} from '@material-ui/icons';
 
 import { userProfile, UserProfile } from '../../firebase/utils/userProfile';
+import { useStyles } from './styles';
 
 type Props = {
     open: boolean;
@@ -29,6 +36,7 @@ const EditHeader = ({ open, setOpen }: Props) => {
     const firebase = useFirebase();
     const { profile } = useSelector((state: RootStateOrAny) => state.firebase);
     const theme = useTheme();
+    const classes = useStyles();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const [profileData, setProfileData] = useState<UserProfile>(userProfile);
 
@@ -44,6 +52,7 @@ const EditHeader = ({ open, setOpen }: Props) => {
             [e.target.name]: e.target.value,
         });
     };
+
     const changeLocation = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
@@ -51,6 +60,18 @@ const EditHeader = ({ open, setOpen }: Props) => {
             ...profile,
             location: {
                 ...profile.location,
+                [e.target.name]: e.target.value,
+            },
+        });
+    };
+
+    const changeSocial = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        setProfileData({
+            ...profile,
+            social: {
+                ...profile.social,
                 [e.target.name]: e.target.value,
             },
         });
@@ -208,6 +229,79 @@ const EditHeader = ({ open, setOpen }: Props) => {
                             label='Postal Code'
                             onChange={changeLocation}
                             value={profileData.location?.postalCode}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant='body1'>
+                            Social
+                        </Typography>
+                    </Grid>
+                    <Grid item sm={6}>
+                        <TextField
+                            type='text'
+                            name='facebook'
+                            label='Facebook'
+                            onChange={changeSocial}
+                            value={profileData.social?.facebook}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Facebook className={classes.facebook} />
+                                    </InputAdornment>
+                                ),
+                            }}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item sm={6}>
+                        <TextField
+                            type='text'
+                            name='instagram'
+                            label='Instagram'
+                            onChange={changeSocial}
+                            value={profileData.social?.instagram}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Instagram className={classes.instagram} />
+                                    </InputAdornment>
+                                ),
+                            }}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item sm={6}>
+                        <TextField
+                            type='text'
+                            name='twitter'
+                            label='Twitter'
+                            onChange={changeSocial}
+                            value={profileData.social?.twitter}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Twitter className={classes.twitter} />
+                                    </InputAdornment>
+                                ),
+                            }}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item sm={6}>
+                        <TextField
+                            type='text'
+                            name='linkedin'
+                            label='LinkedIn'
+                            onChange={changeSocial}
+                            value={profileData.social?.linkedin}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <LinkedIn className={classes.linkedin} />
+                                    </InputAdornment>
+                                ),
+                            }}
                             fullWidth
                         />
                     </Grid>
