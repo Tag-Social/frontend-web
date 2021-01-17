@@ -3,6 +3,7 @@ import { Container, CssBaseline } from '@material-ui/core';
 import { Bug } from '../../containers'
 
 const NotFound404 = () => {
+    document.title = 'Tag | ' + 404;
     return (
         <Container maxWidth='lg'>
             <CssBaseline />

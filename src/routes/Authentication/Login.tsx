@@ -31,6 +31,7 @@ const Login: React.FC = () => {
         error,
     } = useAuth();
 
+    document.title = 'Tag | Login'
     return (
         <Container>
             <CssBaseline />

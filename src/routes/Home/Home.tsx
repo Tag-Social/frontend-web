@@ -22,6 +22,8 @@ const Home: React.FC = () => {
     const classes = useStyles();
     const { signIn, providerSignIn, setEmail, setPassword, error } = useAuth();
 
+
+    document.title = 'Tag | Mentorship Community'
     return (
         <>
             <CssBaseline />

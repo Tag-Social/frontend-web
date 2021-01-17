@@ -26,6 +26,7 @@ const Register: React.FC = () => {
         error,
     } = useAuth();
 
+    document.title = 'Tag | Register'
     return (
         <Container>
             <CssBaseline />

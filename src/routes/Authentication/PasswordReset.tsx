@@ -19,6 +19,8 @@ import { useStyles } from './styles';
 const PasswordReset: React.FC = () => {
     const { email, setEmail, resetPassword, resetSuccess, resetError } = useAuth()
     const classes = useStyles()
+
+    document.title = 'Tag | Reset Password'
     return (
         <Container maxWidth='xs'>
             <CssBaseline />

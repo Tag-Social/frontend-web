@@ -16,6 +16,7 @@ const Dashboard = () => {
             [auth, profile]
     );
 
+    document.title = 'Tag | Dashboard ';
     return (
         <Container maxWidth='lg'>
             <CssBaseline />
