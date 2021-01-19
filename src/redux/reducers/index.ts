@@ -3,15 +3,18 @@ import {firebaseReducer, FirebaseReducer} from "react-redux-firebase";
 import {firestoreReducer} from "redux-firestore";
 
 import {UserProfile} from '../../firebase/utils/userProfile'
+import relationshipsReducer from './relationshipsReducer';
 
 interface RootState {
-    firebase: FirebaseReducer.Reducer<UserProfile>
-    firestore: any
+    firebase: FirebaseReducer.Reducer<UserProfile>;
+    firestore: any;
+    relationships: any;
 }
 
 const rootReducer = combineReducers<RootState>({
     firebase: firebaseReducer,
-    firestore: firestoreReducer
+    firestore: firestoreReducer,
+    relationships: relationshipsReducer,
 });
 
 export default rootReducer;

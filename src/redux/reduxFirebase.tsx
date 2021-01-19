@@ -1,13 +1,13 @@
-import React from 'react'
-import { Provider } from "react-redux";
+import React, { useEffect } from 'react'
+import { Provider, RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import { createFirestoreInstance } from "redux-firestore";
 import * as AuthTypes from '@firebase/auth-types'
 
-
 import store from './store'
 import firebase from '../firebase/firebaseConfig'
 import { userProfile, UserProfile } from '../firebase/utils/userProfile'
+import { getFollowers, getFollowing, getMentees, getMentors, getPending } from './actions/relationships';
 
 type UserData = AuthTypes.User | undefined
 
@@ -34,11 +34,31 @@ const rrfProps = {
     createFirestoreInstance,
 };
 
+const Init: React.FC = ({ children }) => {
+    const dispatch = useDispatch();
+    const auth = useSelector(({ firebase }: RootStateOrAny) => firebase.auth)
+
+    useEffect(() => {
+        const uid = auth.uid || ''
+        dispatch(getFollowers(uid))
+        dispatch(getFollowing(uid))
+        dispatch(getMentees(uid))
+        dispatch(getMentors(uid))
+        dispatch(getPending(uid))
+    }, [dispatch, auth])
+
+    return (<>
+        {children}
+    </>)
+}
+
 const ReduxFirebaseProvider: React.FC = ({ children }) => {
     return (
         <Provider store={store}>
             <ReactReduxFirebaseProvider {...rrfProps}>
-                {children}
+                <Init>
+                    {children}
+                </Init>
             </ReactReduxFirebaseProvider>
         </Provider>
     )
