@@ -7,7 +7,7 @@ import * as AuthTypes from '@firebase/auth-types'
 import store from './store'
 import firebase from '../firebase/firebaseConfig'
 import { userProfile, UserProfile } from '../firebase/utils/userProfile'
-import { getFollowers, getFollowing, getMentees, getMentors, getPending } from './actions/relationships';
+import { getRelationships } from './actions/relationships';
 
 type UserData = AuthTypes.User | undefined
 
@@ -36,16 +36,11 @@ const rrfProps = {
 
 const Init: React.FC = ({ children }) => {
     const dispatch = useDispatch();
-    const auth = useSelector(({ firebase }: RootStateOrAny) => firebase.auth)
+    const { uid } = useSelector(({ firebase }: RootStateOrAny) => firebase.auth)
 
     useEffect(() => {
-        const uid = auth.uid || ''
-        dispatch(getFollowers(uid))
-        dispatch(getFollowing(uid))
-        dispatch(getMentees(uid))
-        dispatch(getMentors(uid))
-        dispatch(getPending(uid))
-    }, [dispatch, auth])
+        if (uid) dispatch(getRelationships(uid))
+    }, [dispatch, uid])
 
     return (<>
         {children}

@@ -1,10 +1,7 @@
 import {
-    GET_FOLLOWERS,
-    GET_FOLLOWING,
-    GET_MENTEES,
-    GET_MENTORS,
-    GET_PENDING,
-    GET_REL_ERROR,
+    LOADING_RELATIONSHIPS,
+    GET_RELATIONSHIPS,
+    RELATIONSHIPS_ERROR,
 } from '../types';
 
 type Action = {
@@ -13,75 +10,34 @@ type Action = {
 };
 
 const initialState = {
-    followers: {
-        payload: [],
-        loading: true,
-    },
-    following: {
-        payload: [],
-        loading: true,
-    },
-    mentors: {
-        payload: [],
-        loading: true,
-    },
-    mentees: {
-        payload: [],
-        loading: true,
-    },
+    followers: [],
+    following: [],
+    mentors: [],
+    mentees: [],
     pending: {
         mentors: [],
         mentees: [],
-        loading: true,
     },
     errors: [],
+    loading: false,
 };
 
 const relationshipsReducer = (state = initialState, action: Action) => {
     const { type, payload } = action;
 
     switch (type) {
-        case GET_FOLLOWERS:
+        case LOADING_RELATIONSHIPS:
             return {
                 ...state,
-                followers: {
-                    payload,
-                    loading: false,
-                },
+                loading: true,
             };
-        case GET_FOLLOWING:
+        case GET_RELATIONSHIPS:
             return {
                 ...state,
-                following: {
-                    payload,
-                    loading: false,
-                },
+                ...payload,
+                loading: false,
             };
-        case GET_MENTEES:
-            return {
-                ...state,
-                mentees: {
-                    payload,
-                    loading: false,
-                },
-            };
-        case GET_MENTORS:
-            return {
-                ...state,
-                mentors: {
-                    payload,
-                    loading: false,
-                },
-            };
-        case GET_PENDING:
-            return {
-                ...state,
-                pending: {
-                    ...payload,
-                    loading: false,
-                },
-            };
-        case GET_REL_ERROR:
+        case RELATIONSHIPS_ERROR:
             return {
                 ...state,
                 errors: payload,
