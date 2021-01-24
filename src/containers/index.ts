@@ -1,4 +1,6 @@
 export { default as Navbar } from './navbar';
+export { default as FollowButton } from './buttons/FollowButton';
+export { default as RequestsButton } from './buttons/RequestsButton';
 export { default as PublicRoute } from './publicRoute';
 export { default as PrivateRoute } from './privateRoute';
 export { default as ProfileAvatar } from './profileAvatar';

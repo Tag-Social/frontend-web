@@ -11,9 +11,8 @@ import {
     CardActions,
     CardContent,
     CardMedia,
-    IconButton,
     Button,
-    Link
+    Link,
 } from '@material-ui/core';
 import {
     Edit,
@@ -26,50 +25,28 @@ import {
     LinkedIn,
     Facebook,
     Twitter,
-    Instagram
+    Instagram,
 } from '@material-ui/icons';
 
 import { ProfileAvatar, ShareDialog } from '..';
-import EditHeader from './editHeader'
+import EditHeader from './editHeader';
+import { FollowButton } from '..';
 import { useStyles } from './styles';
 import { UserProfile } from '../../firebase/utils/userProfile';
+import RequestsButton from '../buttons/RequestsButton';
 
 interface Props {
     profile: UserProfile;
+    profileId: string;
     owner: boolean;
 }
 
-const ProfileHeader = ({ profile, owner }: Props) => {
+const ProfileHeader = ({ profile, profileId, owner }: Props) => {
     const classes = useStyles();
-    const menuRef = useRef<HTMLButtonElement>(null);
-    const [showMenu, setShowMenu] = useState(false);
+    const moreRef = useRef<HTMLButtonElement>(null);
+    const [showMore, setShowMore] = useState(false);
     const [showShareDialog, setShowShareDialog] = useState(false);
     const [editInfo, setEditInfo] = useState(false);
-
-    const handleMenuClick = (
-        event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-    ) => {
-        setShowMenu(true);
-    };
-
-    const handleClose = () => {
-        setShowMenu(false);
-    };
-
-    const handleShare = () => {
-        handleClose()
-        if (navigator.share) {
-            navigator.share({
-                title: `Tag | ${displayName}`,
-                text: `Check out ${displayName}'s profile on Tag!`,
-                url: document.location.href,
-            })
-                .catch((error) => console.log('Error sharing', error));
-        } else {
-            setShowShareDialog(true)
-        }
-    }
-
     const {
         displayName,
         photoURL,
@@ -79,20 +56,59 @@ const ProfileHeader = ({ profile, owner }: Props) => {
         bio,
         pronouns,
         mentor,
-        social
+        social,
     } = profile;
+    const handleMoreClick = (
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+        setShowMore(true);
+    };
 
+    const handleMoreClose = () => {
+        setShowMore(false);
+    };
+
+    const handleShare = () => {
+        handleMoreClose();
+        if (navigator.share) {
+            navigator
+                .share({
+                    title: `Tag | ${displayName}`,
+                    text: `Check out ${displayName}'s profile on Tag!`,
+                    url: document.location.href,
+                })
+                .catch((error) => console.log('Error sharing', error));
+        } else {
+            setShowShareDialog(true);
+        }
+    };
     const headerActions = (
         <CardActions className={classes.cardActions}>
-            <IconButton ref={menuRef} onClick={(e) => handleMenuClick(e)}>
-                <MoreHoriz color='primary' fontSize='large' />
-            </IconButton>
+            {!owner && (
+                <>
+                    <FollowButton size='small' uid={profileId} />
+                    <RequestsButton
+                        size='small'
+                        uid={profileId}
+                        mentor={mentor}
+                    />
+                </>
+            )}
+            <Button
+                ref={moreRef}
+                onClick={(e) => handleMoreClick(e)}
+                color='primary'
+                variant='outlined'
+                size='small'
+            >
+                <MoreHoriz color='primary' fontSize='small' /> More
+            </Button>
             <Menu
-                id='simple-menu'
-                anchorEl={menuRef.current}
+                anchorEl={moreRef.current}
                 keepMounted
-                open={showMenu}
-                onClose={handleClose}
+                open={showMore}
+                onClose={handleMoreClose}
+                elevation={1}
             >
                 <MenuItem onClick={handleShare}>
                     <ListItemIcon className={classes.listItemIcon}>
@@ -103,7 +119,7 @@ const ProfileHeader = ({ profile, owner }: Props) => {
                 {owner && (
                     <MenuItem
                         onClick={() => {
-                            handleClose();
+                            handleMoreClose();
                             setEditInfo(true);
                         }}
                     >
@@ -118,21 +134,41 @@ const ProfileHeader = ({ profile, owner }: Props) => {
     );
 
     const socialLinks = social && Object.keys(social).length > 0 && (
-        <CardActions className={classes.cardActions}>
-            {social.facebook && <Link href={`http://facebook.com/${social.facebook}`} target='_blank'>
-                <Facebook className={classes.facebook} fontSize='large' />
-            </Link>}
-            {social.instagram && <Link href={`http://instagram.com/${social.instagram}`} target='_blank'>
-                <Instagram className={classes.instagram} fontSize='large' />
-            </Link>}
-            {social.linkedin && <Link href={`http://linkedin.com/in/${social.linkedin}`} target='_blank'>
-                <LinkedIn className={classes.linkedin} fontSize='large' />
-            </Link>}
-            {social.twitter && <Link href={`http://twitter.com/${social.twitter}`} target='_blank'>
-                <Twitter className={classes.twitter} fontSize='large' />
-            </Link>}
+        <CardActions className={classes.socialActions}>
+            {social.facebook && (
+                <Link
+                    href={`http://facebook.com/${social.facebook}`}
+                    target='_blank'
+                >
+                    <Facebook className={classes.facebook} fontSize='large' />
+                </Link>
+            )}
+            {social.instagram && (
+                <Link
+                    href={`http://instagram.com/${social.instagram}`}
+                    target='_blank'
+                >
+                    <Instagram className={classes.instagram} fontSize='large' />
+                </Link>
+            )}
+            {social.linkedin && (
+                <Link
+                    href={`http://linkedin.com/in/${social.linkedin}`}
+                    target='_blank'
+                >
+                    <LinkedIn className={classes.linkedin} fontSize='large' />
+                </Link>
+            )}
+            {social.twitter && (
+                <Link
+                    href={`http://twitter.com/${social.twitter}`}
+                    target='_blank'
+                >
+                    <Twitter className={classes.twitter} fontSize='large' />
+                </Link>
+            )}
         </CardActions>
-    )
+    );
 
     const headerContent = (
         <CardContent className={classes.info}>
@@ -141,16 +177,19 @@ const ProfileHeader = ({ profile, owner }: Props) => {
                 {mentor && <LocalOffer className={classes.status} />}
             </Typography>
             <Grid container>
-                {owner && (!bio && !organization && !occupation && !location.country) && (
-                    <Button
-                        variant='contained'
-                        color='primary'
-                        onClick={() => setEditInfo(true)}
-
-                    >
-                        <Edit style={{ marginRight: 6 }} /> Edit Profile
-                    </Button>
-                )}
+                {owner &&
+                    !bio &&
+                    !organization &&
+                    !occupation &&
+                    !location.country && (
+                        <Button
+                            variant='contained'
+                            color='primary'
+                            onClick={() => setEditInfo(true)}
+                        >
+                            <Edit style={{ marginRight: 6 }} /> Edit Profile
+                        </Button>
+                    )}
                 {(bio || pronouns) && (
                     <Grid item xs={12} sm={12}>
                         {pronouns && (
@@ -167,30 +206,34 @@ const ProfileHeader = ({ profile, owner }: Props) => {
                 )}
                 {(occupation || organization) && (
                     <Grid item xs={12} sm={6}>
-                        {occupation && <ListItem className={classes.listItem}>
-                            <AssignmentInd
-                                className={classes.profileItemIcon}
-                            />
-                            <Typography variant='body1'>
-                                {occupation}
-                            </Typography>
-                        </ListItem>}
-                        {organization && <ListItem className={classes.listItem}>
-                            <Work className={classes.profileItemIcon} />
-                            <Typography variant='body1'>
-                                {organization}
-                            </Typography>
-                        </ListItem>}
+                        {occupation && (
+                            <ListItem className={classes.listItem}>
+                                <AssignmentInd
+                                    className={classes.profileItemIcon}
+                                />
+                                <Typography variant='body1'>
+                                    {occupation}
+                                </Typography>
+                            </ListItem>
+                        )}
+                        {organization && (
+                            <ListItem className={classes.listItem}>
+                                <Work className={classes.profileItemIcon} />
+                                <Typography variant='body1'>
+                                    {organization}
+                                </Typography>
+                            </ListItem>
+                        )}
                     </Grid>
                 )}
                 {location && location.country && (
                     <Grid item xs={12} sm={6}>
                         <ListItem className={classes.listItem}>
-                            <LocationOn
-                                className={classes.profileItemIcon}
-                            />
+                            <LocationOn className={classes.profileItemIcon} />
                             <Typography variant='body1'>
-                                {`${(location.state || location.province)}${(location.state || location.province) && ','} ${location.country}`}
+                                {`${location.state || location.province}${
+                                    (location.state || location.province) && ','
+                                } ${location.country}`}
                             </Typography>
                         </ListItem>
                     </Grid>
@@ -214,12 +257,16 @@ const ProfileHeader = ({ profile, owner }: Props) => {
                     alt={String(displayName)}
                     src={String(photoURL)}
                     editable={owner}
-                />
+                    />
             </div>
             {headerContent}
             {socialLinks}
             <EditHeader open={editInfo} setOpen={setEditInfo} />
-            <ShareDialog open={showShareDialog} setOpen={setShowShareDialog} url={document.location.href} />
+            <ShareDialog
+                open={showShareDialog}
+                setOpen={setShowShareDialog}
+                url={document.location.href}
+            />
         </Card>
     );
 };

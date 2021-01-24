@@ -9,7 +9,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     avatarContainer: {
         position: 'absolute',
-        top: '125px',
+        top: '50px',
         left: '20px',
         width: 'fit-content',
     },
@@ -18,6 +18,8 @@ export const useStyles = makeStyles((theme) => ({
     },
     cardActions: {
         justifyContent: 'flex-end',
+        flexWrap: 'wrap',
+        gap: 4,
     },
     listItemIcon: {
         minWidth: '30px',
@@ -31,6 +33,9 @@ export const useStyles = makeStyles((theme) => ({
     },
     listItem: {
         paddingLeft: 0,
+    },
+    socialActions: {
+        paddingLeft: '18px',
     },
     facebook: {
         color: '#3b5998',
