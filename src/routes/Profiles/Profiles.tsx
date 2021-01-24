@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
@@ -24,24 +23,9 @@ const UserProfile = () => {
         ({ firestore: { data } }: RootStateOrAny) =>
             data.users && data.users[profileId]
     );
-    const auth = useSelector(
-        ({ firebase }: RootStateOrAny) =>
-            firebase.auth
-    );
+    const auth = useSelector(({ firebase }: RootStateOrAny) => firebase.auth);
     const classes = useStyles();
     const owner = profileId === auth.uid;
-
-    let headerItems = profile && auth && {
-        owner,
-        displayName: profile.displayName,
-        photoURL: profile.photoURL,
-        occupation: profile.occupation,
-        location: profile.location,
-        organization: profile.organization,
-        mentor: profile.mentor,
-        bio: profile.bio,
-        pronouns: profile.pronouns
-    };
 
     if (profile) {
         document.title = 'Tag | ' + profile.displayName;
@@ -53,25 +37,29 @@ const UserProfile = () => {
             <Grid container spacing={2}>
                 {!isLoaded(profile) ? (
                     <Grid item xs={12} sm={12} className={classes.gridItem}>
-                        <Skeleton variant="rect" height={150} />
-                        <Skeleton variant="circle" width={150} height={150} />
-                        <Skeleton variant="rect" height={300} />
+                        <Skeleton variant='rect' height={150} />
+                        <Skeleton variant='circle' width={150} height={150} />
+                        <Skeleton variant='rect' height={300} />
                     </Grid>
                 ) : isLoaded(profile) && profile ? (
                     <>
                         <Grid item xs={12} sm={12} className={classes.gridItem}>
-                                <ProfileHeader profile={profile} owner={owner} />
+                            <ProfileHeader
+                                profile={profile}
+                                owner={owner}
+                                profileId={profileId}
+                            />
                         </Grid>
                         <Grid item xs={12} sm={12} className={classes.gridItem}>
-                                <ProfileInfo profile={profile} owner={owner} />
+                            <ProfileInfo profile={profile} owner={owner} />
                         </Grid>
-                        </>
-                    ) : (
-                            <Bug
-                                message='Sorry this profile was not found...'
-                                errorType={404}
-                            />
-                        )}
+                    </>
+                ) : (
+                    <Bug
+                        message='Sorry this profile was not found...'
+                        errorType={404}
+                    />
+                )}
             </Grid>
         </Container>
     );
