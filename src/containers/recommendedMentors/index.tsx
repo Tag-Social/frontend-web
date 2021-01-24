@@ -11,10 +11,8 @@ import {
     Button,
     Avatar,
 } from '@material-ui/core';
-import { PersonAdd } from '@material-ui/icons';
 
 import { useStyles } from './styles';
-import { useRelationships } from '../../hooks'
 import { PROFILES } from '../../routes/routePaths';
 
 // TODO : Add actions to connection buttons and add interests
@@ -24,8 +22,7 @@ const RecommendedMentors = ({ profile, auth }: any) => {
             ? profile.interests
             : ['none'];
     const firestore = useFirestore();
-    const [mentors, setMentors] = useState<any[]>([]);
-    const { follow, unfollow, requestMentorship } = useRelationships(auth.uid)
+    const [mentors, setMentors] = useState<any[]>([])
 
     useEffect(() => {
         firestore
@@ -104,20 +101,13 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions>
-                                <PersonAdd fontSize='small' color='primary' />
-                                <Button
-                                    variant='contained'
-                                    color='primary'
-                                    disableElevation
-                                    onClick={() => requestMentorship(mentor.id)}
-                                >
-                                    Connect
-                                </Button>
                                 <Button
                                     variant='outlined'
-                                    onClick={() => follow(mentor.id)}
+                                    component={Link}
+                                    to={`${PROFILES}/${mentor.id}`}
+                                    color='primary'
                                 >
-                                    Follow
+                                    View Profile
                                 </Button>
                             </CardActions>
                         </Card>
