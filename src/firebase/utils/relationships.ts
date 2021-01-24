@@ -1,4 +1,5 @@
 export type Relationship = {
+    relId?: string;
     uid1: string;
     uid2: string;
     type: 0 | 1; // 0 = following, 1 = mentorship
