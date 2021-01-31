@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { Button } from '@material-ui/core';
 import { GroupAdd, Remove } from '@material-ui/icons';

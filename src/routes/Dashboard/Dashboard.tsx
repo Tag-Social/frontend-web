@@ -1,25 +1,20 @@
 import React from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import {
-    Container,
-    CssBaseline,
-    Grid,
-    Paper
-} from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
 import { RecommendedMentors, ProfileCard } from '../../containers';
-import { useStyles } from './styles';
 
 const Dashboard = () => {
-    const classes = useStyles()
-    const [auth, profile] = useSelector(
-        ({ firebase: { auth, profile } }: RootStateOrAny) =>
-            [auth, profile]
-    );
+    const [
+        auth,
+        profile,
+    ] = useSelector(({ firebase: { auth, profile } }: RootStateOrAny) => [
+        auth,
+        profile,
+    ]);
 
     document.title = 'Tag | Dashboard ';
     return (
         <Container maxWidth='lg'>
-            <CssBaseline />
             <Grid container spacing={1}>
                 <Grid item xs={12}>
                     {/* Alerts go here */}

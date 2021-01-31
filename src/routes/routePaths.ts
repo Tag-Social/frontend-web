@@ -5,4 +5,7 @@ export const REGISTER ='/register'
 export const PASSWORD_RESET ='/passwordreset'
 export const PROFILES = '/profiles';
 export const EDIT_PROFILE = '/edit-profile';
+export const CONNECTIONS = '/connections';
+export const NOTIFICATIONS = '/notifications';
+export const MESSAGING = '/messaging';
 export const NOT_FOUND_404 = '*';

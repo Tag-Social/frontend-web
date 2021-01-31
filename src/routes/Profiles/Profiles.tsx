@@ -33,7 +33,6 @@ const UserProfile = () => {
 
     return (
         <Container maxWidth='md' className={classes.container}>
-            <CssBaseline />
             <Grid container spacing={2}>
                 {!isLoaded(profile) ? (
                     <Grid item xs={12} sm={12} className={classes.gridItem}>

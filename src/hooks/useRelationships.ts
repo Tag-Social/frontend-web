@@ -3,7 +3,7 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import { Relationship } from '../firebase/utils/relationships';
 const useRelationships = (currentUser: string) => {
     const firestore = useFirestore();
-    const { followers, following, mentors, mentees, pending } = useSelector(
+    const { following, mentors, mentees, pending } = useSelector(
         ({ relationships }: RootStateOrAny) => relationships
     );
 

@@ -13,13 +13,22 @@ import {
     Avatar,
     Container,
 } from '@material-ui/core';
+import { People, NotificationsActive, Chat } from '@material-ui/icons';
 
 import { useStyles } from './styles';
-import { UserSearchBar } from '..'
-import { DASHBOARD, LOGIN, PROFILES, REGISTER } from '../../routes/routePaths';
+import { UserSearchBar } from '..';
+import {
+    DASHBOARD,
+    LOGIN,
+    PROFILES,
+    REGISTER,
+    CONNECTIONS,
+    NOTIFICATIONS,
+    MESSAGING,
+} from '../../routes/routePaths';
 
 // TODO : Finish search functionality
-const Navbar = () => {
+const TopNavbar = () => {
     const firebase = useFirebase();
     const auth = useSelector((state: RootStateOrAny) => state.firebase.auth);
     const classes = useStyles();
@@ -44,7 +53,26 @@ const Navbar = () => {
     const userNav = (
         <>
             <UserSearchBar />
-            <div>
+            <>
+                <div className={classes.topNavUserActions}>
+                    <IconButton
+                        color='primary'
+                        component={Link}
+                        to={NOTIFICATIONS}
+                    >
+                        <NotificationsActive fontSize='large' />
+                    </IconButton>
+                    <IconButton
+                        color='primary'
+                        component={Link}
+                        to={CONNECTIONS}
+                    >
+                        <People fontSize='large' />
+                    </IconButton>
+                    <IconButton color='primary' component={Link} to={MESSAGING}>
+                        <Chat fontSize='large' />
+                    </IconButton>
+                </div>
                 <IconButton
                     aria-label='account of current user'
                     aria-controls='menu-appbar'
@@ -78,11 +106,11 @@ const Navbar = () => {
                             onClick={handleClose}
                         >
                             Profile
-                    </MenuItem>
+                        </MenuItem>
                         <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
                     </Menu>
                 )}
-            </div>
+            </>
         </>
     );
 
@@ -111,22 +139,17 @@ const Navbar = () => {
     );
 
     return (
-        <div className={classes.root}>
-            <AppBar
-                position='fixed'
-                className={classes.nav}
-            >
-                <Container maxWidth='lg' className={classes.container}>
-                    <Toolbar>
-                        <Typography variant='h5' className={classes.title}>
-                            <Link to={DASHBOARD}>{logoImg}</Link>
-                        </Typography>
-                        {isLoaded(auth) && !isEmpty(auth) ? userNav : guestNav}
-                    </Toolbar>
-                </Container>
-            </AppBar>
-        </div>
+        <AppBar position='fixed' className={classes.topNav}>
+            <Container maxWidth='lg' className={classes.container}>
+                <Toolbar>
+                    <Typography variant='h5' className={classes.title}>
+                        <Link to={DASHBOARD}>{logoImg}</Link>
+                    </Typography>
+                    {isLoaded(auth) && !isEmpty(auth) ? userNav : guestNav}
+                </Toolbar>
+            </Container>
+        </AppBar>
     );
 };
 
-export default Navbar;
+export default TopNavbar;

@@ -1,4 +1,4 @@
-export { default as Navbar } from './navbar';
+export { default as Navigation } from './navigation';
 export { default as FollowButton } from './buttons/FollowButton';
 export { default as RequestsButton } from './buttons/RequestsButton';
 export { default as PublicRoute } from './publicRoute';

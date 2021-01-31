@@ -5,4 +5,7 @@ export { default as Register } from './Authentication/Register';
 export { default as PasswordReset } from './Authentication/PasswordReset';
 export { default as Profiles } from './Profiles/Profiles';
 export { default as EditProfile } from './EditProfile/EditProfile';
+export { default as Connections } from './Connections/Connections';
+export { default as Notifications } from './Notifications/Notifications';
+export { default as Messaging } from './Messaging/Messaging';
 export { default as NotFound404 } from './NotFound404/NotFound404';

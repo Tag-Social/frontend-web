@@ -26,13 +26,13 @@ const options = [''];
 
 // TODO: Finish
 const EditProfile = () => {
-    const firebase = useFirebase()
-    const classes = useStyles()
+    const firebase = useFirebase();
+    const classes = useStyles();
     const { profile, auth } = useSelector(
         (state: RootStateOrAny) => state.firebase
     );
     const [profileData, setProfileData] = useState<UserProfile>(userProfile);
-    const [alertOpen, setAlertOpen] = useState(false)
+    const [alertOpen, setAlertOpen] = useState(false);
 
     useEffect(() => {
         setProfileData(profile);
@@ -49,13 +49,14 @@ const EditProfile = () => {
     };
 
     const saveProfile = (e: React.FormEvent) => {
-        e.preventDefault()
-        firebase.updateProfile(profileData)
-            .then(() => setAlertOpen(true)
-            )
-    }
+        e.preventDefault();
+        firebase.updateProfile(profileData).then(() => setAlertOpen(true));
+    };
 
-    const handleAlertClose = (event?: React.SyntheticEvent, reason?: string) => {
+    const handleAlertClose = (
+        event?: React.SyntheticEvent,
+        reason?: string
+    ) => {
         if (reason === 'clickaway') {
             return;
         }
@@ -63,12 +64,19 @@ const EditProfile = () => {
         setAlertOpen(false);
     };
 
-
     return (
         <Container maxWidth='md'>
-            <CssBaseline />
-            <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleAlertClose}>
-                <MuiAlert elevation={6} variant="filled" onClose={handleAlertClose} severity="success">
+            <Snackbar
+                open={alertOpen}
+                autoHideDuration={6000}
+                onClose={handleAlertClose}
+            >
+                <MuiAlert
+                    elevation={6}
+                    variant='filled'
+                    onClose={handleAlertClose}
+                    severity='success'
+                >
                     Your profile has been saved.
                 </MuiAlert>
             </Snackbar>
@@ -139,91 +147,146 @@ const EditProfile = () => {
                         />
                     </Grid>
                     <Grid item xs={12} sm={12}>
-                        <Typography variant='body1'>
-                            Gender
-                        </Typography>
-                        <RadioGroup row name="gender" value={profileData.gender} onChange={onChange}>
-                            <FormControlLabel value="female" control={<Radio color="primary" />} label="Female" />
-                            <FormControlLabel value="male" control={<Radio color="primary" />} label="Male" />
-                            <FormControlLabel value="non-binary" control={<Radio color="primary" />} label="Non-Binary" />
-                            <FormControlLabel value="other" control={<Radio color="primary" />} label="Other" />
-                            <FormControlLabel value='N/A' control={<Radio color="primary" />} label="N/A" />
+                        <Typography variant='body1'>Gender</Typography>
+                        <RadioGroup
+                            row
+                            name='gender'
+                            value={profileData.gender}
+                            onChange={onChange}
+                        >
+                            <FormControlLabel
+                                value='female'
+                                control={<Radio color='primary' />}
+                                label='Female'
+                            />
+                            <FormControlLabel
+                                value='male'
+                                control={<Radio color='primary' />}
+                                label='Male'
+                            />
+                            <FormControlLabel
+                                value='non-binary'
+                                control={<Radio color='primary' />}
+                                label='Non-Binary'
+                            />
+                            <FormControlLabel
+                                value='other'
+                                control={<Radio color='primary' />}
+                                label='Other'
+                            />
+                            <FormControlLabel
+                                value='N/A'
+                                control={<Radio color='primary' />}
+                                label='N/A'
+                            />
                         </RadioGroup>
                     </Grid>
                     <Grid item xs={12} sm={12}>
-                        <Typography variant='body1'>
-                            Education
-                        </Typography>
-                        <RadioGroup row name="gender" value={profileData.gender} onChange={onChange}>
-                            <FormControlLabel value="female" control={<Radio color="primary" />} label="Female" />
-                            <FormControlLabel value="male" control={<Radio color="primary" />} label="Male" />
-                            <FormControlLabel value="non-binary" control={<Radio color="primary" />} label="Non-Binary" />
-                            <FormControlLabel value="other" control={<Radio color="primary" />} label="Other" />
-                            <FormControlLabel value='N/A' control={<Radio color="primary" />} label="N/A" />
+                        <Typography variant='body1'>Education</Typography>
+                        <RadioGroup
+                            row
+                            name='gender'
+                            value={profileData.gender}
+                            onChange={onChange}
+                        >
+                            <FormControlLabel
+                                value='female'
+                                control={<Radio color='primary' />}
+                                label='Female'
+                            />
+                            <FormControlLabel
+                                value='male'
+                                control={<Radio color='primary' />}
+                                label='Male'
+                            />
+                            <FormControlLabel
+                                value='non-binary'
+                                control={<Radio color='primary' />}
+                                label='Non-Binary'
+                            />
+                            <FormControlLabel
+                                value='other'
+                                control={<Radio color='primary' />}
+                                label='Other'
+                            />
+                            <FormControlLabel
+                                value='N/A'
+                                control={<Radio color='primary' />}
+                                label='N/A'
+                            />
                         </RadioGroup>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        {profileData.skills && <Autocomplete
-                            multiple
-                            freeSolo
-                            options={options}
-                            ChipProps={{ color: 'primary' }}
-                            getOptionLabel={(option) => option}
-                            value={profileData.skills}
-                            onChange={(event, value) => setProfileData({
-                                ...profile,
-                                skills: value
-                            })}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Skills"
-                                />
-                            )}
-                        />}
+                        {profileData.skills && (
+                            <Autocomplete
+                                multiple
+                                freeSolo
+                                options={options}
+                                ChipProps={{ color: 'primary' }}
+                                getOptionLabel={(option) => option}
+                                value={profileData.skills}
+                                onChange={(event, value) =>
+                                    setProfileData({
+                                        ...profile,
+                                        skills: value,
+                                    })
+                                }
+                                renderInput={(params) => (
+                                    <TextField {...params} label='Skills' />
+                                )}
+                            />
+                        )}
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        {profileData.interests && <Autocomplete
-                            multiple
-                            freeSolo
-                            ChipProps={{ color: 'primary' }}
-                            options={options}
-                            getOptionLabel={(option) => option}
-                            value={profileData.interests}
-                            onChange={(event, value) => setProfileData({
-                                ...profile,
-                                interests: value
-                            })}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Interests"
-                                />
-                            )}
-                        />}
+                        {profileData.interests && (
+                            <Autocomplete
+                                multiple
+                                freeSolo
+                                ChipProps={{ color: 'primary' }}
+                                options={options}
+                                getOptionLabel={(option) => option}
+                                value={profileData.interests}
+                                onChange={(event, value) =>
+                                    setProfileData({
+                                        ...profile,
+                                        interests: value,
+                                    })
+                                }
+                                renderInput={(params) => (
+                                    <TextField {...params} label='Interests' />
+                                )}
+                            />
+                        )}
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        {profileData.hobbies && <Autocomplete
-                            multiple
-                            freeSolo
-                            ChipProps={{ color: 'primary' }}
-                            options={options}
-                            getOptionLabel={(option) => option}
-                            value={profileData.hobbies}
-                            onChange={(event, value) => setProfileData({
-                                ...profile,
-                                hobbies: value
-                            })}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Hobbies"
-                                />
-                            )}
-                        />}
+                        {profileData.hobbies && (
+                            <Autocomplete
+                                multiple
+                                freeSolo
+                                ChipProps={{ color: 'primary' }}
+                                options={options}
+                                getOptionLabel={(option) => option}
+                                value={profileData.hobbies}
+                                onChange={(event, value) =>
+                                    setProfileData({
+                                        ...profile,
+                                        hobbies: value,
+                                    })
+                                }
+                                renderInput={(params) => (
+                                    <TextField {...params} label='Hobbies' />
+                                )}
+                            />
+                        )}
                     </Grid>
                 </Grid>
-                <Fab color="primary" aria-label="save" variant='extended' className={classes.saveButton} type='submit'>
+                <Fab
+                    color='primary'
+                    aria-label='save'
+                    variant='extended'
+                    className={classes.saveButton}
+                    type='submit'
+                >
                     <SaveIcon className={classes.saveIcon} /> Save
                 </Fab>
             </form>
