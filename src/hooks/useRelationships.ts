@@ -3,7 +3,7 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import { Relationship } from '../firebase/utils/relationships';
 const useRelationships = (currentUser: string) => {
     const firestore = useFirestore();
-    const { following, mentors, mentees, pending } = useSelector(
+    const { followers, following, mentors, mentees, pending } = useSelector(
         ({ relationships }: RootStateOrAny) => relationships
     );
 
@@ -81,12 +81,34 @@ const useRelationships = (currentUser: string) => {
                 .update({ status: 3 });
     };
 
+    const terminateAllRelationships = (userId: string) => {
+        const relationships = [
+            ...followers,
+            ...following,
+            ...mentors,
+            ...mentees,
+            ...pending.mentors,
+            ...pending.mentees,
+        ].filter(
+            (rel: Relationship) => rel.uid1 === userId || rel.uid2 === userId
+        );
+
+        if (relationships.length > 0)
+            relationships.forEach((rel: Relationship) => {
+                firestore
+                    .collection('relationships')
+                    .doc(rel.relId)
+                    .update({ status: 3 });
+            });
+    };
+
     return {
         follow,
         unfollow,
         requestMentorship,
         acceptMentorship,
         terminateMentorship,
+        terminateAllRelationships,
     };
 };
 

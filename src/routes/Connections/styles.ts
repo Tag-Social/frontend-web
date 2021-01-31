@@ -1,17 +1,19 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
+    card: {
+        margin: '0 auto 16px auto',
+        maxWidth: '850px',
+    },
     container: {
         [theme.breakpoints.down('xs')]: {
             padding: 0,
-            marginRight: 0,
-            marginLeft: 0,
         },
     },
-    gridItem: {
-        [theme.breakpoints.down('xs')]: {
-            paddingRight: '0 !important',
-            paddingLeft: '0 !important',
-        },
+    listItemText: {
+        maxWidth: '50%',
+    },
+    title: {
+        marginLeft: '16px',
     },
 }));

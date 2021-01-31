@@ -2,8 +2,10 @@ import React from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { Container, Grid } from '@material-ui/core';
 import { RecommendedMentors, ProfileCard } from '../../containers';
+import { useStyles } from './styles';
 
 const Dashboard = () => {
+    const classes = useStyles();
     const [
         auth,
         profile,
@@ -14,7 +16,7 @@ const Dashboard = () => {
 
     document.title = 'Tag | Dashboard ';
     return (
-        <Container maxWidth='lg'>
+        <Container maxWidth='lg' className={classes.container}>
             <Grid container spacing={1}>
                 <Grid item xs={12}>
                     {/* Alerts go here */}

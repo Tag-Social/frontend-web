@@ -38,4 +38,7 @@ export const useStyles = makeStyles((theme) => ({
     actionArea: {
         height: '100%',
     },
+    title: {
+        marginLeft: '16px',
+    },
 }));

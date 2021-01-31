@@ -47,6 +47,7 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                 component='h1'
                 gutterBottom
                 color='primary'
+                className={classes.title}
             >
                 Recommened Mentors
             </Typography>
@@ -91,12 +92,14 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                                         color='textSecondary'
                                         component='p'
                                     >
-                                        {`${mentor.location.state ||
+                                        {`${
+                                            mentor.location.state ||
                                             mentor.location.province
-                                            }${(mentor.location.state ||
+                                        }${
+                                            (mentor.location.state ||
                                                 mentor.location.province) &&
                                             ','
-                                            } ${mentor.location.country}`}
+                                        } ${mentor.location.country}`}
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
@@ -113,10 +116,10 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                         </Card>
                     ))
                 ) : (
-                        <Typography variant='body1'>
-                            Sorry we have not found any mentors for you yet...
-                        </Typography>
-                    )}
+                    <Typography variant='body1'>
+                        Sorry we have not found any mentors for you yet...
+                    </Typography>
+                )}
             </div>
         </>
     );
