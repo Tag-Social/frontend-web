@@ -21,11 +21,13 @@ import { useStyles } from './styles';
 import { UserProfile } from '../../firebase/utils/userProfile';
 import { PROFILES } from '../../routes/routePaths';
 import { RecommendedMentors } from '../../containers';
+import { Skeleton } from '@material-ui/lab';
 
 const Connections = () => {
     const firestore = useFirestore();
     const classes = useStyles();
     const [users, setUsers] = useState<UserProfile[]>([]);
+    const [loading, setLoading] = useState(false);
     const [
         profile,
         auth,
@@ -37,6 +39,7 @@ const Connections = () => {
     ]);
 
     useEffect(() => {
+        setLoading(true);
         firestore
             .collection('users')
             .where('__name__', 'in', [
@@ -53,6 +56,7 @@ const Connections = () => {
                     data.push({ ...doc.data(), id: doc.id })
                 );
                 setUsers(data);
+                setLoading(false);
             });
     }, [firestore, followers, following, mentees, mentors]);
 
@@ -66,40 +70,55 @@ const Connections = () => {
             >
                 Connections
             </Typography>
-            <Card className={classes.card} elevation={1}>
-                <List>
-                    {users.map((user: UserProfile, index: number) => (
-                        <ListItem
-                            button
-                            key={`user-${index}`}
-                            component={Link}
-                            to={`${PROFILES}/${user.id}`}
-                        >
-                            <ListItemAvatar>
-                                <Avatar src={user.photoURL} />
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={user.displayName}
-                                secondary={user.occupation}
-                                className={classes.listItemText}
-                            />
-                            <ListItemSecondaryAction>
-                                <Button
-                                    size='small'
-                                    color='primary'
-                                    variant='outlined'
+            {!loading ? (
+                <Card className={classes.card} elevation={1}>
+                    <List>
+                        {users.length > 0 ? (
+                            users.map((user: UserProfile, index: number) => (
+                                <ListItem
+                                    button
+                                    key={`user-${index}`}
+                                    component={Link}
+                                    to={`${PROFILES}/${user.id}`}
                                 >
-                                    <Chat
-                                        fontSize='inherit'
-                                        style={{ marginRight: 5 }}
-                                    />{' '}
-                                    Message
-                                </Button>
-                            </ListItemSecondaryAction>
-                        </ListItem>
-                    ))}
-                </List>
-            </Card>
+                                    <ListItemAvatar>
+                                        <Avatar src={user.photoURL} />
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        primary={user.displayName}
+                                        secondary={user.occupation}
+                                        className={classes.listItemText}
+                                    />
+                                    <ListItemSecondaryAction>
+                                        <Button
+                                            size='small'
+                                            color='primary'
+                                            variant='outlined'
+                                        >
+                                            <Chat
+                                                fontSize='inherit'
+                                                style={{ marginRight: 5 }}
+                                            />{' '}
+                                            Message
+                                        </Button>
+                                    </ListItemSecondaryAction>
+                                </ListItem>
+                            ))
+                        ) : (
+                            <Typography variant='body1'>
+                                No connections yet. When you make connections,
+                                they will appear hear!
+                            </Typography>
+                        )}
+                    </List>
+                </Card>
+            ) : (
+                <Skeleton
+                    animation='wave'
+                    className={classes.card}
+                    height={200}
+                />
+            )}
             <RecommendedMentors profile={profile} auth={auth} />
         </Container>
     );
