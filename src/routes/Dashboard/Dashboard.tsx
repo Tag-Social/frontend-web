@@ -1,7 +1,7 @@
 import React from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { Container, Grid } from '@material-ui/core';
-import { RecommendedMentors, ProfileCard } from '../../containers';
+import { RecommendedMentors, ProfileCard, Posts } from '../../containers';
 import { useStyles } from './styles';
 
 const Dashboard = () => {
@@ -27,6 +27,7 @@ const Dashboard = () => {
                     </Grid>
                     <Grid item md={9} xs={12}>
                         <RecommendedMentors profile={profile} auth={auth} />
+                        <Posts />
                     </Grid>
                 </Grid>
             </Grid>

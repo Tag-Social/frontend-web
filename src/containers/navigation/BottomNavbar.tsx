@@ -32,7 +32,7 @@ const BottomNavbar = () => {
 
     return isLoaded(auth) && !isEmpty(auth) ? (
         <AppBar position='fixed' className={classes.bottomNav}>
-            <Toolbar>
+            <Toolbar style={{  display: 'flex', justifyContent: 'space-evenly'  }}>
                 <IconButton
                     edge='start'
                     color='inherit'
@@ -44,10 +44,6 @@ const BottomNavbar = () => {
                 <IconButton color='inherit' component={Link} to={CONNECTIONS}>
                     <People fontSize='large' />
                 </IconButton>
-                <Fab color='secondary' className={classes.fabButton}>
-                    <Add fontSize='large' color='primary' />
-                </Fab>
-                <div className={classes.grow} />
                 <IconButton color='inherit' component={Link} to={NOTIFICATIONS}>
                     <NotificationsActive fontSize='large' />
                 </IconButton>
