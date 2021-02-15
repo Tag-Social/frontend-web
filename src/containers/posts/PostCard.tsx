@@ -58,7 +58,8 @@ const PostCard = ({ post, auth }: Props) => {
         setExpandedComments(!expandedComments);
     };
 
-    const submitComment = () => {
+    const submitComment = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         const comment = {
             id: uuidv4(),
             uid: auth.uid,
@@ -73,7 +74,11 @@ const PostCard = ({ post, auth }: Props) => {
             .update({
                 comments: [...post.comments, comment],
             })
-            .then(() => setComments([...comments, comment]));
+            .then(() => {
+                setComments([...comments, comment]);
+                setCommentInput('');
+                setExpandedComments(true);
+            });
     };
 
     const reactToPost = (type: 0 | 1) => {
@@ -98,6 +103,7 @@ const PostCard = ({ post, auth }: Props) => {
         }
         firestore.collection('posts').doc(post.id).update({ reactions: data });
     };
+
     return (
         <Card className={classes.postCard}>
             <CardHeader
@@ -108,11 +114,6 @@ const PostCard = ({ post, auth }: Props) => {
                         component={Link}
                         to={`${PROFILES}/${post.uid}`}
                     />
-                }
-                action={
-                    <IconButton aria-label='settings'>
-                        <MoreVert />
-                    </IconButton>
                 }
                 title={post.userName}
                 subheader={moment(post.date).fromNow()}
@@ -174,9 +175,6 @@ const PostCard = ({ post, auth }: Props) => {
                 >
                     {reactions && reactions.filter((r) => r.type === 1).length}
                 </Button>
-                <IconButton aria-label='share'>
-                    <Share />
-                </IconButton>
                 <IconButton
                     className={clsx(classes.expand, {
                         [classes.expandOpen]: expandedComments,
@@ -188,12 +186,7 @@ const PostCard = ({ post, auth }: Props) => {
                     <ExpandMore />
                 </IconButton>
             </CardActions>
-            <form
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    submitComment();
-                }}
-            >
+            <form onSubmit={submitComment}>
                 <CardActions>
                     <Avatar
                         className={classes.commentAvatar}
