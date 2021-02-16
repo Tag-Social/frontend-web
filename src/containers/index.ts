@@ -13,3 +13,4 @@ export { default as RecommendedMentors } from './recommendedMentors';
 export { default as UserSearchBar } from './userSearchBar';
 export { default as Posts } from './posts';
 export { default as Bug } from './bug';
+export { default as Messenger } from './messenger';
