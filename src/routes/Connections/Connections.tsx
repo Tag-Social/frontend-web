@@ -19,7 +19,7 @@ import { Chat } from '@material-ui/icons';
  
 import { useStyles } from './styles';
 import { UserProfile } from '../../firebase/utils/userProfile';
-import { PROFILES } from '../../routes/routePaths';
+import { PROFILES, MESSAGING } from '../../routes/routePaths';
 import { RecommendedMentors } from '../../containers';
 import { Skeleton } from '@material-ui/lab';
 
@@ -94,6 +94,13 @@ const Connections = () => {
                                             size='small'
                                             color='primary'
                                             variant='outlined'
+                                            component={Link}
+                                            to={{
+                                                pathname: MESSAGING,
+                                                state: {
+                                                    user: user.id,
+                                                },
+                                            }}
                                         >
                                             <Chat
                                                 fontSize='inherit'

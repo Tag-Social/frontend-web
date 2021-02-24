@@ -4,7 +4,7 @@ import {
     ListItemAvatar,
     Avatar,
 } from '@material-ui/core';
-import moment from 'moment';
+import Moment from 'react-moment';
 
 type Props = {
     user: any;
@@ -16,7 +16,6 @@ const Message = ({
     data: { text, date, uid, photoURL, displayName },
 }: Props) => {
     displayName = displayName && displayName.trim().split(' ')[0];
-    date = moment(date).fromNow();
     return (
         <ListItem
             alignItems='flex-start'
@@ -31,9 +30,9 @@ const Message = ({
             </ListItemAvatar>
             <ListItemText
                 primary={text}
-                secondary={date}
+                secondary={<Moment fromNow>{date}</Moment>}
                 style={
-                    user.uid === uid
+                    user === uid
                         ? {
                               position: 'absolute',
                               right: '75px',

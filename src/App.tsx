@@ -56,7 +56,7 @@ const App = () => (
                     <PrivateRoute exact path={NOTIFICATIONS}>
                         <Notifications />
                     </PrivateRoute>
-                    <PrivateRoute exact path={MESSAGING}>
+                    <PrivateRoute path={MESSAGING}>
                         <Messaging />
                     </PrivateRoute>
                     <Route path={`${PROFILES}/:profileId`}>

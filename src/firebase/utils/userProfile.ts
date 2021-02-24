@@ -26,6 +26,7 @@ export type Social = {
 
 export type UserProfile = {
     [key: string]: any;
+    id?: string;
     displayName?: string | null | undefined;
     email?: string | null | undefined;
     gender: string | null | undefined;
