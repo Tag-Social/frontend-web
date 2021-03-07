@@ -22,7 +22,7 @@ type Props = {
 const ShareDialog = ({ open, setOpen, url }: Props) => {
     const classes = useStyles();
     const copyLink = () => {
-        navigator.clipboard.writeText(url);
+        if (navigator.clipboard) navigator.clipboard.writeText(url);
     };
 
     return (

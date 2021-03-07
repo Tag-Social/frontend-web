@@ -30,7 +30,6 @@ import {
 
 import { ProfileAvatar, ShareDialog } from '..';
 import EditHeader from './editHeader';
-import { FollowButton } from '..';
 import { useStyles } from './styles';
 import { UserProfile } from '../../firebase/utils/userProfile';
 import RequestsButton from '../buttons/RequestsButton';
@@ -86,9 +85,9 @@ const ProfileHeader = ({ profile, profileId, owner }: Props) => {
         <CardActions className={classes.cardActions}>
             {!owner && (
                 <>
-                    <FollowButton size='small' uid={profileId} />
                     <RequestsButton
                         size='small'
+                        user={profile}
                         uid={profileId}
                         mentor={mentor}
                     />

@@ -2,43 +2,56 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
     gridList: {
-        maxWidth: '100vw',
+        width: '100%',
         marginBottom: '10px',
         padding: '6px',
+        paddingBottom: '30px',
         display: 'grid',
         gap: '10px',
-        gridTemplateRows: 'minmax(150px, 1fr)',
+        gridTemplateRows: 'minmax(500px, 1fr)',
         gridTemplateColumns: '10px',
         gridAutoFlow: 'column',
         overflowX: 'scroll',
         scrollSnapType: 'x proximity',
         scrollbarWidth: 'none',
         margin: 0,
-        '&:webkit-scrollbar': {
+        '&::webkit-scrollbar': {
             display: 'none',
         },
     },
     userCard: {
         scrollSnapAlign: 'center',
-        width: '250px',
+        borderRadius: '15px',
+        width: '350px',
         display: 'flex',
         overflow: 'auto',
         flexDirection: 'column',
         position: 'relative',
+        boxShadow: ' 0px 8px 20px rgb(0 0 0 / 6%)',
     },
     avatarContainer: {
-        position: 'absolute',
-        top: 0,
-        left: 10,
-        width: '85px',
-        height: '85px',
-        backgroundColor: '#c3c3c3',
-        border: '3px solid white',
+        backgroundColor: '#F0F0F0',
+        borderRadius: '15px',
+        border: '5px solid white',
+    },
+    userInfo: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    userInfoText: {
+        display: 'flex',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: 5,
     },
     actionArea: {
         height: '100%',
     },
+    actions: {
+        margin: '0 auto',
+    },
     title: {
-        marginLeft: '16px',
+        fontWeight: 600,
     },
 }));

@@ -1,11 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
-import {
-    Container,
-    CssBaseline,
-    Grid,
-} from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 
 import { useStyles } from './styles';

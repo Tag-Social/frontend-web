@@ -19,7 +19,7 @@ import {
     MenuItem,
     FormHelperText,
 } from '@material-ui/core';
-import { Create, ArrowBack, LocalDrinkOutlined,  } from '@material-ui/icons';
+import { Create, ArrowBack } from '@material-ui/icons';
 
 import { UserProfile } from '../../firebase/utils/userProfile';
 import { useStyles } from './styles';
@@ -75,8 +75,6 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
                 .where('__name__', 'in', [
                     ...mentees.map((u: { uid2: string }) => u.uid2),
                     ...mentors.map((u: { uid1: string }) => u.uid1),
-                    ...following.map((u: { uid2: string }) => u.uid2),
-                    ...followers.map((u: { uid1: string }) => u.uid1),
                     '1',
                 ])
                 .get()
@@ -85,7 +83,14 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
                     snapshot.forEach((doc) =>
                         data.push({ ...doc.data(), id: doc.id })
                     );
-                    setConnections(data.filter(u => !conversations.some((c:any) => c.users.includes(u.id))));
+                    setConnections(
+                        data.filter(
+                            (u) =>
+                                !conversations.some((c: any) =>
+                                    c.users.includes(u.id)
+                                )
+                        )
+                    );
                 });
         }
     }, [conversations, convoId, firestore, followers, following, mentees, mentors, setConnections]);

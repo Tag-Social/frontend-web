@@ -17,6 +17,7 @@ import {
 import { Autocomplete } from '@material-ui/lab';
 
 import { userProfile, UserProfile } from '../../firebase/utils/userProfile';
+import options from './options';
 
 type Props = {
     open: boolean;
@@ -43,8 +44,6 @@ const EditInterests = ({ open, setOpen }: Props) => {
         setOpen(false);
     };
 
-    const options = ['']
-
     return (
         <Dialog
             fullScreen={fullScreen}
@@ -54,30 +53,34 @@ const EditInterests = ({ open, setOpen }: Props) => {
             aria-labelledby='responsive-dialog-title'
         >
             <DialogTitle id='responsive-dialog-title'>
-                {"Edit Interests"}
+                {'Edit Interests'}
             </DialogTitle>
             <DialogContent>
                 <DialogContentText>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
-                            {profileData.interests && <Autocomplete
-                                multiple
-                                freeSolo
-                                ChipProps={{ color: 'primary' }}
-                                options={options}
-                                getOptionLabel={(option) => option}
-                                value={profileData.interests}
-                                onChange={(event, value) => setProfileData({
-                                    ...profile,
-                                    interests: value
-                                })}
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label="Interests"
-                                    />
-                                )}
-                            />}
+                            {profileData.interests && (
+                                <Autocomplete
+                                    multiple
+                                    freeSolo
+                                    ChipProps={{ color: 'primary' }}
+                                    options={options}
+                                    getOptionLabel={(option) => option}
+                                    value={profileData.interests}
+                                    onChange={(event, value) =>
+                                        setProfileData({
+                                            ...profile,
+                                            interests: value,
+                                        })
+                                    }
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label='Interests'
+                                        />
+                                    )}
+                                />
+                            )}
                         </Grid>
                     </Grid>
                 </DialogContentText>
@@ -92,6 +95,6 @@ const EditInterests = ({ open, setOpen }: Props) => {
             </DialogActions>
         </Dialog>
     );
-};
+};;
 
 export default EditInterests;

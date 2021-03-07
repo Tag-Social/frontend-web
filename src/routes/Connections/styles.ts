@@ -4,12 +4,9 @@ export const useStyles = makeStyles((theme) => ({
     card: {
         margin: '0 auto 16px auto',
         maxWidth: '850px',
+        boxShadow: ' 0px 8px 20px rgb(0 0 0 / 6%)',
     },
-    container: {
-        [theme.breakpoints.down('xs')]: {
-            padding: 0,
-        },
-    },
+    container: {},
     listItemText: {
         maxWidth: '50%',
     },

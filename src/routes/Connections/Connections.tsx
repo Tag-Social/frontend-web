@@ -13,15 +13,14 @@ import {
     ListItemText,
     ListItemSecondaryAction,
     Button,
-
 } from '@material-ui/core';
 import { Chat } from '@material-ui/icons';
- 
+
 import { useStyles } from './styles';
 import { UserProfile } from '../../firebase/utils/userProfile';
 import { PROFILES, MESSAGING } from '../../routes/routePaths';
-import { RecommendedMentors } from '../../containers';
 import { Skeleton } from '@material-ui/lab';
+import { RequestsButton } from '../../containers';
 
 const Connections = () => {
     const firestore = useFirestore();
@@ -31,7 +30,7 @@ const Connections = () => {
     const [
         profile,
         auth,
-        { mentors, mentees, following, followers },
+        { mentors, mentees, pending },
     ] = useSelector(({ relationships, firebase }: RootStateOrAny) => [
         firebase.profile,
         firebase.auth,
@@ -45,8 +44,8 @@ const Connections = () => {
             .where('__name__', 'in', [
                 ...mentees.map((u: { uid2: string }) => u.uid2),
                 ...mentors.map((u: { uid1: string }) => u.uid1),
-                ...following.map((u: { uid2: string }) => u.uid2),
-                ...followers.map((u: { uid1: string }) => u.uid1),
+                ...pending.mentees.map((u: { uid2: string }) => u.uid2),
+                ...pending.mentors.map((u: { uid1: string }) => u.uid1),
                 '1',
             ])
             .get()
@@ -58,7 +57,7 @@ const Connections = () => {
                 setUsers(data);
                 setLoading(false);
             });
-    }, [firestore, followers, following, mentees, mentors]);
+    }, [firestore]);
 
     return (
         <Container maxWidth='md' className={classes.container}>
@@ -71,13 +70,16 @@ const Connections = () => {
                 Connections
             </Typography>
             {!loading ? (
-                <Card className={classes.card} elevation={1}>
-                    <List>
-                        {users.length > 0 ? (
-                            users.map((user: UserProfile, index: number) => (
+                <List>
+                    {users.length > 0 ? (
+                        users.map((user: UserProfile, index: number) => (
+                            <Card
+                                className={classes.card}
+                                elevation={0}
+                                key={`user-${index}`}
+                            >
                                 <ListItem
                                     button
-                                    key={`user-${index}`}
                                     component={Link}
                                     to={`${PROFILES}/${user.id}`}
                                 >
@@ -90,35 +92,23 @@ const Connections = () => {
                                         className={classes.listItemText}
                                     />
                                     <ListItemSecondaryAction>
-                                        <Button
+                                        <RequestsButton
+                                            user={user}
+                                            uid={String(user.id)}
+                                            mentor={user.mentor}
                                             size='small'
-                                            color='primary'
-                                            variant='outlined'
-                                            component={Link}
-                                            to={{
-                                                pathname: MESSAGING,
-                                                state: {
-                                                    user: user.id,
-                                                },
-                                            }}
-                                        >
-                                            <Chat
-                                                fontSize='inherit'
-                                                style={{ marginRight: 5 }}
-                                            />{' '}
-                                            Message
-                                        </Button>
+                                        />
                                     </ListItemSecondaryAction>
                                 </ListItem>
-                            ))
-                        ) : (
-                            <Typography variant='body1'>
-                                No connections yet. When you make connections,
-                                they will appear hear!
-                            </Typography>
-                        )}
-                    </List>
-                </Card>
+                            </Card>
+                        ))
+                    ) : (
+                        <Typography variant='body1'>
+                            No connections yet. When you make connections, they
+                            will appear hear!
+                        </Typography>
+                    )}
+                </List>
             ) : (
                 <Skeleton
                     animation='wave'
@@ -126,7 +116,6 @@ const Connections = () => {
                     height={200}
                 />
             )}
-            <RecommendedMentors profile={profile} auth={auth} />
         </Container>
     );
 };
