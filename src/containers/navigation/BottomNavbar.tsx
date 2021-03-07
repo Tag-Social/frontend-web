@@ -32,7 +32,9 @@ const BottomNavbar = () => {
 
     return isLoaded(auth) && !isEmpty(auth) ? (
         <AppBar position='fixed' className={classes.bottomNav}>
-            <Toolbar style={{  display: 'flex', justifyContent: 'space-evenly'  }}>
+            <Toolbar
+                style={{ display: 'flex', justifyContent: 'space-evenly' }}
+            >
                 <IconButton
                     edge='start'
                     color='inherit'
@@ -43,17 +45,6 @@ const BottomNavbar = () => {
                 </IconButton>
                 <IconButton color='inherit' component={Link} to={CONNECTIONS}>
                     <People fontSize='large' />
-                </IconButton>
-                <IconButton color='inherit' component={Link} to={NOTIFICATIONS}>
-                    <NotificationsActive fontSize='large' />
-                </IconButton>
-                <IconButton
-                    edge='end'
-                    color='inherit'
-                    component={Link}
-                    to={MESSAGING}
-                >
-                    <Chat fontSize='large' />
                 </IconButton>
             </Toolbar>
         </AppBar>

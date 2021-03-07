@@ -5,17 +5,26 @@ import {
     MenuItem,
     ListItemIcon,
     ListItemText,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    Grid,
+    IconButton,
+    TextField
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Menu, { MenuProps } from '@material-ui/core/Menu';
-import { LocalOffer, PersonAdd, Remove } from '@material-ui/icons';
+import { LocalOffer, PersonAdd, Remove, LinkedIn, FileCopy } from '@material-ui/icons';
 
 import { Relationship } from '../../firebase/utils/relationships';
 import { useRelationships } from '../../hooks';
 import { getRelationships } from '../../redux/actions/relationships';
 import { useStyles } from './styles';
+import { UserProfile } from '../../firebase/utils/userProfile';
 
 type Props = {
+    user: UserProfile;
     uid: string;
     size?: 'small' | 'large' | 'medium';
     mentor: boolean;
@@ -52,11 +61,12 @@ const StyledMenuItem = withStyles((theme) => ({
     },
 }))(MenuItem);
 
-const RequestsButton = ({ mentor, uid, size }: Props) => {
+const RequestsButton = ({ mentor, uid, size, user }: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const optionsRef = useRef<HTMLButtonElement>(null);
     const [showOptions, setShowOptions] = useState(false);
+    const [showDialog, setShowDialog] = useState(false)
     const [
         auth,
         relationships,
@@ -64,6 +74,10 @@ const RequestsButton = ({ mentor, uid, size }: Props) => {
         firebase.auth,
         relationships,
     ]);
+    const [message, setMessage] = useState(`Hi ${
+        user.displayName?.split(' ')[0]
+    }! I am currently looking for a mentor and I found you on TAG! Below is a link to my TAG profile. Hope to hear from you soon!
+    http://gettagged.co/profiles/${auth.uid}`);
 
     const mentorRel = relationships.mentees.find(
         (rel: Relationship) => rel.uid2 === uid
@@ -84,7 +98,6 @@ const RequestsButton = ({ mentor, uid, size }: Props) => {
 
     const mentorshipId =
         (menteeRel && menteeRel.relId) || (mentorRel && mentorRel.relId);
-
     const {
         requestMentorship,
         acceptMentorship,
@@ -92,10 +105,79 @@ const RequestsButton = ({ mentor, uid, size }: Props) => {
     } = useRelationships(auth.uid);
     const fontSize = size === 'medium' ? 'inherit' : size;
 
+    const submitRequest = () => {
+        requestMentorship(uid);
+        if (user.social?.linkedin) {
+            setShowDialog(true)
+        }
+    };
+    const copyText = () => {
+        if (navigator.clipboard) navigator.clipboard.writeText(message);
+     };
+
+    const dialog = (
+        <Dialog
+            open={showDialog}
+            onClose={() => setShowDialog(false)}
+            aria-labelledby='responsive-dialog-title'
+        >
+            <DialogTitle id='responsive-dialog-title'>
+                {`Notify ${user.displayName} on LinkedIn!`}
+            </DialogTitle>
+            <DialogContent>
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        {`Copy the message below and invite ${
+                            user.displayName?.split(' ')[0]
+                        } to connect with this message in the body.`}
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            id='input-with-icon-textfield'
+                            multiline
+                            variant='outlined'
+                            fullWidth
+                            value={message}
+                            onChange={(e)=> setMessage(e.target.value)}
+                            InputProps={{
+                                startAdornment: (
+                                    <IconButton onClick={copyText}>
+                                        <FileCopy color='primary' />
+                                    </IconButton>
+                                ),
+                            }}
+                        />
+                    </Grid>
+                </Grid>
+            </DialogContent>
+            <DialogActions>
+                <Button
+                    startIcon={<LinkedIn/> }
+                    variant='contained'
+                    disableElevation
+                    href={`https://linkedin.com/in/${user.social?.linkedin}`}
+                    color='primary'
+                >{`${user.displayName}`}
+                </Button>
+                <Button
+                    onClick={() => setShowDialog(false)}
+                    color='primary'
+                >
+                    Close
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
+
     useEffect(() => {}, [relationships]);
-    return mentor || pendingMenteeRel || pendingMentorRel ? (
+    return mentor || pendingMenteeRel || pendingMentorRel || mentorshipId ? (
         <>
             <Button
+                startIcon={
+                    <LocalOffer
+                        fontSize={fontSize}
+                    />
+                }
                 ref={optionsRef}
                 onClick={(e) => setShowOptions(true)}
                 color='primary'
@@ -103,10 +185,6 @@ const RequestsButton = ({ mentor, uid, size }: Props) => {
                 size={size}
                 disableElevation
             >
-                <LocalOffer
-                    fontSize={fontSize}
-                    className={classes.buttonIcon}
-                />
                 {pendingMenteeRel
                     ? 'Pending...'
                     : pendingMentorRel
@@ -126,9 +204,7 @@ const RequestsButton = ({ mentor, uid, size }: Props) => {
             >
                 {!noRel && mentor && (
                     <StyledMenuItem
-                        onClick={() => {
-                            requestMentorship(uid);
-                        }}
+                        onClick={submitRequest}
                     >
                         <ListItemIcon className={classes.listItemIcon}>
                             <LocalOffer fontSize={fontSize} />
@@ -173,6 +249,7 @@ const RequestsButton = ({ mentor, uid, size }: Props) => {
                     </StyledMenuItem>
                 )}
             </StyledMenu>
+            {dialog}
         </>
     ) : null;
 };

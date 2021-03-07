@@ -51,26 +51,14 @@ const TopNavbar = () => {
     };
 
     const userNav = (
-        <>
-            <UserSearchBar />
             <>
                 <div className={classes.topNavUserActions}>
-                    <IconButton
-                        color='primary'
-                        component={Link}
-                        to={NOTIFICATIONS}
-                    >
-                        <NotificationsActive fontSize='large' />
-                    </IconButton>
                     <IconButton
                         color='primary'
                         component={Link}
                         to={CONNECTIONS}
                     >
                         <People fontSize='large' />
-                    </IconButton>
-                    <IconButton color='primary' component={Link} to={MESSAGING}>
-                        <Chat fontSize='large' />
                     </IconButton>
                 </div>
                 <IconButton
@@ -111,7 +99,6 @@ const TopNavbar = () => {
                     </Menu>
                 )}
             </>
-        </>
     );
 
     const guestNav = (

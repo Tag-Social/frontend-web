@@ -5,16 +5,14 @@ import { CssBaseline, ThemeProvider } from '@material-ui/core'
 import { theme } from './materialUI/theme'
 import { Navigation, PrivateRoute, PublicRoute } from './containers';
 import {
-      Home,
-      Dashboard,
-      Profiles,
-      Login,
-      Register,
-      PasswordReset,
-      Connections,
-      Notifications,
-      Messaging,
-      NotFound404,
+    Home,
+    Dashboard,
+    Profiles,
+    Login,
+    Register,
+    PasswordReset,
+    Connections,
+    NotFound404,
 } from './routes';
 import {
     HOME,
@@ -24,8 +22,6 @@ import {
     PASSWORD_RESET,
     PROFILES,
     CONNECTIONS,
-    NOTIFICATIONS, 
-    MESSAGING
 } from './routes/routePaths';
 
 const App = () => (
@@ -33,7 +29,7 @@ const App = () => (
         <CssBaseline />
         <Router>
             <Navigation />
-            <main style={{ paddingTop: '5.3rem' }}>
+            <main style={{ paddingTop: '4rem' }}>
                 <Switch>
                     <PublicRoute exact path={HOME}>
                         <Home />
@@ -52,12 +48,6 @@ const App = () => (
                     </PrivateRoute>
                     <PrivateRoute exact path={CONNECTIONS}>
                         <Connections />
-                    </PrivateRoute>
-                    <PrivateRoute exact path={NOTIFICATIONS}>
-                        <Notifications />
-                    </PrivateRoute>
-                    <PrivateRoute path={MESSAGING}>
-                        <Messaging />
                     </PrivateRoute>
                     <Route path={`${PROFILES}/:profileId`}>
                         <Profiles />

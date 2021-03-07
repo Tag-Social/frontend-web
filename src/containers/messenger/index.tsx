@@ -19,7 +19,7 @@ import {
     MenuItem,
     FormHelperText,
 } from '@material-ui/core';
-import { Create, ArrowBack, LocalDrinkOutlined,  } from '@material-ui/icons';
+import { Create, ArrowBack } from '@material-ui/icons';
 
 import { UserProfile } from '../../firebase/utils/userProfile';
 import { useStyles } from './styles';
