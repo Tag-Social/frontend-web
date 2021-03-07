@@ -51,54 +51,53 @@ const TopNavbar = () => {
     };
 
     const userNav = (
-            <>
-                <div className={classes.topNavUserActions}>
-                    <IconButton
-                        color='primary'
-                        component={Link}
-                        to={CONNECTIONS}
-                    >
-                        <People fontSize='large' />
-                    </IconButton>
-                </div>
-                <IconButton
-                    aria-label='account of current user'
-                    aria-controls='menu-appbar'
-                    aria-haspopup='true'
-                    onClick={handleMenu}
-                    color='inherit'
-                >
-                    <Avatar
-                        alt={auth.displayName || undefined}
-                        src={auth.photoURL || undefined}
-                    />
+        <>
+            <div className={classes.topNavUserActions}>
+                <IconButton color='primary' component={Link} to={CONNECTIONS}>
+                    <People fontSize='large' />
                 </IconButton>
-                {auth && (
-                    <Menu
-                        anchorEl={anchorEl}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'left',
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        open={open}
-                        onClose={handleClose}
+                <IconButton color='primary' component={Link} to={MESSAGING}>
+                    <Chat fontSize='large' />
+                </IconButton>
+            </div>
+            <IconButton
+                aria-label='account of current user'
+                aria-controls='menu-appbar'
+                aria-haspopup='true'
+                onClick={handleMenu}
+                color='inherit'
+            >
+                <Avatar
+                    alt={auth.displayName || undefined}
+                    src={auth.photoURL || undefined}
+                />
+            </IconButton>
+            {auth && (
+                <Menu
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
+                    open={open}
+                    onClose={handleClose}
+                >
+                    <MenuItem
+                        component={Link}
+                        to={`${PROFILES}/${auth.uid}`}
+                        onClick={handleClose}
                     >
-                        <MenuItem
-                            component={Link}
-                            to={`${PROFILES}/${auth.uid}`}
-                            onClick={handleClose}
-                        >
-                            Profile
-                        </MenuItem>
-                        <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
-                    </Menu>
-                )}
-            </>
+                        Profile
+                    </MenuItem>
+                    <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
+                </Menu>
+            )}
+        </>
     );
 
     const guestNav = (

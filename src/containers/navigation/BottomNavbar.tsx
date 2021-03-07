@@ -46,6 +46,14 @@ const BottomNavbar = () => {
                 <IconButton color='inherit' component={Link} to={CONNECTIONS}>
                     <People fontSize='large' />
                 </IconButton>
+                <IconButton
+                    edge='end'
+                    color='inherit'
+                    component={Link}
+                    to={MESSAGING}
+                >
+                    <Chat fontSize='large' />
+                </IconButton>
             </Toolbar>
         </AppBar>
     ) : null;

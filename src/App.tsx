@@ -11,6 +11,7 @@ import {
     Login,
     Register,
     PasswordReset,
+    Messaging,
     Connections,
     NotFound404,
 } from './routes';
@@ -21,6 +22,7 @@ import {
     DASHBOARD,
     PASSWORD_RESET,
     PROFILES,
+    MESSAGING,
     CONNECTIONS,
 } from './routes/routePaths';
 
@@ -29,7 +31,7 @@ const App = () => (
         <CssBaseline />
         <Router>
             <Navigation />
-            <main style={{ paddingTop: '4rem' }}>
+            <main style={{ paddingTop: '4.3rem' }}>
                 <Switch>
                     <PublicRoute exact path={HOME}>
                         <Home />
@@ -48,6 +50,9 @@ const App = () => (
                     </PrivateRoute>
                     <PrivateRoute exact path={CONNECTIONS}>
                         <Connections />
+                    </PrivateRoute>
+                    <PrivateRoute path={MESSAGING}>
+                        <Messaging />
                     </PrivateRoute>
                     <Route path={`${PROFILES}/:profileId`}>
                         <Profiles />

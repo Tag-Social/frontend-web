@@ -177,7 +177,7 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                         color='primary'
                         align='center'
                     >
-                        Update your interests for better matches!
+                        Update your interests for more matches!
                     </Typography>
                     <IconButton
                         color='primary'

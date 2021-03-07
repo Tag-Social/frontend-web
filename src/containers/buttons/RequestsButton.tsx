@@ -173,11 +173,7 @@ const RequestsButton = ({ mentor, uid, size, user }: Props) => {
     return mentor || pendingMenteeRel || pendingMentorRel || mentorshipId ? (
         <>
             <Button
-                startIcon={
-                    <LocalOffer
-                        fontSize={fontSize}
-                    />
-                }
+                startIcon={<LocalOffer fontSize={fontSize} />}
                 ref={optionsRef}
                 onClick={(e) => setShowOptions(true)}
                 color='primary'
@@ -188,7 +184,7 @@ const RequestsButton = ({ mentor, uid, size, user }: Props) => {
                 {pendingMenteeRel
                     ? 'Pending...'
                     : pendingMentorRel
-                    ? 'Accept'
+                    ? 'Respond'
                     : 'Mentorship'}
             </Button>
             <StyledMenu
@@ -203,9 +199,7 @@ const RequestsButton = ({ mentor, uid, size, user }: Props) => {
                 }}
             >
                 {!noRel && mentor && (
-                    <StyledMenuItem
-                        onClick={submitRequest}
-                    >
+                    <StyledMenuItem onClick={submitRequest}>
                         <ListItemIcon className={classes.listItemIcon}>
                             <LocalOffer fontSize={fontSize} />
                         </ListItemIcon>
@@ -222,6 +216,18 @@ const RequestsButton = ({ mentor, uid, size, user }: Props) => {
                             <PersonAdd fontSize={fontSize} />
                         </ListItemIcon>
                         <ListItemText primary='Accept Request' />
+                    </StyledMenuItem>
+                )}
+                {pendingMentorRel && (
+                    <StyledMenuItem
+                        onClick={() => {
+                            terminateMentorship(pendingMentorRel.relId);
+                        }}
+                    >
+                        <ListItemIcon className={classes.listItemIcon}>
+                            <PersonAdd fontSize={fontSize} />
+                        </ListItemIcon>
+                        <ListItemText primary='Decline Request' />
                     </StyledMenuItem>
                 )}
                 {pendingMenteeRel && (
