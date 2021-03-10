@@ -44,19 +44,21 @@ type Message = {
     id: string;
     uid: string;
     text: string;
-    date:string;
-}
+    date: string;
+};
 
 const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
     const [
         conversations,
         auth,
         { mentors, mentees, following, followers },
-    ] = useSelector(({ firestore, firebase, relationships }: RootStateOrAny) => [
-        firestore.ordered.conversations,
-        firebase.auth,
-        relationships,
-    ]);
+    ] = useSelector(
+        ({ firestore, firebase, relationships }: RootStateOrAny) => [
+            firestore.ordered.conversations,
+            firebase.auth,
+            relationships,
+        ]
+    );
     const [conversation, setConversation] = useState<Conversation>();
     const firestore = useFirestore();
     const theme = useTheme();
@@ -64,8 +66,8 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
     const [open, setOpen] = useState(false);
     const [newMessage, setNewMessage] = useState('');
-    const [connections, setConnections] = useState<UserProfile[]>()
-    const [newConvoUser, setNewConvoUser] = useState('')
+    const [connections, setConnections] = useState<UserProfile[]>();
+    const [newConvoUser, setNewConvoUser] = useState('');
     const endOfPage = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -93,7 +95,16 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
                     );
                 });
         }
-    }, [conversations, convoId, firestore, followers, following, mentees, mentors, setConnections]);
+    }, [
+        conversations,
+        convoId,
+        firestore,
+        followers,
+        following,
+        mentees,
+        mentors,
+        setConnections,
+    ]);
 
     useEffect(() => {
         if (convoId) {
@@ -125,23 +136,23 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
                         uid: auth.uid,
                         date: new Date().toISOString(),
                         id: uuidv4(),
-                    }
+                    },
                 ],
                 users: [auth.uid, user.id],
                 usersData: {
                     [auth.uid]: {
                         displayName: auth.displayName,
-                        photoURL: auth.photoURL,
+                        photoURL: auth.photoURL || '',
                     },
                     [user.id]: {
                         displayName: user.displayName,
-                        photoURL: user.photoURL,
+                        photoURL: user.photoURL || '',
                     },
                 },
             })
             .then(() => {
-                setCurrentConvo(id)
-                setNewMessage('')
+                setCurrentConvo(id);
+                setNewMessage('');
             });
     };
 
@@ -149,7 +160,7 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
         e.preventDefault();
         const id = uuidv4();
         const date = new Date().toISOString();
-        if (conversation){
+        if (conversation) {
             firestore
                 .collection('conversations')
                 .doc(conversation.id)
@@ -161,15 +172,14 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
                             text: newMessage,
                             uid: auth.uid,
                             date,
-                            id
+                            id,
                         },
                     ],
                 })
                 .then(() => setNewMessage(''));
-            } else if(convoId === 'new' && newConvoUser) {
-                newConvo(connections?.find(c=> c.id === newConvoUser))
-            }
-        
+        } else if (convoId === 'new' && newConvoUser) {
+            newConvo(connections?.find((c) => c.id === newConvoUser));
+        }
     };
 
     const header = (
@@ -192,10 +202,7 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
                         }
                     >
                         {connections?.map((c) => (
-                            <MenuItem
-                                value={c.id as string}
-                                key={c.id}
-                            >
+                            <MenuItem value={c.id as string} key={c.id}>
                                 {c.displayName}
                             </MenuItem>
                         ))}
@@ -221,16 +228,21 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
                         conversation.messages.map((m: Message, i: number) => {
                             const msgData = {
                                 ...m,
-                                displayName:
-                                    String(conversation.usersData[m.uid].displayName),
+                                displayName: String(
+                                    conversation.usersData[m.uid].displayName
+                                ),
                                 photoURL:
                                     conversation.usersData[m.uid].photoURL,
                             };
                             return (
-                                <Message key={i} data={msgData} user={auth.uid} />
+                                <Message
+                                    key={i}
+                                    data={msgData}
+                                    user={auth.uid}
+                                />
                             );
                         })}
-                        <div ref={endOfPage}></div>
+                    <div ref={endOfPage}></div>
                 </List>
             </DialogContent>
             <form onSubmit={onSubmit}>

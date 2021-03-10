@@ -11,6 +11,8 @@ import {
     Button,
     IconButton
 } from '@material-ui/core';
+import Skeleton from '@material-ui/lab/Skeleton';
+
 import { LocationOn, AssignmentInd, Person, Edit } from '@material-ui/icons';
 
 import { useStyles } from './styles';
@@ -21,8 +23,10 @@ import { RequestsButton } from '..';
 const RecommendedMentors = ({ profile, auth }: any) => {
     const firestore = useFirestore();
     const [mentors, setMentors] = useState<any[]>([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true);
         const interests =
             profile.interests && profile.interests.length > 0
                 ? profile.interests
@@ -52,12 +56,13 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                             setMentors(data);
                         });
                 }
+                setLoading(false);
             });
     }, [firestore, auth.uid, profile,]);
     const classes = useStyles();
 
     const mentorCards =
-        mentors.length > 0 ? (
+        mentors.length > 0 && !loading ? (
             mentors.map((mentor) => (
                 <Card
                     className={classes.userCard}
@@ -140,6 +145,15 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                     </CardActions>
                 </Card>
             ))
+        ) : loading ? (
+            <>
+                <Skeleton variant='rect'>
+                    <Card className={classes.userCard}></Card>
+                </Skeleton>
+                <Skeleton variant='rect'>
+                    <Card className={classes.userCard}></Card>
+                </Skeleton>
+            </>
         ) : (
             <Typography variant='body1'>
                 Sorry we have not found any mentors for you yet...

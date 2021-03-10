@@ -60,12 +60,11 @@ const Connections = () => {
     }, [firestore]);
 
     return (
-        <Container maxWidth='md' className={classes.container}>
+        <Container maxWidth='sm' className={classes.container}>
             <Typography
-                variant='h6'
+                variant='h5'
                 color='primary'
                 gutterBottom
-                className={classes.title}
             >
                 Connections
             </Typography>
