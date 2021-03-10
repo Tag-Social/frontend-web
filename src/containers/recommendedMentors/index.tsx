@@ -30,7 +30,7 @@ const RecommendedMentors = ({ profile, auth }: any) => {
         const usersCollection = firestore.collection('users');
         usersCollection
             .where('__name__', '!=', auth.uid)
-            .where('mentor', '==', true)
+            .where('accountType', '==', 1)
             .where('interests', 'in', interests)
             .get()
             .then((snapshot) => {
@@ -39,11 +39,11 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                     snapshot.forEach((doc) =>
                         data.push({ ...doc.data(), id: doc.id })
                     );
-                     setMentors(data);
+                    setMentors(data);
                 } else {
                     usersCollection
                         .where('__name__', '!=', auth.uid)
-                        .where('mentor', '==', true)
+                        .where('accountType', '==', 1)
                         .get()
                         .then((snapshot) => {
                             snapshot.forEach((doc) =>
@@ -133,7 +133,7 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                             View Profile
                         </Button>
                         <RequestsButton
-                            mentor={mentor.mentor}
+                            mentor={mentor.accountType === 1}
                             uid={mentor.id}
                             user={mentor}
                         />

@@ -1,7 +1,12 @@
 import React from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { Container, Grid } from '@material-ui/core';
-import { RecommendedMentors, ProfileCard, Posts } from '../../containers';
+import {
+    RecommendedMentors,
+    ProfileCard,
+    Posts,
+    Onboarding,
+} from '../../containers';
 import { useStyles } from './styles';
 
 const Dashboard = () => {

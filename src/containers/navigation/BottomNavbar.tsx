@@ -27,10 +27,16 @@ import {
 } from '../../routes/routePaths';
 
 const BottomNavbar = () => {
-    const auth = useSelector((state: RootStateOrAny) => state.firebase.auth);
+    const [
+        auth,
+        profile,
+    ] = useSelector(({ firebase: { auth, profile } }: RootStateOrAny) => [
+        auth,
+        profile,
+    ]);
     const classes = useStyles();
 
-    return isLoaded(auth) && !isEmpty(auth) ? (
+    return isLoaded(auth) && !isEmpty(auth) && profile.onboarded ? (
         <AppBar position='fixed' className={classes.bottomNav}>
             <Toolbar
                 style={{ display: 'flex', justifyContent: 'space-evenly' }}

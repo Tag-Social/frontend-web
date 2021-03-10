@@ -34,7 +34,8 @@ export type UserProfile = {
     ethnicity: string | null | undefined;
     photoURL?: string;
     bio: string;
-    mentor: boolean;
+    accountType: null | 0 | 1 | 2; // mentee = 0, mentor = 1, pending mentor = 2
+    onboarded: boolean;
     displayEducation: boolean;
     displayLocation: boolean;
     disability: string | null | undefined;
@@ -66,7 +67,8 @@ export const userProfile: UserProfile = {
     bio: '',
     gender: '',
     ethnicity: '',
-    mentor: false,
+    accountType: null,
+    onboarded: false,
     displayEducation: false,
     displayLocation: false,
     disability: null,

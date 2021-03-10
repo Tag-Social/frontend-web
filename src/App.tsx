@@ -1,9 +1,15 @@
-import React  from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { CssBaseline, ThemeProvider } from '@material-ui/core'
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { RootStateOrAny, useSelector } from 'react-redux';
+import { CssBaseline, ThemeProvider } from '@material-ui/core';
 
-import { theme } from './materialUI/theme'
-import { Navigation, PrivateRoute, PublicRoute } from './containers';
+import { theme } from './materialUI/theme';
+import {
+    Navigation,
+    PrivateRoute,
+    PublicRoute,
+    Onboarding,
+} from './containers';
 import {
     Home,
     Dashboard,
@@ -26,44 +32,53 @@ import {
     CONNECTIONS,
 } from './routes/routePaths';
 
-const App = () => (
-    <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Router>
-            <Navigation />
-            <main style={{ paddingTop: '4.3rem' }}>
-                <Switch>
-                    <PublicRoute exact path={HOME}>
-                        <Home />
-                    </PublicRoute>
-                    <PublicRoute exact path={LOGIN}>
-                        <Login />
-                    </PublicRoute>
-                    <PublicRoute exact path={REGISTER}>
-                        <Register />
-                    </PublicRoute>
-                    <PublicRoute exact path={PASSWORD_RESET}>
-                        <PasswordReset />
-                    </PublicRoute>
-                    <PrivateRoute exact path={DASHBOARD}>
-                        <Dashboard />
-                    </PrivateRoute>
-                    <PrivateRoute exact path={CONNECTIONS}>
-                        <Connections />
-                    </PrivateRoute>
-                    <PrivateRoute path={MESSAGING}>
-                        <Messaging />
-                    </PrivateRoute>
-                    <Route path={`${PROFILES}/:profileId`}>
-                        <Profiles />
-                    </Route>
-                    <Route path='*'>
-                        <NotFound404 />
-                    </Route>
-                </Switch>
-            </main>
-        </Router>
-    </ThemeProvider>
-);
+const App = () => {
+    const profile = useSelector(
+        ({ firebase: { profile } }: RootStateOrAny) => profile
+    );
+    return (
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Router>
+                <Navigation />
+                {profile.isEmpty || profile.onboarded ? (
+                    <main style={{ paddingTop: '4.3rem' }}>
+                        <Switch>
+                            <PublicRoute exact path={HOME}>
+                                <Home />
+                            </PublicRoute>
+                            <PublicRoute exact path={LOGIN}>
+                                <Login />
+                            </PublicRoute>
+                            <PublicRoute exact path={REGISTER}>
+                                <Register />
+                            </PublicRoute>
+                            <PublicRoute exact path={PASSWORD_RESET}>
+                                <PasswordReset />
+                            </PublicRoute>
+                            <PrivateRoute exact path={DASHBOARD}>
+                                <Dashboard />
+                            </PrivateRoute>
+                            <PrivateRoute exact path={CONNECTIONS}>
+                                <Connections />
+                            </PrivateRoute>
+                            <PrivateRoute path={MESSAGING}>
+                                <Messaging />
+                            </PrivateRoute>
+                            <Route path={`${PROFILES}/:profileId`}>
+                                <Profiles />
+                            </Route>
+                            <Route path='*'>
+                                <NotFound404 />
+                            </Route>
+                        </Switch>
+                    </main>
+                ) : (
+                    <Onboarding />
+                )}
+            </Router>
+        </ThemeProvider>
+    );
+};
 
 export default App;

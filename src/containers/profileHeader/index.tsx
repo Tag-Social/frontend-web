@@ -54,7 +54,7 @@ const ProfileHeader = ({ profile, profileId, owner }: Props) => {
         organization,
         bio,
         pronouns,
-        mentor,
+        accountType,
         social,
     } = profile;
     const handleMoreClick = (
@@ -89,7 +89,7 @@ const ProfileHeader = ({ profile, profileId, owner }: Props) => {
                         size='small'
                         user={profile}
                         uid={profileId}
-                        mentor={mentor}
+                        mentor={accountType === 1}
                     />
                 </>
             )}
@@ -173,7 +173,7 @@ const ProfileHeader = ({ profile, profileId, owner }: Props) => {
         <CardContent className={classes.info}>
             <Typography gutterBottom variant='h4' component='h2'>
                 {displayName && displayName}{' '}
-                {mentor && <LocalOffer className={classes.status} />}
+                {accountType === 1 && <LocalOffer className={classes.status} />}
             </Typography>
             <Grid container>
                 {owner &&

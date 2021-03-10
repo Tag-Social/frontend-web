@@ -30,7 +30,13 @@ import {
 // TODO : Finish search functionality
 const TopNavbar = () => {
     const firebase = useFirebase();
-    const auth = useSelector((state: RootStateOrAny) => state.firebase.auth);
+    const [
+        auth,
+        profile,
+    ] = useSelector(({ firebase: { auth, profile } }: RootStateOrAny) => [
+        auth,
+        profile,
+    ]);
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState<(EventTarget & Element) | null>(
         null
@@ -38,7 +44,7 @@ const TopNavbar = () => {
     const open = Boolean(anchorEl);
 
     const handleMenu = (event: MouseEvent) => {
-        setAnchorEl(event.currentTarget);
+        if (profile.onboarded) setAnchorEl(event.currentTarget);
     };
 
     const handleClose = () => {
