@@ -9,7 +9,7 @@ import {
     Typography,
     CardActions,
     Button,
-    IconButton
+    IconButton,
 } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 
@@ -58,7 +58,7 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                 }
                 setLoading(false);
             });
-    }, [firestore, auth.uid, profile,]);
+    }, [firestore, auth.uid, profile]);
     const classes = useStyles();
 
     const mentorCards =
@@ -78,7 +78,10 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                             component='img'
                             alt={mentor.displayName}
                             height='300'
-                            image={mentor.photoURL}
+                            image={
+                                mentor.photoURL ||
+                                'https://firebasestorage.googleapis.com/v0/b/tag-app-81b10.appspot.com/o/images%2Fdefault-banner.jpg?alt=media&token=425fde9f-6ae8-447b-8684-bf458e9a8255'
+                            }
                             title={mentor.displayName}
                             className={classes.avatarContainer}
                         />
@@ -147,12 +150,8 @@ const RecommendedMentors = ({ profile, auth }: any) => {
             ))
         ) : loading ? (
             <>
-                <Skeleton variant='rect'>
-                    <Card className={classes.userCard}></Card>
-                </Skeleton>
-                <Skeleton variant='rect'>
-                    <Card className={classes.userCard}></Card>
-                </Skeleton>
+                <Skeleton variant='rect' width={350} height={500} />
+                <Skeleton variant='rect' width={350} height={500} />
             </>
         ) : (
             <Typography variant='body1'>
