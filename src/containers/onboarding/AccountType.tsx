@@ -12,7 +12,7 @@ type Props = {
 const AccountType = ({ profileData, setProfileData, handleNext }: Props) => {
     return (
         <Grid container spacing={2}>
-            <Grid item xs={12} justify='center'>
+            <Grid item xs={12}>
                 <Typography
                     gutterBottom
                     variant='h5'

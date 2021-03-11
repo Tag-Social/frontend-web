@@ -1,9 +1,9 @@
 export type Education = {
     fieldOfStudy: string;
     school: string;
-    degree: string | undefined;
-    endYear: number | undefined;
-    startYear: number | undefined;
+    degree: string | undefined | null;
+    endYear: number | undefined | null;
+    startYear: number | undefined | null;
 };
 
 export type Experience = {
@@ -13,8 +13,8 @@ export type Experience = {
     location: string;
     description: string;
     current: boolean;
-    startDate: string | undefined;
-    endDate: string | undefined;
+    startDate: string | undefined | null;
+    endDate: string | undefined | null;
 };
 
 export type Social = {
