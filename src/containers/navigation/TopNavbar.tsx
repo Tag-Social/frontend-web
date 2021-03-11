@@ -58,14 +58,20 @@ const TopNavbar = () => {
 
     const userNav = (
         <>
-            <div className={classes.topNavUserActions}>
-                <IconButton color='primary' component={Link} to={CONNECTIONS}>
-                    <People fontSize='large' />
-                </IconButton>
-                <IconButton color='primary' component={Link} to={MESSAGING}>
-                    <Chat fontSize='large' />
-                </IconButton>
-            </div>
+            {profile.onboarded && (
+                <div className={classes.topNavUserActions}>
+                    <IconButton
+                        color='primary'
+                        component={Link}
+                        to={CONNECTIONS}
+                    >
+                        <People fontSize='large' />
+                    </IconButton>
+                    <IconButton color='primary' component={Link} to={MESSAGING}>
+                        <Chat fontSize='large' />
+                    </IconButton>
+                </div>
+            )}
             <IconButton
                 aria-label='account of current user'
                 aria-controls='menu-appbar'
