@@ -44,7 +44,7 @@ const TopNavbar = () => {
     const open = Boolean(anchorEl);
 
     const handleMenu = (event: MouseEvent) => {
-        if (profile.onboarded) setAnchorEl(event.currentTarget);
+        setAnchorEl(event.currentTarget);
     };
 
     const handleClose = () => {
@@ -99,13 +99,15 @@ const TopNavbar = () => {
                     open={open}
                     onClose={handleClose}
                 >
-                    <MenuItem
-                        component={Link}
-                        to={`${PROFILES}/${auth.uid}`}
-                        onClick={handleClose}
-                    >
-                        Profile
-                    </MenuItem>
+                    {profile.onboarded && (
+                        <MenuItem
+                            component={Link}
+                            to={`${PROFILES}/${auth.uid}`}
+                            onClick={handleClose}
+                        >
+                            Profile
+                        </MenuItem>
+                    )}
                     <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
                 </Menu>
             )}
