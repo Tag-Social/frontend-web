@@ -41,7 +41,9 @@ const App = () => {
             <CssBaseline />
             <Router>
                 <Navigation />
-                {profile.isEmpty || profile.onboarded ? (
+                {(profile.isLoaded && profile.onboarded === false) ? (
+                    <Onboarding />
+                ) : (
                     <main style={{ paddingTop: '4.3rem' }}>
                         <Switch>
                             <PublicRoute exact path={HOME}>
@@ -73,8 +75,6 @@ const App = () => {
                             </Route>
                         </Switch>
                     </main>
-                ) : (
-                    <Onboarding />
                 )}
             </Router>
         </ThemeProvider>
