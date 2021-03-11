@@ -195,7 +195,9 @@ const EduExpForm = ({ profileData, setProfileData }: Props) => {
                 />
             </Grid>
             <Grid item xs={12}>
-                <Typography variant='h6' style={{paddingTop: 16}}> Recent Experience </Typography>
+                <Typography variant='h6' style={{ paddingTop: 16 }}>
+                    Recent Experience
+                </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
                 <TextField
@@ -255,13 +257,13 @@ const EduExpForm = ({ profileData, setProfileData }: Props) => {
                     }
                     label='Currently working in this role'
                 />
-            </Grid> 
+            </Grid>
             <Grid item xs={6}>
                 <TextField
                     type='date'
                     name='startDate'
                     label='Start Date'
-                    value={experience[0]?.startDate}
+                    value={String(experience[0]?.startDate)}
                     onChange={editExperience}
                     fullWidth
                     InputLabelProps={{ shrink: true }}
@@ -273,7 +275,7 @@ const EduExpForm = ({ profileData, setProfileData }: Props) => {
                         type='date'
                         name='endDate'
                         label='End Date'
-                        value={experience[0]?.endDate}
+                        value={String(experience[0]?.endDate)}
                         onChange={editExperience}
                         fullWidth
                         InputLabelProps={{ shrink: true }}
