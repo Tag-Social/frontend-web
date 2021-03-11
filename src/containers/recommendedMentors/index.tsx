@@ -19,7 +19,6 @@ import { useStyles } from './styles';
 import { PROFILES } from '../../routes/routePaths';
 import { RequestsButton } from '..';
 
-// TODO : Add actions to connection buttons and add interests
 const RecommendedMentors = ({ profile, auth }: any) => {
     const firestore = useFirestore();
     const [mentors, setMentors] = useState<any[]>([]);
@@ -27,15 +26,12 @@ const RecommendedMentors = ({ profile, auth }: any) => {
 
     useEffect(() => {
         setLoading(true);
-        const interests =
-            profile.interests && profile.interests.length > 0
-                ? profile.interests
-                : ['none'];
         const usersCollection = firestore.collection('users');
+        const interests = profile.interests.length > 0 ? profile.interests : [];
         usersCollection
             .where('__name__', '!=', auth.uid)
             .where('accountType', '==', 1)
-            .where('interests', 'in', interests)
+            .where('interests', 'array-contains-any', interests)
             .get()
             .then((snapshot) => {
                 const data: React.SetStateAction<any[]> = [];
@@ -48,6 +44,7 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                     usersCollection
                         .where('__name__', '!=', auth.uid)
                         .where('accountType', '==', 1)
+                        .limit(20)
                         .get()
                         .then((snapshot) => {
                             snapshot.forEach((doc) =>
