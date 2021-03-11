@@ -124,17 +124,19 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
 
     const newConvo = (user: any) => {
         const id = uuidv4();
+        const date = new Date().toISOString();
         firestore
             .collection('conversations')
             .doc(id)
             .set({
                 id,
-                initDate: new Date().toISOString(),
+                initDate: date,
+                lastSentAt: date,
                 messages: [
                     {
                         text: newMessage,
                         uid: auth.uid,
-                        date: new Date().toISOString(),
+                        date: date,
                         id: uuidv4(),
                     },
                 ],
