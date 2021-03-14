@@ -47,6 +47,14 @@ const useAuth = () => {
             .then(() => history.push(DASHBOARD))
             .catch((error) => console.error(error));
     };
+    const reAuthenticateWithProvider = (provider: Provider) => {
+        firebase
+            .reauthenticate({
+                provider,
+                type: 'popup',
+            })
+            .catch((error) => console.error(error));
+    };
 
     const handleRegister = (e: FormEvent): void => {
         e.preventDefault();
@@ -89,6 +97,7 @@ const useAuth = () => {
     return {
         signIn,
         providerSignIn,
+        reAuthenticateWithProvider,
         email,
         setEmail,
         name,

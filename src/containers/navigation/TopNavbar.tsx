@@ -25,6 +25,7 @@ import {
     CONNECTIONS,
     NOTIFICATIONS,
     MESSAGING,
+    MY_ACCOUNT,
 } from '../../routes/routePaths';
 
 // TODO : Finish search functionality
@@ -108,6 +109,13 @@ const TopNavbar = () => {
                             Profile
                         </MenuItem>
                     )}
+                    <MenuItem
+                        component={Link}
+                        to={MY_ACCOUNT}
+                        onClick={handleClose}
+                    >
+                        My Account
+                    </MenuItem>
                     <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
                 </Menu>
             )}

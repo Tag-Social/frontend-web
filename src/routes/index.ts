@@ -4,6 +4,7 @@ export { default as Login } from './Authentication/Login';
 export { default as Register } from './Authentication/Register';
 export { default as PasswordReset } from './Authentication/PasswordReset';
 export { default as Profiles } from './Profiles/Profiles';
+export { default as Account } from './Account/Account';
 export { default as EditProfile } from './EditProfile/EditProfile';
 export { default as Connections } from './Connections/Connections';
 export { default as Notifications } from './Notifications/Notifications';

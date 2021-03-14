@@ -8,4 +8,5 @@ export const EDIT_PROFILE = '/edit-profile';
 export const CONNECTIONS = '/connections';
 export const NOTIFICATIONS = '/notifications';
 export const MESSAGING = '/messaging';
+export const MY_ACCOUNT = '/my-account';
 export const NOT_FOUND_404 = '*';

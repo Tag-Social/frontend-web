@@ -19,6 +19,7 @@ import {
     PasswordReset,
     Messaging,
     Connections,
+    Account,
     NotFound404,
 } from './routes';
 import {
@@ -30,6 +31,7 @@ import {
     PROFILES,
     MESSAGING,
     CONNECTIONS,
+    MY_ACCOUNT,
 } from './routes/routePaths';
 
 const App = () => {
@@ -41,7 +43,7 @@ const App = () => {
             <CssBaseline />
             <Router>
                 <Navigation />
-                {(profile.isLoaded && profile.onboarded === false) ? (
+                {profile.isLoaded && profile.onboarded === false ? (
                     <Onboarding />
                 ) : (
                     <main style={{ paddingTop: '4.3rem' }}>
@@ -66,6 +68,9 @@ const App = () => {
                             </PrivateRoute>
                             <PrivateRoute path={MESSAGING}>
                                 <Messaging />
+                            </PrivateRoute>
+                            <PrivateRoute path={MY_ACCOUNT}>
+                                <Account />
                             </PrivateRoute>
                             <Route path={`${PROFILES}/:profileId`}>
                                 <Profiles />
