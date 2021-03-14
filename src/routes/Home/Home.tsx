@@ -50,9 +50,7 @@ const Home: React.FC = () => {
                             name='email'
                             autoComplete='email'
                             autoFocus
-                            onChange={({ target }) =>
-                                setEmail(target.value)
-                            }
+                            onChange={({ target }) => setEmail(target.value)}
                         />
                         <TextField
                             variant='outlined'
@@ -64,9 +62,7 @@ const Home: React.FC = () => {
                             type='password'
                             id='password'
                             autoComplete='current-password'
-                            onChange={({ target }) =>
-                                setPassword(target.value)
-                            }
+                            onChange={({ target }) => setPassword(target.value)}
                         />
                         <Grid container>
                             <Grid item xs>
@@ -81,6 +77,7 @@ const Home: React.FC = () => {
                         </Grid>
                         <Button
                             type='submit'
+                            disableElevation
                             fullWidth
                             variant='contained'
                             color='primary'
@@ -90,6 +87,7 @@ const Home: React.FC = () => {
                         </Button>
                         <Divider />
                         <Button
+                            disableElevation
                             fullWidth
                             variant='contained'
                             color='secondary'
@@ -100,6 +98,7 @@ const Home: React.FC = () => {
                             Sign In with Google
                         </Button>
                         <Button
+                            disableElevation
                             fullWidth
                             variant='contained'
                             className={classes.facebook}

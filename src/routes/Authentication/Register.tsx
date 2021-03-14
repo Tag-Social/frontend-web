@@ -81,6 +81,7 @@ const Register: React.FC = () => {
                     </Link>
                     <Button
                         type='submit'
+                        disableElevation
                         fullWidth
                         variant='contained'
                         color='primary'

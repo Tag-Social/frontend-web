@@ -89,6 +89,7 @@ const Login: React.FC = () => {
                     </Grid>
                     <Button
                         type='submit'
+                        disableElevation
                         fullWidth
                         variant='contained'
                         color='primary'
@@ -99,18 +100,18 @@ const Login: React.FC = () => {
                     <Divider />
                     <Button
                         fullWidth
+                        disableElevation
                         variant='contained'
                         color='secondary'
                         className={classes.google}
                         onClick={() => providerSignIn('google')}
                     >
-                        <i className={classes.icon}>
-                            {GoogleIcon}
-                        </i>
+                        <i className={classes.icon}>{GoogleIcon}</i>
                         Sign In with Google
                     </Button>
                     <Button
                         fullWidth
+                        disableElevation
                         variant='contained'
                         className={classes.facebook}
                         onClick={() => providerSignIn('facebook')}

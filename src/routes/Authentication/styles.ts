@@ -13,13 +13,11 @@ export const useStyles = makeStyles((theme) => ({
     },
     button: {
         margin: theme.spacing(1, 0),
-        borderRadius: '50px',
         padding: '0.75rem 0',
         fontWeight: 600,
     },
     facebook: {
         margin: theme.spacing(1, 0),
-        borderRadius: '50px',
         padding: '0.75rem 0',
         fontWeight: 600,
         backgroundColor: '#3b5998',
@@ -28,7 +26,6 @@ export const useStyles = makeStyles((theme) => ({
     google: {
         backgroundColor: '#de5246',
         margin: theme.spacing(1, 0),
-        borderRadius: '50px',
         padding: '0.75rem 0',
         fontWeight: 600,
         color: '#ffffff',

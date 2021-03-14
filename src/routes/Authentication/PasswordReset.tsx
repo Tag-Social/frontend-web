@@ -52,6 +52,7 @@ const PasswordReset: React.FC = () => {
                         />
                         <Button
                             type='submit'
+                            disableElevation
                             fullWidth
                             variant='contained'
                             color='primary'
@@ -61,10 +62,10 @@ const PasswordReset: React.FC = () => {
                         </Button>
                     </form>
                 ) : (
-                        <Typography component='h1' variant='h6'>
-                            Email with instructions has been sent.
-                        </Typography>
-                    )}
+                    <Typography component='h1' variant='h6'>
+                        Email with instructions has been sent.
+                    </Typography>
+                )}
                 <Link component={A} to='/login' variant='body2'>
                     Go back to Login
                 </Link>
