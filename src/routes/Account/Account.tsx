@@ -45,8 +45,10 @@ const Account = () => {
     const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     useEffect(() => {
+        let errorTimer: NodeJS.Timeout;
+        let successTimer: NodeJS.Timeout;
         if (error) {
-            setTimeout(
+            errorTimer = setTimeout(
                 () =>
                     setError({
                         type: '',
@@ -56,8 +58,13 @@ const Account = () => {
             );
         }
         if (success) {
-            setTimeout(() => setSuccess(''), 10000);
+            successTimer = setTimeout(() => setSuccess(''), 10000);
         }
+
+        return () => {
+            clearTimeout(errorTimer);
+            clearTimeout(successTimer);
+        };
     }, [success, error]);
 
     const saveEmail = () => {
