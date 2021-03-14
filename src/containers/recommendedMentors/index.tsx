@@ -27,7 +27,8 @@ const RecommendedMentors = ({ profile, auth }: any) => {
     useEffect(() => {
         setLoading(true);
         const usersCollection = firestore.collection('users');
-        const interests = profile.interests.length > 0 ? profile.interests : [];
+        const interests =
+            profile.interests.length > 0 ? profile.interests : [''];
         usersCollection
             .where('__name__', '!=', auth.uid)
             .where('accountType', '==', 1)
