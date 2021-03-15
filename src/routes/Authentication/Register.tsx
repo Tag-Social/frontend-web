@@ -36,7 +36,7 @@ const Register: React.FC = () => {
                     variant='h4'
                     className={classes.title}
                 >
-                    Find your mentor today!
+                    Find your mentor or become a mentor today!
                 </Typography>
                 {error && (
                     <Alert className='alert' severity='error'>
