@@ -17,7 +17,7 @@ import {
 import { Autocomplete } from '@material-ui/lab';
 
 import { userProfile, UserProfile } from '../../firebase/utils/userProfile';
-import options from './options';
+import interestsList from '../../utils/interestsList.json';
 
 type Props = {
     open: boolean;
@@ -64,7 +64,7 @@ const EditInterests = ({ open, setOpen }: Props) => {
                                     multiple
                                     freeSolo
                                     ChipProps={{ color: 'primary' }}
-                                    options={options}
+                                    options={interestsList}
                                     getOptionLabel={(option) => option}
                                     value={profileData.interests}
                                     onChange={(event, value) =>

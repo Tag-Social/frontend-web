@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
-
 import {
     Grid,
     TextField,
@@ -16,6 +15,7 @@ import {
 } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 
+import skillsList  from '../../utils/skillsList.json'
 import { userProfile, UserProfile } from '../../firebase/utils/userProfile';
 
 type Props = {
@@ -43,8 +43,6 @@ const EditSkills = ({ open, setOpen }: Props) => {
         setOpen(false);
     };
 
-    const options = ['']
-
     return (
         <Dialog
             fullScreen={fullScreen}
@@ -63,7 +61,7 @@ const EditSkills = ({ open, setOpen }: Props) => {
                             {profileData.skills && <Autocomplete
                                 multiple
                                 freeSolo
-                                options={options}
+                                options={skillsList}
                                 ChipProps={{ color: 'primary' }}
                                 getOptionLabel={(option) => option}
                                 value={profileData.skills}

@@ -1,8 +1,11 @@
 import React from 'react';
 import { Grid, TextField, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
+
 import { UserProfile } from '../../firebase/utils/userProfile';
-import options from '../profileInfo/options';
+import interestsList from '../../utils/interestsList.json';
+import skillsList from '../../utils/skillsList.json';
+
 
 type Props = {
     profileData: UserProfile;
@@ -20,7 +23,7 @@ const SkillsInterestsForm = ({ profileData, setProfileData }: Props) => {
                             multiple
                             freeSolo
                             ChipProps={{ color: 'primary' }}
-                            options={options}
+                            options={interestsList}
                             getOptionLabel={(option) => option}
                             value={profileData.interests}
                             onChange={(event, value) =>
@@ -41,7 +44,7 @@ const SkillsInterestsForm = ({ profileData, setProfileData }: Props) => {
                         <Autocomplete
                             multiple
                             freeSolo
-                            options={options}
+                            options={skillsList}
                             ChipProps={{ color: 'primary' }}
                             getOptionLabel={(option) => option}
                             value={profileData.skills}
