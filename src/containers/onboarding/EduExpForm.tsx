@@ -7,6 +7,7 @@ import {
     Typography,
 } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
+import employmentTypes from '../../utils/employmentTypes.json';
 
 import { UserProfile } from '../../firebase/utils/userProfile';
 
@@ -14,16 +15,6 @@ type Props = {
     profileData: UserProfile;
     setProfileData: React.Dispatch<React.SetStateAction<UserProfile>>;
 };
-
-const employmentTypes = [
-    'Full-time',
-    'Part-time',
-    'Self-employed',
-    'Freelance',
-    'Intern',
-    'Contract',
-    'Apprenticeship',
-];
 
 const EduExpForm = ({ profileData, setProfileData }: Props) => {
     const { education, experience } = profileData;
@@ -37,8 +28,8 @@ const EduExpForm = ({ profileData, setProfileData }: Props) => {
                         fieldOfStudy: '',
                         school: '',
                         degree: '',
-                        endYear: null,
-                        startYear: null,
+                        endYear: '',
+                        startYear: '',
                     },
                 ],
             });
@@ -149,7 +140,7 @@ const EduExpForm = ({ profileData, setProfileData }: Props) => {
                     type='text'
                     name='school'
                     label='School'
-                    value={education[0]?.school}
+                    value={education[0]?.school || ''}
                     onChange={editEducation}
                     fullWidth
                 />
@@ -159,7 +150,7 @@ const EduExpForm = ({ profileData, setProfileData }: Props) => {
                     type='text'
                     name='fieldOfStudy'
                     label='Field of Study'
-                    value={education[0]?.fieldOfStudy}
+                    value={education[0]?.fieldOfStudy || ''}
                     onChange={editEducation}
                     fullWidth
                 />
@@ -169,7 +160,7 @@ const EduExpForm = ({ profileData, setProfileData }: Props) => {
                     type='text'
                     name='degree'
                     label='Degree'
-                    value={education[0]?.degree}
+                    value={education[0]?.degree || ''}
                     onChange={editEducation}
                     fullWidth
                 />
@@ -205,7 +196,7 @@ const EduExpForm = ({ profileData, setProfileData }: Props) => {
                     name='title'
                     label='Title'
                     onChange={editExperience}
-                    value={experience[0]?.title}
+                    value={experience[0]?.title || ''}
                     fullWidth
                 />
             </Grid>
@@ -215,7 +206,7 @@ const EduExpForm = ({ profileData, setProfileData }: Props) => {
                     name='organization'
                     label='Organization'
                     onChange={editExperience}
-                    value={experience[0]?.organization}
+                    value={experience[0]?.organization || ''}
                     fullWidth
                 />
             </Grid>
@@ -223,7 +214,7 @@ const EduExpForm = ({ profileData, setProfileData }: Props) => {
                 <Autocomplete
                     freeSolo
                     options={employmentTypes}
-                    value={experience[0]?.employmentType}
+                    value={experience[0]?.employmentType || ''}
                     onChange={onChangeEmploymentType}
                     renderInput={(params) => (
                         <TextField
@@ -241,7 +232,7 @@ const EduExpForm = ({ profileData, setProfileData }: Props) => {
                     name='location'
                     label='Location'
                     onChange={editExperience}
-                    value={experience[0]?.location}
+                    value={experience[0]?.location || ''}
                     fullWidth
                 />
             </Grid>
@@ -250,7 +241,7 @@ const EduExpForm = ({ profileData, setProfileData }: Props) => {
                     control={
                         <Switch
                             name='current'
-                            checked={experience[0]?.current}
+                            checked={experience[0]?.current || false}
                             onChange={toggleCurrentJob}
                             color='primary'
                         />
@@ -287,7 +278,7 @@ const EduExpForm = ({ profileData, setProfileData }: Props) => {
                     type='text'
                     name='description'
                     label='Job Description'
-                    value={experience[0]?.description}
+                    value={experience[0]?.description || ''}
                     onChange={editExperience}
                     fullWidth
                     multiline

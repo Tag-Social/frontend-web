@@ -17,24 +17,17 @@ import {
     useTheme,
 } from '@material-ui/core';
 import { Add, Delete } from '@material-ui/icons';
-
 import { Experience } from '../../firebase/utils/userProfile';
 import { Autocomplete } from '@material-ui/lab';
+
+import employmentTypes from '../../utils/employmentTypes.json';
+
 
 type Props = {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const employmentTypes = [
-    'Full-time',
-    'Part-time',
-    'Self-employed',
-    'Freelance',
-    'Intern',
-    'Contract',
-    'Apprenticeship'
-]
 
 const EditExp = ({ open, setOpen }: Props) => {
     const firebase = useFirebase();
