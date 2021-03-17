@@ -13,17 +13,17 @@ import {
     Avatar,
     Container,
 } from '@material-ui/core';
-import { People, NotificationsActive, Chat } from '@material-ui/icons';
+import { People, /*NotificationsActive,*/ Chat } from '@material-ui/icons';
 
 import { useStyles } from './styles';
-import { UserSearchBar } from '..';
+// import { UserSearchBar } from '..';
 import {
     DASHBOARD,
     LOGIN,
     PROFILES,
     REGISTER,
     CONNECTIONS,
-    NOTIFICATIONS,
+    // NOTIFICATIONS,
     MESSAGING,
     MY_ACCOUNT,
 } from '../../routes/routePaths';
@@ -101,21 +101,24 @@ const TopNavbar = () => {
                     onClose={handleClose}
                 >
                     {profile.onboarded && (
-                        <MenuItem
-                            component={Link}
-                            to={`${PROFILES}/${auth.uid}`}
-                            onClick={handleClose}
-                        >
-                            Profile
-                        </MenuItem>
+                        <>
+                            <MenuItem
+                                component={Link}
+                                to={`${PROFILES}/${auth.uid}`}
+                                onClick={handleClose}
+                            >
+                                Profile
+                            </MenuItem>
+                            <MenuItem
+                                component={Link}
+                                to={MY_ACCOUNT}
+                                onClick={handleClose}
+                            >
+                                My Account
+                            </MenuItem>
+                        </>
                     )}
-                    <MenuItem
-                        component={Link}
-                        to={MY_ACCOUNT}
-                        onClick={handleClose}
-                    >
-                        My Account
-                    </MenuItem>
+
                     <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
                 </Menu>
             )}

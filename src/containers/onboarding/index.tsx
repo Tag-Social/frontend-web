@@ -9,7 +9,6 @@ import EduExpForm from './EduExpForm';
 import GeneralInfoForm from './GeneralInfoForm';
 import SkillsInterestsForm from './SkillsInterestsForm';
 import Confirmation from './Confirmation';
-import { UserProfile } from '../../firebase/utils/userProfile';
 
 const Onboarding = () => {
     const firebase = useFirebase();
@@ -50,35 +49,25 @@ const Onboarding = () => {
         setProfileData(profile);
     }, [profile]);
 
-    const steps = ['General', 'Interests & Skills', 'Education'];
-
-    const getStepForm = (step: Number) => {
-        switch (step) {
-            case 0:
-                return (
-                    <GeneralInfoForm
-                        profileData={profileData}
-                        setProfileData={setProfileData}
-                    />
-                );
-            case 1:
-                return (
-                    <SkillsInterestsForm
-                        profileData={profileData}
-                        setProfileData={setProfileData}
-                    />
-                );
-            case 2:
-                return (
-                    <EduExpForm
-                        profileData={profileData}
-                        setProfileData={setProfileData}
-                    />
-                );
-            default:
-                throw new Error('Unknown step');
-        }
-    };
+    const steps = new Map();
+    steps.set(
+        'General',
+        <GeneralInfoForm
+            profileData={profileData}
+            setProfileData={setProfileData}
+        />
+    );
+    steps.set(
+        'Interests & Skills',
+        <SkillsInterestsForm
+            profileData={profileData}
+            setProfileData={setProfileData}
+        />
+    );
+    steps.set(
+        'Education',
+        <EduExpForm profileData={profileData} setProfileData={setProfileData} />
+    );
 
     return (
         <div className={classes.layout}>
@@ -92,14 +81,14 @@ const Onboarding = () => {
                         activeStep={activeStep}
                         className={classes.stepper}
                     >
-                        {steps.map((label) => (
+                        {Array.from(steps.keys()).map((label) => (
                             <Step key={label}>
                                 <StepLabel>{label}</StepLabel>
                             </Step>
                         ))}
                     </Stepper>
                 )}
-                {activeStep === steps.length ? (
+                {activeStep === steps.size ? (
                     <Confirmation
                         profileData={profileData}
                         setProfileData={setProfileData}
@@ -108,7 +97,7 @@ const Onboarding = () => {
                     />
                 ) : activeStep >= 0 ? (
                     <>
-                        {getStepForm(activeStep)}
+                        {Array.from(steps.values())[activeStep]}
                         <div className={classes.buttons}>
                             {activeStep >= 0 && (
                                 <Button
