@@ -58,7 +58,7 @@ const TopNavbar = () => {
     };
 
     const userNav = (
-        <div>
+        <>
             {profile.onboarded && (
                 <div className={classes.topNavUserActions}>
                     <IconButton
@@ -101,32 +101,31 @@ const TopNavbar = () => {
                     onClose={handleClose}
                 >
                     {profile.onboarded && (
-                        <div>
-                            <MenuItem
-                                component={Link}
-                                to={`${PROFILES}/${auth.uid}`}
-                                onClick={handleClose}
-                            >
-                                Profile
-                            </MenuItem>
-                            <MenuItem
-                                component={Link}
-                                to={MY_ACCOUNT}
-                                onClick={handleClose}
-                            >
-                                My Account
-                            </MenuItem>
-                        </div>
+                        <MenuItem
+                            component={Link}
+                            to={`${PROFILES}/${auth.uid}`}
+                            onClick={handleClose}
+                        >
+                            Profile
+                        </MenuItem>
                     )}
-
+                    {profile.onboarded && (
+                        <MenuItem
+                            component={Link}
+                            to={MY_ACCOUNT}
+                            onClick={handleClose}
+                        >
+                            My Account
+                        </MenuItem>
+                    )}
                     <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
                 </Menu>
             )}
-        </div>
+        </>
     );
 
     const guestNav = (
-        <div>
+        <>
             <Button component={Link} to={LOGIN}>
                 Login
             </Button>
@@ -138,7 +137,7 @@ const TopNavbar = () => {
             >
                 Sign Up
             </Button>
-        </div>
+        </>
     );
 
     const logoImg = (
