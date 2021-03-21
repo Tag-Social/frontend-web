@@ -15,3 +15,4 @@ export { default as Posts } from './posts';
 export { default as Bug } from './bug';
 export { default as Messenger } from './messenger';
 export { default as Onboarding } from './onboarding';
+export { default as PlacesAutocomplete } from './placesAutocomplete';
