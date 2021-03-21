@@ -28,4 +28,29 @@ export const useStyles = makeStyles((theme) => ({
         marginRight: '16px',
         lineHeight: 0,
     },
+    main: {
+        paddingBottom: 22,
+    },
+    container: {
+        padding: 32,
+    },
+    mainImage: {
+        width: '100%',
+        height: 'auto',
+    },
+    section2: {
+        backgroundColor: '#ebeef1',
+    },
+    section3: {
+        height: '300px',
+        padding: '16px',
+    },
+    section4: {
+        backgroundColor: '#663695',
+        height: '300px',
+        padding: '16px',
+    },
+    section5: {
+        backgroundColor: '#ebeef1',
+    },
 }));
