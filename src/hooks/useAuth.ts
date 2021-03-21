@@ -14,13 +14,15 @@ type Provider =
     | 'microsoft.com'
     | 'apple.com'
     | 'yahoo.com';
-
+type Error = {
+    message: string;
+    code: number;
+};
 const useAuth = () => {
     const firebase = useFirebase();
     const firestore = useFirestore();
     const history = useHistory();
-    const error = useSelector((state: RootStateOrAny) => state.firebase.error);
-
+    const [error, setError] = useState<Error>();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -35,7 +37,10 @@ const useAuth = () => {
                 password,
             })
             .then(() => history.push(DASHBOARD))
-            .catch((error) => console.error(error));
+            .catch((err) => {
+                setError(err);
+                console.error(err);
+            });
     };
 
     const providerSignIn = (provider: Provider): void => {
@@ -45,7 +50,10 @@ const useAuth = () => {
                 type: 'popup',
             })
             .then(() => history.push(DASHBOARD))
-            .catch((error) => console.error(error));
+            .catch((err) => {
+                setError(err);
+                console.error(err);
+            });
     };
     const reAuthenticateWithProvider = (provider: Provider) => {
         firebase
@@ -53,7 +61,10 @@ const useAuth = () => {
                 provider,
                 type: 'popup',
             })
-            .catch((error) => console.error(error));
+            .catch((err) => {
+                setError(err);
+                console.error(err);
+            });
     };
 
     const handleRegister = (e: FormEvent): void => {
@@ -79,9 +90,12 @@ const useAuth = () => {
                         )
                         .then(() => {
                             history.push(DASHBOARD);
-                        })
-                        .catch((error) => console.error(error));
+                        });
                 }
+            })
+            .catch((err) => {
+                setError(err);
+                console.error(err);
             });
     };
 

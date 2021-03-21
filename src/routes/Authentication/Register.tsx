@@ -40,10 +40,10 @@ const Register: React.FC = () => {
                 </Typography>
                 {error && (
                     <Alert className='alert' severity='error'>
-                        {error}
+                        {error.message}
                     </Alert>
                 )}
-                <form noValidate onSubmit={handleRegister}>
+                <form onSubmit={handleRegister}>
                     <TextField
                         variant='outlined'
                         margin='normal'
@@ -80,6 +80,7 @@ const Register: React.FC = () => {
                         Already have an account? Sign in
                     </Link>
                     <Button
+                        disabled={!email || !name || !password}
                         type='submit'
                         disableElevation
                         fullWidth

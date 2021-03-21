@@ -90,6 +90,7 @@ const Login: React.FC = () => {
                     <Button
                         type='submit'
                         disableElevation
+                        disabled={!email || !password}
                         fullWidth
                         variant='contained'
                         color='primary'
