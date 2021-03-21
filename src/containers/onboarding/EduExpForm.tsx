@@ -170,7 +170,7 @@ const EduExpForm = ({ profileData, setProfileData }: Props) => {
                     type='text'
                     name='startYear'
                     label='Start Year'
-                    value={education[0]?.startYear}
+                    value={education[0]?.startYear || ''}
                     onChange={editEducation}
                     fullWidth
                 />
@@ -180,7 +180,7 @@ const EduExpForm = ({ profileData, setProfileData }: Props) => {
                     type='text'
                     name='endYear'
                     label='End Year'
-                    value={education[0]?.endYear}
+                    value={education[0]?.endYear || ''}
                     onChange={editEducation}
                     fullWidth
                 />
@@ -254,7 +254,7 @@ const EduExpForm = ({ profileData, setProfileData }: Props) => {
                     type='date'
                     name='startDate'
                     label='Start Date'
-                    value={String(experience[0]?.startDate)}
+                    value={String(experience[0]?.startDate || '')}
                     onChange={editExperience}
                     fullWidth
                     InputLabelProps={{ shrink: true }}
@@ -266,7 +266,7 @@ const EduExpForm = ({ profileData, setProfileData }: Props) => {
                         type='date'
                         name='endDate'
                         label='End Date'
-                        value={String(experience[0]?.endDate)}
+                        value={String(experience[0]?.endDate || '')}
                         onChange={editExperience}
                         fullWidth
                         InputLabelProps={{ shrink: true }}

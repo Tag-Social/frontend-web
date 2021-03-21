@@ -58,7 +58,7 @@ const TopNavbar = () => {
     };
 
     const userNav = (
-        <>
+        <div>
             {profile.onboarded && (
                 <div className={classes.topNavUserActions}>
                     <IconButton
@@ -101,7 +101,7 @@ const TopNavbar = () => {
                     onClose={handleClose}
                 >
                     {profile.onboarded && (
-                        <>
+                        <div>
                             <MenuItem
                                 component={Link}
                                 to={`${PROFILES}/${auth.uid}`}
@@ -116,17 +116,17 @@ const TopNavbar = () => {
                             >
                                 My Account
                             </MenuItem>
-                        </>
+                        </div>
                     )}
 
                     <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
                 </Menu>
             )}
-        </>
+        </div>
     );
 
     const guestNav = (
-        <>
+        <div>
             <Button component={Link} to={LOGIN}>
                 Login
             </Button>
@@ -138,7 +138,7 @@ const TopNavbar = () => {
             >
                 Sign Up
             </Button>
-        </>
+        </div>
     );
 
     const logoImg = (
