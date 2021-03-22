@@ -266,8 +266,7 @@ const Home: React.FC = () => {
                         <Grid container item xs={12} justify='center'>
                             <img
                                 src='https://firebasestorage.googleapis.com/v0/b/tag-app-81b10.appspot.com/o/images%2Fassets%2Flogo.svg?alt=media&token=16b8288b-042e-4e68-8dda-5de15c3c7d1f'
-                                alt='Welcome'
-                                style={{ width: '100px', height: 'auto' }}
+                                style={{ width: '100px'}}
                             />
                         </Grid>
                         <Grid container item xs={12} justify='center'>
