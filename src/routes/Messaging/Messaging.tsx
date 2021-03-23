@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 import Moment from 'react-moment';
 import {
     Container,
@@ -15,11 +16,11 @@ import {
 } from '@material-ui/core';
 import { Create } from '@material-ui/icons';
 
-
 import { Messenger } from '../../containers';
+import { PROFILES } from '../../routes/routePaths';
 
 const Messaging = () => {
-    const location = useLocation() as {state:{user:string}; }
+    const location = useLocation() as { state: { user: string } };
     const [currentConvo, setCurrentConvo] = useState('');
     const [
         conversations,
@@ -35,13 +36,15 @@ const Messaging = () => {
         },
     ]);
 
-    useEffect(()=>{
-        if(location && location.state && conversations) {
+    useEffect(() => {
+        if (location && location.state && conversations) {
             setCurrentConvo(
-                conversations.find((c:any) => c.users.includes(location.state.user))?.id || ''
+                conversations.find((c: any) =>
+                    c.users.includes(location.state.user)
+                )?.id || ''
             );
         }
-    },[location, conversations])
+    }, [location, conversations]);
 
     return (
         <Container maxWidth='sm'>
@@ -69,47 +72,40 @@ const Messaging = () => {
                     </Button>
                 </Grid>
                 {conversations?.map((i: any) => {
-                        const avatar = (
-                            <Avatar
-                                src={
-                                    i.usersData[
-                                        i.users.find((u: any) => u !== auth.uid)
-                                    ].photoURL
-                                }
-                            />
-                        );
-                        const date = <Moment fromNow>{i.lastSentAt}</Moment>;
-                        const title =
-                            i.usersData[
-                                i.users.find((u: any) => u !== auth.uid)
-                            ].displayName;
-                        const subHeader = `${
-                            i.messages.slice(-1)[0].uid === auth.uid
-                                ? 'You: '
-                                : ''
-                        } ${i.messages.slice(-1)[0].text}`;
-                        return (
-                            <Grid item xs={12} key={i.id}>
-                                <Card
-                                    style={{
-                                        boxShadow:
-                                            ' 0px 8px 20px rgb(0 0 0 / 6%)',
-                                    }}
+                    const user = i.users.find((u: any) => u !== auth.uid);
+                    const avatar = (
+                        <Avatar
+                            src={i.usersData[user].photoURL}
+                            component={Link}
+                            to={`${PROFILES}/${user}`}
+                        />
+                    );
+                    const date = <Moment fromNow>{i.lastSentAt}</Moment>;
+                    const title = i.usersData[user].displayName;
+                    const subHeader = `${
+                        i.messages.slice(-1)[0].uid === auth.uid ? 'You: ' : ''
+                    } ${i.messages.slice(-1)[0].text}`;
+                    return (
+                        <Grid item xs={12} key={i.id}>
+                            <Card
+                                style={{
+                                    boxShadow: ' 0px 8px 20px rgb(0 0 0 / 6%)',
+                                }}
+                            >
+                                <CardActionArea
+                                    onClick={() => setCurrentConvo(i.id)}
                                 >
-                                    <CardActionArea
-                                        onClick={() => setCurrentConvo(i.id)}
-                                    >
-                                        <CardHeader
-                                            avatar={avatar}
-                                            title={title}
-                                            subheader={subHeader}
-                                            action={date}
-                                        />
-                                    </CardActionArea>
-                                </Card>
-                            </Grid>
-                        );
-                    })}
+                                    <CardHeader
+                                        avatar={avatar}
+                                        title={title}
+                                        subheader={subHeader}
+                                        action={date}
+                                    />
+                                </CardActionArea>
+                            </Card>
+                        </Grid>
+                    );
+                })}
             </Grid>
         </Container>
     );

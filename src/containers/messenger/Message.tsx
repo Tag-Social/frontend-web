@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
     ListItem,
     ListItemText,
@@ -5,6 +6,7 @@ import {
     Avatar,
 } from '@material-ui/core';
 import Moment from 'react-moment';
+import { PROFILES } from '../../routes/routePaths';
 
 type Props = {
     user: any;
@@ -26,7 +28,12 @@ const Message = ({
             }}
         >
             <ListItemAvatar>
-                <Avatar alt='Remy Sharp' src={photoURL} />
+                <Avatar
+                    alt={String(displayName)}
+                    src={photoURL}
+                    component={Link}
+                    to={`${PROFILES}/${uid}`}
+                />
             </ListItemAvatar>
             <ListItemText
                 primary={text}
