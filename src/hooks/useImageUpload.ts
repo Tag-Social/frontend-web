@@ -53,7 +53,7 @@ const useImageUpload = () => {
             return imageUrl
         };
     }
-    return {handleImageInput, saveImageToFirebase, previewImage, imageUrl}
+    return { handleImageInput, saveImageToFirebase, previewImage, imageUrl };
 }
 
 export default useImageUpload

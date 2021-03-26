@@ -35,4 +35,19 @@ export const useStyles = makeStyles((theme) => ({
     linkedin: {
         color: '#0072b1',
     },
+    avatar: {
+        width: theme.spacing(20),
+        height: theme.spacing(20),
+    },
+    avatarInput: {
+        width: '0.01px',
+        height: '0.01px',
+        opacity: 0,
+        overflow: 'hidden',
+        position: 'absolute',
+        zIndex: -1,
+    },
+    formControl: {
+        margin: 0,
+    },
 }));
