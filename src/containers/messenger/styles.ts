@@ -14,4 +14,9 @@ export const useStyles = makeStyles((theme) => ({
         margin: '0 auto',
         overflow: 'scroll',
     },
+    dialogTitle: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
 }));

@@ -18,8 +18,10 @@ import { Create } from '@material-ui/icons';
 
 import { Messenger } from '../../containers';
 import { PROFILES } from '../../routes/routePaths';
+import { useStyles } from './styles';
 
 const Messaging = () => {
+    const classes = useStyles();
     const location = useLocation() as { state: { user: string } };
     const [currentConvo, setCurrentConvo] = useState('');
     const [
@@ -28,12 +30,6 @@ const Messaging = () => {
     ] = useSelector(({ firestore, firebase }: RootStateOrAny) => [
         firestore.ordered.conversations,
         firebase.auth,
-    ]);
-    useFirestoreConnect([
-        {
-            collection: 'conversations',
-            where: [['users', 'array-contains', auth.uid]],
-        },
     ]);
 
     useEffect(() => {
@@ -71,25 +67,46 @@ const Messaging = () => {
                         New
                     </Button>
                 </Grid>
-                {conversations?.map((i: any) => {
-                    const user = i.users.find((u: any) => u !== auth.uid);
+                {conversations?.map((convo: any) => {
+                    const user = convo.users.find((u: any) => u !== auth.uid);
+                    const lastMessage = convo.messages.slice(-1)[0];
                     const avatar = (
                         <Avatar
-                            src={i.usersData[user].photoURL}
+                            src={convo.usersData[user].photoURL}
                             component={Link}
                             to={`${PROFILES}/${user}`}
                         />
                     );
-                    const date = <Moment fromNow>{i.lastSentAt}</Moment>;
-                    const title = i.usersData[user].displayName;
-                    const subHeader = `${
-                        i.messages.slice(-1)[0].uid === auth.uid ? 'You: ' : ''
-                    } ${i.messages.slice(-1)[0].text}`;
+                    const date =
+                        lastMessage.uid === auth.uid ? (
+                            <Moment fromNow>{convo.lastSentAt}</Moment>
+                        ) : (
+                            <b>
+                                <Moment fromNow>{convo.lastSentAt}</Moment>
+                            </b>
+                        );
+                    const title =
+                        lastMessage.uid ===
+                        auth.uid ? convo.usersData[user].displayName : (<b>{convo.usersData[user].displayName}</b>);
+                    const subHeader =
+                        lastMessage.uid === auth.uid ? (
+                            `You: ${lastMessage.text}`
+                        ) : (
+                            <b>{lastMessage.text}</b>
+                        );
+
                     return (
-                        <Grid item xs={12} key={i.id}>
-                            <Card>
+                        <Grid item xs={12} key={convo.id}>
+                            <Card
+                                className={
+                                    lastMessage.uid !== auth.uid &&
+                                    convo.lastSeenBy !== auth.uid
+                                        ? classes.newMessage
+                                        : ''
+                                }
+                            >
                                 <CardActionArea
-                                    onClick={() => setCurrentConvo(i.id)}
+                                    onClick={() => setCurrentConvo(convo.id)}
                                 >
                                     <CardHeader
                                         avatar={avatar}

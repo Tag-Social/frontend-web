@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useFirestore } from 'react-redux-firebase';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
@@ -18,8 +18,9 @@ import {
     Select,
     MenuItem,
     FormHelperText,
+    Typography,
 } from '@material-ui/core';
-import { Create, ArrowBack } from '@material-ui/icons';
+import { Create, Close } from '@material-ui/icons';
 
 import { UserProfile } from '../../firebase/utils/userProfile';
 import { useStyles } from './styles';
@@ -124,16 +125,22 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
 
     useEffect(() => {
         // Focus on last message when component mounts or new message.
-        if (endOfPage && endOfPage.current)
-            endOfPage.current.scrollIntoView({ behavior: 'smooth' });
-        
-    }, [conversation?.messages]);
+        // TODO: Less "hacky" way of doing it?
+        if (endOfPage && endOfPage.current) {
+            setTimeout(
+                () =>
+                    endOfPage?.current?.scrollIntoView({ behavior: 'smooth' }),
+                1000
+            );
+        }
+    }, [conversation]);
 
     const handleClose = () => {
-        setOpen(false);
-        setCurrentConvo('');
         // Set last seen by
         lastSeenBy();
+        setConversation(undefined);
+        setOpen(false);
+        setCurrentConvo('');
     };
 
     // Start a new conversation
@@ -203,14 +210,18 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
     };
 
     const header = (
-        <DialogTitle>
+        <DialogTitle disableTypography className={classes.dialogTitle}>
+            <Typography variant='h5' align='left'>
+                {conversation?.usersData &&
+                    conversation.usersData[
+                        conversation.users.find(
+                            (u: any) => u !== auth.uid
+                        ) || ''
+                    ].displayName}
+            </Typography>
             <IconButton onClick={handleClose}>
-                <ArrowBack />
+                <Close />
             </IconButton>
-            {conversation?.usersData &&
-                conversation.usersData[
-                    conversation.users.find((u: any) => u !== auth.uid) || ''
-                ].displayName}
             {convoId === 'new' && (
                 <FormControl fullWidth>
                     <InputLabel>User</InputLabel>
@@ -239,7 +250,6 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
             scroll='paper'
             open={open}
             onClose={handleClose}
-            aria-labelledby='responsive-dialog-title'
         >
             {header}
             <DialogContent className={classes.messengerContainer}>
