@@ -27,7 +27,6 @@ export const useStyles = makeStyles((theme) => ({
         overflow: 'auto',
         flexDirection: 'column',
         position: 'relative',
-        boxShadow: ' 0px 8px 20px rgb(0 0 0 / 6%)',
     },
     avatarContainer: {
         backgroundColor: '#F0F0F0',

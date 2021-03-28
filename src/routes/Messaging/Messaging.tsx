@@ -87,11 +87,7 @@ const Messaging = () => {
                     } ${i.messages.slice(-1)[0].text}`;
                     return (
                         <Grid item xs={12} key={i.id}>
-                            <Card
-                                style={{
-                                    boxShadow: ' 0px 8px 20px rgb(0 0 0 / 6%)',
-                                }}
-                            >
+                            <Card>
                                 <CardActionArea
                                     onClick={() => setCurrentConvo(i.id)}
                                 >

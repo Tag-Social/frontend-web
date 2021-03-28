@@ -153,7 +153,7 @@ const Account = () => {
             <Typography variant='h5' color='primary' gutterBottom>
                 My Account
             </Typography>
-            <Card className={classes.card}>
+            <Card>
                 {error.type === 'auth' && (
                     <Alert severity='error'>{error.message}</Alert>
                 )}
