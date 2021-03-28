@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react'
 import { Provider, RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { ReactReduxFirebaseProvider } from "react-redux-firebase";
+import {
+    ReactReduxFirebaseProvider,
+    useFirestoreConnect,
+} from 'react-redux-firebase';
 import { createFirestoreInstance } from "redux-firestore";
 import * as AuthTypes from '@firebase/auth-types'
 
@@ -36,15 +39,22 @@ const rrfProps = {
 
 const Init: React.FC = ({ children }) => {
     const dispatch = useDispatch();
-    const { uid } = useSelector(({ firebase }: RootStateOrAny) => firebase.auth)
+    const { uid } = useSelector(
+        ({ firebase }: RootStateOrAny) => firebase.auth
+    );
 
     useEffect(() => {
-        if (uid) dispatch(getRelationships(uid))
-    }, [dispatch, uid])
+        if (uid) dispatch(getRelationships(uid));
+    }, [dispatch, uid]);
 
-    return (<>
-        {children}
-    </>)
+    useFirestoreConnect([
+        {
+            collection: 'conversations',
+            where: [['users', 'array-contains', uid || '']],
+        },
+    ]);
+
+    return <>{children}</>;
 }
 
 const ReduxFirebaseProvider: React.FC = ({ children }) => {

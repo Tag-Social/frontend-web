@@ -16,7 +16,7 @@ import {
 import { People, /*NotificationsActive,*/ Chat } from '@material-ui/icons';
 
 import { useStyles } from './styles';
-// import { UserSearchBar } from '..';
+import { NewMessageIndicator } from '..';
 import {
     DASHBOARD,
     LOGIN,
@@ -69,7 +69,9 @@ const TopNavbar = () => {
                         <People fontSize='large' />
                     </IconButton>
                     <IconButton color='primary' component={Link} to={MESSAGING}>
-                        <Chat fontSize='large' />
+                        <NewMessageIndicator>
+                            <Chat fontSize='large' />
+                        </NewMessageIndicator>
                     </IconButton>
                 </div>
             )}

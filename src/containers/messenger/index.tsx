@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useFirestore } from 'react-redux-firebase';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
@@ -39,6 +39,7 @@ type Conversation = {
     users: string[];
     usersData: UserData;
     lastSentAt: string;
+    lastSeenBy: string;
 };
 type Message = {
     id: string;
@@ -48,6 +49,11 @@ type Message = {
 };
 
 const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
+    const firestore = useFirestore();
+    const theme = useTheme();
+    const classes = useStyles();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
+    const endOfPage = useRef<HTMLDivElement>(null);
     const [
         conversations,
         auth,
@@ -59,18 +65,22 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
             relationships,
         ]
     );
+    const [connections, setConnections] = useState<UserProfile[]>();
     const [conversation, setConversation] = useState<Conversation>();
-    const firestore = useFirestore();
-    const theme = useTheme();
-    const classes = useStyles();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
     const [open, setOpen] = useState(false);
     const [newMessage, setNewMessage] = useState('');
-    const [connections, setConnections] = useState<UserProfile[]>();
     const [newConvoUser, setNewConvoUser] = useState('');
-    const endOfPage = useRef<HTMLDivElement>(null);
+
+    const lastSeenBy = () => {
+        if (conversation) {
+            firestore.collection('conversations').doc(conversation.id).update({
+                lastSeenBy: auth.uid,
+            });
+        }
+    };
 
     useEffect(() => {
+        // Set list of users who are connected but have no current conversation.
         if (convoId === 'new') {
             firestore
                 .collection('users')
@@ -87,13 +97,19 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
                     );
                     setConnections(
                         data.filter(
-                            (u) =>
-                                !conversations.some((c: any) =>
-                                    c.users.includes(u.id)
+                            (user) =>
+                                !conversations.some((convo: Conversation) =>
+                                    convo.users.includes(user.id)
                                 )
                         )
                     );
                 });
+        }
+
+        // Set conversation
+        if (convoId) {
+            setConversation(conversations.find((c: any) => c.id === convoId));
+            setOpen(true);
         }
     }, [
         conversations,
@@ -107,21 +123,20 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
     ]);
 
     useEffect(() => {
-        if (convoId) {
-            setConversation(conversations.find((c: any) => c.id === convoId));
-            setOpen(true);
-        }
-    }, [convoId, conversations]);
-    useEffect(() => {
+        // Focus on last message when component mounts or new message.
         if (endOfPage && endOfPage.current)
             endOfPage.current.scrollIntoView({ behavior: 'smooth' });
-    }, [conversation]);
+        
+    }, [conversation?.messages]);
 
     const handleClose = () => {
         setOpen(false);
         setCurrentConvo('');
+        // Set last seen by
+        lastSeenBy();
     };
 
+    // Start a new conversation
     const newConvo = (user: any) => {
         const id = uuidv4();
         const date = new Date().toISOString();
@@ -132,6 +147,7 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
                 id,
                 initDate: date,
                 lastSentAt: date,
+                lastSeenBy: auth.uid,
                 messages: [
                     {
                         text: newMessage,
@@ -158,6 +174,7 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
             });
     };
 
+    // Send a message
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const id = uuidv4();
@@ -168,6 +185,7 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
                 .doc(conversation.id)
                 .update({
                     lastSentAt: date,
+                    lastSeenBy: auth.uid,
                     messages: [
                         ...conversation.messages,
                         {

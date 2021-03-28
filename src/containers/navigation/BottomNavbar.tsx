@@ -25,6 +25,8 @@ import {
     NOTIFICATIONS,
     MESSAGING,
 } from '../../routes/routePaths';
+import { NewMessageIndicator } from '..';
+
 
 const BottomNavbar = () => {
     const [
@@ -58,7 +60,9 @@ const BottomNavbar = () => {
                     component={Link}
                     to={MESSAGING}
                 >
-                    <Chat fontSize='large' />
+                    <NewMessageIndicator>
+                        <Chat fontSize='large' />
+                    </NewMessageIndicator>
                 </IconButton>
             </Toolbar>
         </AppBar>

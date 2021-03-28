@@ -16,3 +16,4 @@ export { default as Bug } from './bug';
 export { default as Messenger } from './messenger';
 export { default as Onboarding } from './onboarding';
 export { default as PlacesAutocomplete } from './placesAutocomplete';
+export { default as NewMessageIndicator } from './newMessageIndicator';
