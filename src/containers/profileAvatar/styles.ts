@@ -17,7 +17,7 @@ export const useStyles = makeStyles((theme) => ({
         cursor: 'pointer',
         color: '#fff',
         width: '35px',
-        height: '35px'
+        height: '35px',
     },
     label: {
         marginRight: 0,
@@ -27,8 +27,8 @@ export const useStyles = makeStyles((theme) => ({
         backgroundColor: '#fff',
         boxSizing: 'content-box',
         border: '3px solid white',
-        boxShadow: '0 2px 5px 0 rgba(0,0,0,0.5)',
-        width: '150px', 
-        height: '150px'
-    }
+        boxShadow: ' 0px 8px 20px rgb(0 0 0 / 6%)',
+        width: '150px',
+        height: '150px',
+    },
 }));
