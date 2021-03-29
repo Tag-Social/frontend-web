@@ -19,12 +19,14 @@ const NewMessageIndicator: React.FC = ({ children }) => {
 
     useEffect(() => {
         let count = 0;
-        conversations.forEach((convo: any) => {
-            const lastMessage = convo.messages.slice(-1)[0];
-            if (lastMessage.uid !== uid && convo.lastSeenBy !== uid) {
-                count++;
-            }
-        });
+        if (conversations && conversations.length > 0) {
+            conversations.forEach((convo: any) => {
+                const lastMessage = convo.messages.slice(-1)[0];
+                if (lastMessage.uid !== uid && convo.lastSeenBy !== uid) {
+                    count++;
+                }
+            });
+        }
         setNewMessagesCount(count);
     }, [conversations, uid]);
     return (
