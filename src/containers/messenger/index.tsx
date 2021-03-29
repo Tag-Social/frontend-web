@@ -289,7 +289,11 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
                             />
                         </Grid>
                         <Grid item xs={1}>
-                            <IconButton color='primary' type='submit'>
+                            <IconButton
+                                color='primary'
+                                type='submit'
+                                disabled={newMessage.length < 1}
+                            >
                                 <Create />
                             </IconButton>
                         </Grid>
