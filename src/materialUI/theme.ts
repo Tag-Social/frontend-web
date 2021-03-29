@@ -11,7 +11,6 @@ export const theme = createMuiTheme({
     overrides: {
         MuiCard: {
             root: {
-                // Some CSS
                 boxShadow: ' 0px 8px 20px rgb(0 0 0 / 6%)',
             },
         },

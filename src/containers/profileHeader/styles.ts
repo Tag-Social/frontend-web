@@ -10,7 +10,7 @@ export const useStyles = makeStyles((theme) => ({
     avatarContainer: {
         position: 'absolute',
         top: '50px',
-        left: '20px',
+        left: '15px',
         width: 'fit-content',
     },
     info: {
