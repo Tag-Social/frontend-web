@@ -26,7 +26,8 @@ $ npm install
 
 ### Prepare Environment Variables
 #### Copy the Firebase API Credentials
-Create a new '.env.local' file in the root directory with the API keys provided.
+Create a new '.env.local' file in the root directory with the [Firebase API Keys](https://docs.google.com/document/d/1xlx3qOzLxp1WL53RdnQYdTmP77zLBO0bWupZN4V8dMc).
+You will need permissions to access keys.
 
 ### Run Application Locally
 ```
