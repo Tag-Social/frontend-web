@@ -43,7 +43,7 @@ const AccountType = ({ profileData, setProfileData, handleNext }: Props) => {
                     color='primary'
                     onClick={() => {
                         handleNext();
-                        setProfileData({ ...profileData, accountType: 2 });
+                        setProfileData({ ...profileData, accountType: 1 });
                     }}
                 >
                     Mentee

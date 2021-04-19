@@ -185,7 +185,7 @@ const Home: React.FC = () => {
                 </Container>
             </section> */}
 
-        {/* NEWSLETTER */}
+            {/* NEWSLETTER */}
             <Container maxWidth='md' className={classes.container}>
                 <Grid container justify='center'>
                     <Grid
@@ -252,7 +252,7 @@ const Home: React.FC = () => {
                     )}
                     <Grid item xs={12} sm={4}>
                         <img
-                            src='https://firebasestorage.googleapis.com/v0/b/tag-app-81b10.appspot.com/o/images%2Fassets%2FReading%20Newspaper.svg?alt=media&token=6a2d4645-bcb3-4777-9f50-c5c73a6463b4'
+                            src='https://firebasestorage.googleapis.com/v0/b/tag-app-81b10.appspot.com/o/images%2Fassets%2FReading%20Newspaper.svg?alt=media&token=184dd535-e133-46ac-9f79-754c086e4e96'
                             style={{ width: '100%' }}
                         />
                     </Grid>
@@ -266,7 +266,7 @@ const Home: React.FC = () => {
                         <Grid container item xs={12} justify='center'>
                             <img
                                 src='https://firebasestorage.googleapis.com/v0/b/tag-app-81b10.appspot.com/o/images%2Fassets%2Flogo.svg?alt=media&token=16b8288b-042e-4e68-8dda-5de15c3c7d1f'
-                                style={{ width: '100px'}}
+                                style={{ width: '100px' }}
                             />
                         </Grid>
                         <Grid container item xs={12} justify='center'>

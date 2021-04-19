@@ -25,6 +25,7 @@ import { Create, Close } from '@material-ui/icons';
 import { UserProfile } from '../../firebase/utils/userProfile';
 import { useStyles } from './styles';
 import Message from './Message';
+import userEvent from '@testing-library/user-event';
 
 type UserData = {
     [key: string]: any;
@@ -203,11 +204,32 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
                         },
                     ],
                 })
-                .then(() => setNewMessage(''));
+                .then(() => {
+                    conversation.users.forEach(userId => {
+                        if (userId != auth.uid) {
+                            firestore.collection('users').doc(userId).get().then((snapshot) => {
+                                const data = snapshot.data();
+                                sendEmailNotification(data?.email, `New Message from ${auth.displayName}`, newMessage, newMessage);
+                                setNewMessage('');
+                            });
+                        }
+                    });
+                });
         } else if (convoId === 'new' && newConvoUser) {
             newConvo(connections?.find((c) => c.id === newConvoUser));
         }
     };
+
+    function sendEmailNotification(to: String, subject: String, text: String, html: String) {
+        firestore.collection("email_collection").add({
+            to: to,
+            message: {
+                subject: subject,
+                text: text,
+                html: html,
+            },
+        });
+    }
 
     const header = (
         <DialogTitle disableTypography className={classes.dialogTitle}>
