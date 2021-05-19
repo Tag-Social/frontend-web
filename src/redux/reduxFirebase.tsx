@@ -51,6 +51,7 @@ const Init: React.FC = ({ children }) => {
         {
             collection: 'conversations',
             where: [['users', 'array-contains', uid || '']],
+            //orderBy: ['lastSeenAt', 'desc'],
         },
     ]);
 

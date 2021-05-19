@@ -87,7 +87,7 @@ const Messaging = () => {
                         );
                     const title =
                         lastMessage.uid ===
-                        auth.uid ? convo.usersData[user].displayName : (<b>{convo.usersData[user].displayName}</b>);
+                            auth.uid ? convo.usersData[user].displayName : (<b>{convo.usersData[user].displayName}</b>);
                     const subHeader =
                         lastMessage.uid === auth.uid ? (
                             `You: ${lastMessage.text}`
@@ -100,7 +100,7 @@ const Messaging = () => {
                             <Card
                                 className={
                                     lastMessage.uid !== auth.uid &&
-                                    convo.lastSeenBy !== auth.uid
+                                        convo.lastSeenBy !== auth.uid
                                         ? classes.newMessage
                                         : ''
                                 }

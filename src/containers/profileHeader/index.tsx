@@ -230,9 +230,8 @@ const ProfileHeader = ({ profile, profileId, owner }: Props) => {
                         <ListItem className={classes.listItem}>
                             <LocationOn className={classes.profileItemIcon} />
                             <Typography variant='body1'>
-                                {`${location.state || location.province}${
-                                    (location.state || location.province) && ','
-                                } ${location.country}`}
+                                {`${location.state || location.province}${(location.state || location.province) && ','
+                                    } ${location.country}`}
                             </Typography>
                         </ListItem>
                     </Grid>
@@ -256,7 +255,7 @@ const ProfileHeader = ({ profile, profileId, owner }: Props) => {
                     alt={String(displayName)}
                     src={String(photoURL)}
                     editable={owner}
-                    />
+                />
             </div>
             {headerContent}
             {socialLinks}

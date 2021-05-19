@@ -19,9 +19,9 @@ import { useStyles } from './styles';
 import { PROFILES } from '../../routes/routePaths';
 import { RequestsButton } from '..';
 
-const RecommendedMentors = ({ profile, auth }: any) => {
+const RecommendedMentees = ({ profile, auth }: any) => {
     const firestore = useFirestore();
-    const [mentors, setMentors] = useState<any[]>([]);
+    const [mentees, setMentees] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -31,7 +31,7 @@ const RecommendedMentors = ({ profile, auth }: any) => {
             profile.interests.length > 0 ? profile.interests : [''];
         usersCollection
             .where('__name__', '!=', auth.uid)
-            .where('accountType', '==', 1)
+            .where('accountType', '==', 0)
             .where('interests', 'array-contains-any', interests)
             .get()
             .then((snapshot) => {
@@ -40,18 +40,18 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                     snapshot.forEach((doc) =>
                         data.push({ ...doc.data(), id: doc.id })
                     );
-                    setMentors(data);
+                    setMentees(data);
                 } else {
                     usersCollection
                         .where('__name__', '!=', auth.uid)
-                        .where('accountType', '==', 1)
+                        .where('accountType', '==', 0)
                         .limit(20)
                         .get()
                         .then((snapshot) => {
                             snapshot.forEach((doc) =>
                                 data.push({ ...doc.data(), id: doc.id })
                             );
-                            setMentors(data);
+                            setMentees(data);
                         });
                 }
                 setLoading(false);
@@ -59,28 +59,28 @@ const RecommendedMentors = ({ profile, auth }: any) => {
     }, [firestore, auth.uid, profile]);
     const classes = useStyles();
 
-    const mentorCards =
-        mentors.length > 0 && !loading ? (
-            mentors.map((mentor) => (
+    const menteesCards =
+        mentees.length > 0 && !loading ? (
+            mentees.map((mentee) => (
                 <Card
                     className={classes.userCard}
-                    key={`mentors-${mentor.id}`}
+                    key={`mentors-${mentee.id}`}
                     elevation={0}
                 >
                     <CardActionArea
                         component={Link}
-                        to={`${PROFILES}/${mentor.id}`}
+                        to={`${PROFILES}/${mentee.id}`}
                         className={classes.actionArea}
                     >
                         <CardMedia
                             component='img'
-                            alt={mentor.displayName}
+                            alt={mentee.displayName}
                             height='300'
                             image={
-                                mentor.photoURL ||
+                                mentee.photoURL ||
                                 'https://firebasestorage.googleapis.com/v0/b/tag-app-81b10.appspot.com/o/images%2Fdefault-banner.jpg?alt=media&token=425fde9f-6ae8-447b-8684-bf458e9a8255'
                             }
-                            title={mentor.displayName}
+                            title={mentee.displayName}
                             className={classes.avatarContainer}
                         />
                         <CardContent>
@@ -90,10 +90,10 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                                 className={classes.title}
                                 gutterBottom
                             >
-                                {mentor.displayName}
+                                {mentee.displayName}
                             </Typography>
 
-                            {mentor.occupation && (
+                            {mentee.occupation && (
                                 <Typography
                                     variant='h6'
                                     color='textSecondary'
@@ -101,13 +101,13 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                                     className={classes.userInfoText}
                                 >
                                     <AssignmentInd fontSize='small' />
-                                    {mentor.occupation}
+                                    {mentee.occupation}
                                 </Typography>
                             )}
 
-                            {(mentor.location.state ||
-                                mentor.location.province ||
-                                mentor.location.country) && (
+                            {(mentee.location.state ||
+                                mentee.location.province ||
+                                mentee.location.country) && (
                                     <Typography
                                         variant='h6'
                                         color='textSecondary'
@@ -115,12 +115,12 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                                         className={classes.userInfoText}
                                     >
                                         <LocationOn fontSize='small' />
-                                        {`${mentor.location.state ||
-                                            mentor.location.province
-                                            }${(mentor.location.state ||
-                                                mentor.location.province) &&
+                                        {`${mentee.location.state ||
+                                            mentee.location.province
+                                            }${(mentee.location.state ||
+                                                mentee.location.province) &&
                                             ','
-                                            } ${mentor.location.country}`}
+                                            } ${mentee.location.country}`}
                                     </Typography>
                                 )}
                         </CardContent>
@@ -130,16 +130,16 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                             startIcon={<Person />}
                             variant='contained'
                             component={Link}
-                            to={`${PROFILES}/${mentor.id}`}
+                            to={`${PROFILES}/${mentee.id}`}
                             color='primary'
                             disableElevation
                         >
                             View Profile
                         </Button>
                         <RequestsButton
-                            mentor={mentor.accountType === 0}
-                            uid={mentor.id}
-                            user={mentor}
+                            mentor={mentee.accountType === 0}
+                            uid={mentee.id}
+                            user={mentee}
                         />
                     </CardActions>
                 </Card>
@@ -151,7 +151,7 @@ const RecommendedMentors = ({ profile, auth }: any) => {
             </>
         ) : (
             <Typography variant='body1'>
-                Sorry we have not found any mentors for you yet...
+                Sorry we have not found any mentees for you yet...
             </Typography>
         );
 
@@ -164,11 +164,11 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                 color='primary'
                 style={{ marginLeft: '16px' }}
             >
-                Recommened Mentors
+                Recommened Mentees
             </Typography>
             <div className={classes.gridList}>
                 <div></div>
-                {mentorCards}
+                {menteesCards}
                 <div
                     style={{
                         display: 'flex',
@@ -202,4 +202,4 @@ const RecommendedMentors = ({ profile, auth }: any) => {
     );
 };
 
-export default RecommendedMentors;
+export default RecommendedMentees;

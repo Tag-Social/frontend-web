@@ -27,7 +27,8 @@ type Props = {
     user: UserProfile;
     uid: string;
     size?: 'small' | 'large' | 'medium';
-    mentor: boolean;
+    mentor?: boolean;
+    mentee?: boolean;
 };
 
 const StyledMenu = withStyles({
@@ -74,9 +75,8 @@ const RequestsButton = ({ mentor, uid, size, user }: Props) => {
         firebase.auth,
         relationships,
     ]);
-    const [message, setMessage] = useState(`Hi ${
-        user.displayName?.split(' ')[0]
-    }! I am currently looking for a mentor and I found you on TAG! Below is a link to my TAG profile. Hope to hear from you soon!
+    const [message, setMessage] = useState(`Hi ${user.displayName?.split(' ')[0]
+        }! I am currently looking for a mentor and I found you on TAG! Below is a link to my TAG profile. Hope to hear from you soon!
     http://gettagged.co/profiles/${auth.uid}`);
 
     const mentorRel = relationships.mentees.find(
@@ -113,7 +113,7 @@ const RequestsButton = ({ mentor, uid, size, user }: Props) => {
     };
     const copyText = () => {
         if (navigator.clipboard) navigator.clipboard.writeText(message);
-     };
+    };
 
     const dialog = (
         <Dialog
@@ -127,9 +127,8 @@ const RequestsButton = ({ mentor, uid, size, user }: Props) => {
             <DialogContent>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        {`Copy the message below and invite ${
-                            user.displayName?.split(' ')[0]
-                        } to connect with this message in the body.`}
+                        {`Copy the message below and invite ${user.displayName?.split(' ')[0]
+                            } to connect with this message in the body.`}
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
@@ -138,7 +137,7 @@ const RequestsButton = ({ mentor, uid, size, user }: Props) => {
                             variant='outlined'
                             fullWidth
                             value={message}
-                            onChange={(e)=> setMessage(e.target.value)}
+                            onChange={(e) => setMessage(e.target.value)}
                             InputProps={{
                                 startAdornment: (
                                     <IconButton onClick={copyText}>
@@ -152,7 +151,7 @@ const RequestsButton = ({ mentor, uid, size, user }: Props) => {
             </DialogContent>
             <DialogActions>
                 <Button
-                    startIcon={<LinkedIn/> }
+                    startIcon={<LinkedIn />}
                     variant='contained'
                     disableElevation
                     href={`https://linkedin.com/in/${user.social?.linkedin}`}
@@ -169,7 +168,7 @@ const RequestsButton = ({ mentor, uid, size, user }: Props) => {
         </Dialog>
     );
 
-    useEffect(() => {}, [relationships]);
+    useEffect(() => { }, [relationships]);
     return mentor || pendingMenteeRel || pendingMentorRel || mentorshipId ? (
         <>
             <Button
@@ -184,8 +183,8 @@ const RequestsButton = ({ mentor, uid, size, user }: Props) => {
                 {pendingMenteeRel
                     ? 'Pending...'
                     : pendingMentorRel
-                    ? 'Respond'
-                    : 'Mentorship'}
+                        ? 'Respond'
+                        : 'Mentorship'}
             </Button>
             <StyledMenu
                 anchorEl={optionsRef.current}

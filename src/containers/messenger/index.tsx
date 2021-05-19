@@ -221,7 +221,7 @@ const Messenger = ({ convoId, setCurrentConvo, location }: any) => {
     };
 
     function sendEmailNotification(to: String, subject: String, text: String, html: String) {
-        firestore.collection("email_collection").add({
+        firestore.collection("mail").add({
             to: to,
             message: {
                 subject: subject,

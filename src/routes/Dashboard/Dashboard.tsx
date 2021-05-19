@@ -2,6 +2,7 @@ import React from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { Container, Grid } from '@material-ui/core';
 import { RecommendedMentors } from '../../containers';
+import { RecommendedMentees } from '../../containers';
 import { useStyles } from './styles';
 
 const Dashboard = () => {
@@ -14,7 +15,7 @@ const Dashboard = () => {
         profile,
     ]);
 
-    document.title = 'Tag | Dashboard ';
+    document.title = 'Tag | Dashboard';
     return (
         <Container maxWidth='lg' className={classes.container}>
             <Grid container spacing={1} justify='center'>
@@ -26,6 +27,9 @@ const Dashboard = () => {
                         {/* <ProfileCard profile={profile} auth={auth} /> */}
                         {profile.interests && (
                             <RecommendedMentors profile={profile} auth={auth} />
+                        )}
+                        {profile.interests && (
+                            <RecommendedMentees profile={profile} auth={auth} />
                         )}
                     </Grid>
                     <Grid item md={9} xs={12}></Grid>

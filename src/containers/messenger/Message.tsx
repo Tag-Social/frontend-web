@@ -41,10 +41,10 @@ const Message = ({
                 style={
                     user === uid
                         ? {
-                              position: 'absolute',
-                              right: '75px',
-                              textAlign: 'right',
-                          }
+                            position: 'absolute',
+                            right: '75px',
+                            textAlign: 'right',
+                        }
                         : {}
                 }
             />
