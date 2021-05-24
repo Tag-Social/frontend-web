@@ -26,10 +26,7 @@ const Dashboard = () => {
                     <Grid item md={10} xs={12}>
                         {/* <ProfileCard profile={profile} auth={auth} /> */}
                         {profile.interests && (
-                            <RecommendedMentors profile={profile} auth={auth} />
-                        )}
-                        {profile.interests && (
-                            <RecommendedMentees profile={profile} auth={auth} />
+                            profile.accountType == 0 ? <RecommendedMentors profile={profile} auth={auth} /> : <RecommendedMentees profile={profile} auth={auth} />
                         )}
                     </Grid>
                     <Grid item md={9} xs={12}></Grid>

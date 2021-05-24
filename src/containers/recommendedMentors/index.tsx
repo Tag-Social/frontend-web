@@ -137,7 +137,7 @@ const RecommendedMentors = ({ profile, auth }: any) => {
                             View Profile
                         </Button>
                         <RequestsButton
-                            mentor={mentor.accountType === 0}
+                            mentor={mentor.accountType === 1}
                             uid={mentor.id}
                             user={mentor}
                         />
